@@ -1,9 +1,12 @@
 # Config File
 .config/*
 !.config/alacritty
+!.config/dconf
 !.config/gtk-2.0
 !.config/gtk-3.0
 !.config/gtk-4.0
+!.config/libreoffice
+!.config/monitors.xml
 !.config/nvim
 !.config/okullarrc
 !.config/pulse
