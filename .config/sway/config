@@ -39,8 +39,8 @@ input "1267:12572:VEN_04F3:00_04F3:311C_Touchpad" {
 # System Functions
 #
     # Brightness Control
-    bindsym XF86MonBrightnessDown exec brightnessctl s 10%-
-    bindsym XF86MonBrightnessUp exec brightnessctl s +10%
+    bindsym XF86MonBrightnessDown exec brightnessctl s -1000
+    bindsym XF86MonBrightnessUp exec brightnessctl s +1000
     # Volume Control
     bindsym XF86AudioRaiseVolume exec pactl set-sink-volume @DEFAULT_SINK@ +10%
     bindsym XF86AudioLowerVolume exec pactl set-sink-volume @DEFAULT_SINK@ -10%
@@ -179,16 +179,10 @@ bindsym $mod+r mode "resize"
 # Read `man 5 sway-bar` for more information about this section.
 bar {
     position top
-
-    # When the status_command prints a new line to stdout, swaybar updates.
-    # The default just shows the current date and time.
-    status_command while date +'%Y-%m-%d %I:%M %p'; do sleep 60; done
-
-    colors {
-        statusline #ffffff
-        background #323232
-        inactive_workspace #32323200 #32323200 #5c5c5c
-    }
+    status_command i3blocks
 }
+
+# Hide borders if there is only one child in a workspace or container
+hide_edge_borders --i3 smart_no_gaps
 
 include /etc/sway/config.d/*
