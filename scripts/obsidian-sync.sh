@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Define the path to your local repository
-REPO_PATH="~/Documents/Obsidian"
+REPO_PATH="~/Documents/Obsidian/"
 
 # Navigate to the repository
 cd "$REPO_PATH"
