@@ -11,6 +11,7 @@ echo "Updated contents of .config directory and copied to $dotfiles_directory"
 # Vim and Tmux
 cp ~/.vimrc "$dotfiles_directory"
 cp ~/.tmux.conf "$dotfiles_directory"
+cp ~/.bashrc "$dotfiles_directory"
 echo "Updated latest .vimrc and .tmux.conf and copied to $dotfiles_directory"
 
 
