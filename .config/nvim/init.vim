@@ -1,5 +1,7 @@
 source ~/.vimrc
 
+set clipboard+=unnamedplus
+
 lua << END
 require('lualine').setup {
   options = {

@@ -4,6 +4,9 @@ Plug 'nvim-tree/nvim-web-devicons'
 Plug 'nvim-lualine/lualine.nvim'
 call plug#end()
 
+" Copy & Paste
+set clipboard=unnamedplus
+
 " Visual
 syntax on
 set number
