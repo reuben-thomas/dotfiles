@@ -112,6 +112,11 @@ if ! shopt -oq posix; then
   fi
 fi
 
+# Flatpak App Shortcuts
+alias obsidian='flatpak run md.obsidian.Obsidian'
+alias okular='flatpak run org.kde.okular'
+alias zoom='flatpak run us.zoom.Zoom'
+
 # App Shortcuts
 alias obsidian-sync='/home/reuben/.config/scripts/obsidian-sync.sh'
 alias socvpn-start='sudo openfortivpn webvpn.comp.nus.edu.sg --username=e1123003'
