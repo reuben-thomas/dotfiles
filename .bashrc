@@ -113,7 +113,7 @@ if ! shopt -oq posix; then
 fi
 
 # App Shortcuts
-alias obsidian-sync='/home/reuben/dev/dotfiles/scripts/obsidian-sync.sh'
+alias obsidian-sync='/home/reuben/.config/scripts/obsidian-sync.sh'
 
 # System Shortcuts
 alias powerstatus='upower -i /org/freedesktop/UPower/devices/battery_BAT0'

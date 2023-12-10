@@ -2,7 +2,12 @@
 call plug#begin()
 Plug 'nvim-tree/nvim-web-devicons'
 Plug 'nvim-lualine/lualine.nvim'
+Plug 'numToStr/Comment.nvim'
+Plug 'christoomey/vim-tmux-navigator'
 call plug#end()
+
+" Comments
+lua require('Comment').setup()
 
 " Copy & Paste
 set clipboard=unnamedplus
