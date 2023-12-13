@@ -26,7 +26,7 @@
 ### Appearance and Outputs
 #
     # Wallpaper
-    output * bg /home/reuben/Pictures/Wallpapers/mercedes_amg_gt_black_series_2020_4k_8k-HD.jpg fill
+    output * bg /home/reuben/Pictures/Wallpapers/porschediagonal.jpg fill
 
 #   # Display
 #
@@ -71,6 +71,7 @@
 # Basics:
 #
     exec brightnessctl set 5%
+
     # Start a terminal
     bindsym $mod+Return exec $term
 
