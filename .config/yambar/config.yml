@@ -1,0 +1,144 @@
+awesome: &awesome Font Awesome 6 Free:style=solid:pixelsize=14
+awesome_brands: &awesome_brands Font Awesome 6 Brands:pixelsize=16
+
+std_underline: &std_underline {underline: { size: 2, color: ff0000ff}}
+
+# This is THE bar configuration
+bar:
+  height: 26
+  location: top
+  spacing: 10
+  margin: 7
+
+  # Default font
+  font: Hack Nerd Font Mono:pixelsize=12
+
+  foreground: ffffffff
+  background: 111111cc
+
+  left:
+    - i3:
+        anchors: # Not used (directly) by f00bar; used here to avoid duplication
+          - string: &i3_common {margin: 5, on-click: "swaymsg --quiet workspace {name}"}
+          - string: &default {<<: *i3_common, text: "{name}"}
+          - string: &main    {<<: *i3_common, text: , font: *awesome}
+          - string: &surfing {<<: *i3_common, text: , font: *awesome_brands}
+          - string: &misc    {<<: *i3_common, text: , font: *awesome}
+          - string: &mail    {<<: *i3_common, text: , font: *awesome}
+          - string: &music   {<<: *i3_common, text: , font: *awesome}
+          - focused: &focused
+              deco: {stack: [background: {color: ffa0a04c}, <<: *std_underline]}
+          - invisible: &invisible {foreground: ffffff55}
+          - urgent: &urgent
+              foreground: 000000ff
+              deco: {stack: [background: {color: bc2b3fff}, <<: *std_underline]}
+          - map: &i3_mode
+              default:
+                - string:
+                    margin: 5
+                    text: "{mode}"
+                    deco: {background: {color: cc421dff}}
+                - empty: {right-margin: 7}
+              conditions:
+                mode == default: {empty: {}}
+        content:
+          "":
+            map:
+              conditions:
+                state == focused:   {string: {<<: [*default, *focused]}}
+                state == unfocused: {string: {<<: *default}}
+                state == invisible: {string: {<<: [*default, *invisible]}}
+                state == urgent:    {string: {<<: [*default, *urgent]}}
+          main:
+            map:
+              conditions:
+                state == focused:   {string: {<<: [*main, *focused]}}
+                state == unfocused: {string: {<<: *main}}
+                state == invisible: {string: {<<: [*main, *invisible]}}
+                state == urgent:    {string: {<<: [*main, *urgent]}}
+          surfing:
+            map:
+              conditions:
+                state == focused: {string: {<<: [*surfing, *focused]}}
+                state == unfocused: {string: {<<: *surfing}}
+                state == invisible: {string: {<<: [*surfing, *invisible]}}
+                state == urgent:    {string: {<<: [*surfing, *urgent]}}
+          misc:
+            map:
+              conditions:
+                state == focused: {string: {<<: [*misc, *focused]}}
+                state == unfocused: {string: {<<: *misc}}
+                state == invisible: {string: {<<: [*misc, *invisible]}}
+                state == urgent:    {string: {<<: [*misc, *urgent]}}
+
+          mail:
+            map:
+              conditions:
+                state == focused: {string: {<<: [*mail, *focused]}}
+                state == unfocused: {string: {<<: *mail}}
+                state == invisible: {string: {<<: [*mail, *invisible]}}
+                state == urgent:    {string: {<<: [*mail, *urgent]}}
+          music:
+            map:
+              conditions:
+                state == focused: {string: {<<: [*music, *focused]}}
+                state == unfocused: {string: {<<: *music}}
+                state == invisible: {string: {<<: [*music, *invisible]}}
+                state == urgent:    {string: {<<: [*music, *urgent]}}
+
+    - foreign-toplevel:
+        content:
+          map:
+            conditions:
+              ~activated: {empty: {}}
+              activated:
+                - string: {text: "{app-id}", foreground: ffa0a0ff}
+                - string: {text: ": {title}"}
+  right:
+    - alsa:
+        card: default
+        mixer: Master
+        content:
+          map:
+            conditions:
+              ~online: {string: {text: "ALSA ERR"}}
+              online:
+                map:
+                  on-click: /bin/sh -c "amixer -q sset Speaker unmute && amixer -q sset Headphone unmute && amixer -q sset Master toggle"
+                  conditions:
+                    muted: {string: {text: "VOL MUT"}}
+                    ~muted:
+                      - string: {text: "VOL {percent}%"}
+    - backlight:
+        name: intel_backlight
+        content: [ string: {text: "LUM "}, string: {text: "{percent}%"}]
+    - network:
+        name: enp1s0
+        content:
+          map:
+            conditions:
+              ~carrier: {empty: {}}
+              carrier:
+                map:
+                  default: {string: {text: , font: *awesome, foreground: ffffff66}}
+                  conditions:
+                    state == up && ipv4 != "": {string: {text: , font: *awesome}}
+    - network:
+        name: wlp0s20f3
+        poll-interval: 1000
+        content:
+          map:
+            default: {string: {text: "NET OK"}}
+            conditions:
+              state == down: {string: {text: "OFFLINE"}}
+              state == up:
+                - string: {text: "NET OK [{ssid}]"}
+    - battery:
+        name: BAT0
+        content: [ string: {text: "BAT "}, string: {text: "{capacity}% [{estimate}]"}]
+        poll-interval: 30000
+    - clock:
+        time-format: "%H:%M %p"
+        content:
+          - string: {text: "{date}", right-margin: 5}
+          - string: {text: "{time}"}

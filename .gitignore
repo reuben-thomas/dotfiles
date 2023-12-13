@@ -13,5 +13,6 @@
 !.config/sway
 !.config/tmux
 !.config/waybar
+!.config/yambar
 !.config/wofi
 !.config/i3blocks.conf
