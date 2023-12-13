@@ -4,6 +4,7 @@ Plug 'nvim-tree/nvim-web-devicons'
 Plug 'nvim-lualine/lualine.nvim'
 Plug 'numToStr/Comment.nvim'
 Plug 'christoomey/vim-tmux-navigator'
+Plug 'lukas-reineke/indent-blankline.nvim'
 call plug#end()
 
 " Comments

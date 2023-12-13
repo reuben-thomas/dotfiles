@@ -3,6 +3,15 @@ source ~/.vimrc
 set clipboard+=unnamedplus
 
 lua << END
+
+-- Indent Blank Line
+local opts = { noremap = true, silent = true }
+require('ibl').setup()
+
+-- Comment
+require('Comment').setup()
+
+-- Lualine
 require('lualine').setup {
   options = {
     icons_enabled = true,
