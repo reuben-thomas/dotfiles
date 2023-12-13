@@ -6,7 +6,7 @@ lua << END
 
 -- Indent Blank Line
 local opts = { noremap = true, silent = true }
-require('ibl').setup()
+require("ibl").setup ()
 
 -- Comment
 require('Comment').setup()

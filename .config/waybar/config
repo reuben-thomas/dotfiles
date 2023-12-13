@@ -1,71 +1,175 @@
-// -*- mode: json -*-
+// =============================================================================
+//
+// Waybar configuration
+//
+// Configuration reference: https://github.com/Alexays/Waybar/wiki/Configuration
+//
+// =============================================================================
 
 {
-	"layer": "top",
-	"position": "top",
-  "spacing": 20,
+    // -------------------------------------------------------------------------
+    // Global configuration
+    // -------------------------------------------------------------------------
 
-	"modules-left": [
-		"sway/workspaces",
-	],
-	"modules-center": [
-		"clock#3",
-    "clock#2"
-	],
-	"modules-right": [
-    "network",
-		"pulseaudio",
-    "backlight",
-		"memory",
-    "cpu",
-    "battery"
-	],
+    "layer": "top",
 
-	"sway/workspaces": {
-		"disable-scroll": true,
-		"format": "{name}"
-	},
+    "position": "top",
 
-	"clock#1": {
-		"format": "{:%A}",
-		"tooltip": false
-	},
-	"clock#2": {
-		"format": "{:%H:%M %p} ",
-		"tooltip": false
-	},
-	"clock#3": {
-		"format": "{:%d.%m.%Y}",
-		"tooltip": false
-	},
-  "network": {
-      "format-wifi": "WI-FI {signalStrength}%",
-      "format-ethernet": "ETH {ipaddr}/{cidr}",
-      "tooltip-format": "{ifname} via {gwaddr}",
-      "format-linked": "{ifname} (No IP)",
-      "format-disconnected": "DISCONNECTED ⚠",
-      "format-alt": "{ifname}: {ipaddr}/{cidr}"
-  },
-	"pulseaudio": {
-		"format": "VOL {volume:2}%",
-		"format-bluetooth": "VOL[BT]  {volume}%",
-		"format-muted": "MUTE",
-		"scroll-step": 5,
-		"on-click": "pamixer -t",
-		"on-click-right": "pavucontrol"
-	},
-  "backlight": {
-      "format": "BCL {percent}%",
-  },
-	"memory": {
-		"interval": 15,
-		"format": "MEM {}%"
-	},
-	"cpu": {
-		"interval": 15,
-		"format": "CPU {usage:2}%"
-	},
-	"battery": {
-		"format": "BAT {capacity}% ",
-	},
+    // If height property would be not present, it'd be calculated dynamically
+    "height": 30,
+
+    "modules-left": [
+        "sway/workspaces",
+        "sway/mode"
+    ],
+    "modules-center": [
+        "sway/window"
+    ],
+    "modules-right": [
+        "network",
+        "memory",
+        "cpu",
+        "temperature",
+        "custom/keyboard-layout",
+        "battery",
+        "tray",
+        "clock#date",
+        "clock#time"
+    ],
+
+
+    // -------------------------------------------------------------------------
+    // Modules
+    // -------------------------------------------------------------------------
+
+    "battery": {
+        "interval": 10,
+        "states": {
+            "warning": 30,
+            "critical": 15
+        },
+        // Connected to AC
+        "format": "  {icon}  {capacity}%", // Icon: bolt
+        // Not connected to AC
+        "format-discharging": "{icon}  {capacity}%",
+        "format-icons": [
+            "", // Icon: battery-full
+            "", // Icon: battery-three-quarters
+            "", // Icon: battery-half
+            "", // Icon: battery-quarter
+            ""  // Icon: battery-empty
+        ],
+        "tooltip": true
+    },
+
+    "clock#time": {
+        "interval": 1,
+        "format": "{:%H:%M:%S}",
+        "tooltip": false
+    },
+
+    "clock#date": {
+      "interval": 10,
+      "format": "  {:%e %b %Y}", // Icon: calendar-alt
+      "tooltip-format": "{:%e %B %Y}"
+    },
+
+    "cpu": {
+        "interval": 5,
+        "format": "  {usage}% ({load})", // Icon: microchip
+        "states": {
+          "warning": 70,
+          "critical": 90
+        }
+    },
+
+    "custom/keyboard-layout": {
+      "exec": "swaymsg -t get_inputs | grep -m1 'xkb_active_layout_name' | cut -d '\"' -f4",
+      // Interval set only as a fallback, as the value is updated by signal
+      "interval": 30,
+      "format": "  {}", // Icon: keyboard
+      // Signal sent by Sway key binding (~/.config/sway/key-bindings)
+      "signal": 1, // SIGHUP
+      "tooltip": false
+    },
+
+    "memory": {
+        "interval": 5,
+        "format": "  {}%", // Icon: memory
+        "states": {
+            "warning": 70,
+            "critical": 90
+        }
+    },
+
+    "network": {
+        "interval": 5,
+        "format-wifi": "  {essid} ({signalStrength}%)", // Icon: wifi
+        "format-ethernet": "  {ifname}: {ipaddr}/{cidr}", // Icon: ethernet
+        "format-disconnected": "⚠  Disconnected",
+        "tooltip-format": "{ifname}: {ipaddr}"
+    },
+
+    "sway/mode": {
+        "format": "<span style=\"italic\">  {}</span>", // Icon: expand-arrows-alt
+        "tooltip": false
+    },
+
+    "sway/window": {
+        "format": "{}",
+        "max-length": 120
+    },
+
+    "sway/workspaces": {
+        "all-outputs": false,
+        "disable-scroll": true,
+        "format": "{icon} {name}",
+        "format-icons": {
+            "1:www": "龜", // Icon: firefox-browser
+            "2:mail": "", // Icon: mail
+            "3:editor": "", // Icon: code
+            "4:terminals": "", // Icon: terminal
+            "5:portal": "", // Icon: terminal
+            "urgent": "",
+            "focused": "",
+            "default": ""
+        }
+    },
+
+    //"pulseaudio": {
+    //    //"scroll-step": 1,
+    //    "format": "{icon}  {volume}%",
+    //    "format-bluetooth": "{icon}  {volume}%",
+    //    "format-muted": "",
+    //    "format-icons": {
+    //        "headphones": "",
+    //        "handsfree": "",
+    //        "headset": "",
+    //        "phone": "",
+    //        "portable": "",
+    //        "car": "",
+    //        "default": ["", ""]
+    //    },
+    //    "on-click": "pavucontrol"
+    //},
+
+    "temperature": {
+      "critical-threshold": 80,
+      "interval": 5,
+      "format": "{icon}  {temperatureC}°C",
+      "format-icons": [
+          "", // Icon: temperature-empty
+          "", // Icon: temperature-quarter
+          "", // Icon: temperature-half
+          "", // Icon: temperature-three-quarters
+          ""  // Icon: temperature-full
+      ],
+      "tooltip": true
+    },
+
+    "tray": {
+        "icon-size": 21,
+        "spacing": 10
+    }
+
 }

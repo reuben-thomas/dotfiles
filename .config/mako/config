@@ -1,0 +1,9 @@
+font=Hack Nerd Font Mono 8
+background-color=#424f5e
+text-color=#ffffff
+border-color=#bde8ff
+default-timeout=5000
+padding=0,5,10
+
+[urgency=high]
+text-color=#CB4B16

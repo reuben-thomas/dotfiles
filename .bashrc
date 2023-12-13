@@ -124,3 +124,7 @@ alias chrome='google-chrome --password-store=gnome-libsecret'
 
 # System Shortcuts
 alias powerstatus='upower -i /org/freedesktop/UPower/devices/battery_BAT0'
+alias pci-pm='echo auto | sudo tee /sys/bus/pci/devices/*/power/control'
+
+# Created by `pipx` on 2023-12-13 10:18:49
+export PATH="$PATH:/home/reuben/.local/bin"
