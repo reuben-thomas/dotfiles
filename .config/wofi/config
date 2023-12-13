@@ -1,0 +1,6 @@
+mode=run
+insensitive=true
+width=600
+height=350
+term=alacritty
+hide_scroll=true

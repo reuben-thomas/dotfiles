@@ -1,8 +1,26 @@
 <monitors version="2">
   <configuration>
     <logicalmonitor>
+      <x>3440</x>
+      <y>0</y>
+      <scale>1</scale>
+      <monitor>
+        <monitorspec>
+          <connector>DP-7</connector>
+          <vendor>GSM</vendor>
+          <product>LG FULL HD</product>
+          <serial>0x01010101</serial>
+        </monitorspec>
+        <mode>
+          <width>1920</width>
+          <height>1080</height>
+          <rate>60.000</rate>
+        </mode>
+      </monitor>
+    </logicalmonitor>
+    <logicalmonitor>
       <x>0</x>
-      <y>260</y>
+      <y>0</y>
       <scale>1</scale>
       <primary>yes</primary>
       <monitor>
@@ -16,28 +34,6 @@
           <width>3440</width>
           <height>1440</height>
           <rate>59.973</rate>
-        </mode>
-      </monitor>
-    </logicalmonitor>
-    <logicalmonitor>
-      <x>3440</x>
-      <y>0</y>
-      <scale>1</scale>
-      <transform>
-        <rotation>right</rotation>
-        <flipped>no</flipped>
-      </transform>
-      <monitor>
-        <monitorspec>
-          <connector>DP-7</connector>
-          <vendor>GSM</vendor>
-          <product>LG FULL HD</product>
-          <serial>0x01010101</serial>
-        </monitorspec>
-        <mode>
-          <width>1920</width>
-          <height>1080</height>
-          <rate>60.000</rate>
         </mode>
       </monitor>
     </logicalmonitor>

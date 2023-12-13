@@ -3,58 +3,23 @@
 {
 	"layer": "top",
 	"position": "top",
+  "spacing": 20,
 
 	"modules-left": [
 		"sway/workspaces",
-		"custom/right-arrow-dark"
 	],
 	"modules-center": [
-		"custom/left-arrow-dark",
-		"clock#1",
-		"custom/left-arrow-light",
-		"custom/left-arrow-dark",
-		"clock#2",
-		"custom/right-arrow-dark",
-		"custom/right-arrow-light",
 		"clock#3",
-		"custom/right-arrow-dark"
+    "clock#2"
 	],
 	"modules-right": [
-		"custom/left-arrow-dark",
+    "network",
 		"pulseaudio",
-		"custom/left-arrow-light",
-		"custom/left-arrow-dark",
+    "backlight",
 		"memory",
-		"custom/left-arrow-light",
-		"custom/left-arrow-dark",
-		"cpu",
-		"custom/left-arrow-light",
-		"custom/left-arrow-dark",
-		"battery",
-		"custom/left-arrow-light",
-		"custom/left-arrow-dark",
-		"disk",
-		"custom/left-arrow-light",
-		"custom/left-arrow-dark",
-		"tray"
+    "cpu",
+    "battery"
 	],
-
-	"custom/left-arrow-dark": {
-		"format": "",
-		"tooltip": false
-	},
-	"custom/left-arrow-light": {
-		"format": "",
-		"tooltip": false
-	},
-	"custom/right-arrow-dark": {
-		"format": "",
-		"tooltip": false
-	},
-	"custom/right-arrow-light": {
-		"format": "",
-		"tooltip": false
-	},
 
 	"sway/workspaces": {
 		"disable-scroll": true,
@@ -62,62 +27,45 @@
 	},
 
 	"clock#1": {
-		"format": "{:%a}",
+		"format": "{:%A}",
 		"tooltip": false
 	},
 	"clock#2": {
-		"format": "{:%H:%M}",
+		"format": "{:%H:%M %p} ",
 		"tooltip": false
 	},
 	"clock#3": {
-		"format": "{:%m-%d}",
+		"format": "{:%d.%m.%Y}",
 		"tooltip": false
 	},
-
+  "network": {
+      "format-wifi": "WI-FI {signalStrength}%",
+      "format-ethernet": "ETH {ipaddr}/{cidr}",
+      "tooltip-format": "{ifname} via {gwaddr}",
+      "format-linked": "{ifname} (No IP)",
+      "format-disconnected": "DISCONNECTED ⚠",
+      "format-alt": "{ifname}: {ipaddr}/{cidr}"
+  },
 	"pulseaudio": {
-		"format": "{icon} {volume:2}%",
-		"format-bluetooth": "{icon}  {volume}%",
+		"format": "VOL {volume:2}%",
+		"format-bluetooth": "VOL[BT]  {volume}%",
 		"format-muted": "MUTE",
-		"format-icons": {
-			"headphones": "",
-			"default": [
-				"",
-				""
-			]
-		},
 		"scroll-step": 5,
 		"on-click": "pamixer -t",
 		"on-click-right": "pavucontrol"
 	},
+  "backlight": {
+      "format": "BCL {percent}%",
+  },
 	"memory": {
-		"interval": 5,
-		"format": "Mem {}%"
+		"interval": 15,
+		"format": "MEM {}%"
 	},
 	"cpu": {
-		"interval": 5,
+		"interval": 15,
 		"format": "CPU {usage:2}%"
 	},
 	"battery": {
-		"states": {
-			"good": 95,
-			"warning": 30,
-			"critical": 15
-		},
-		"format": "{icon} {capacity}%",
-		"format-icons": [
-			"",
-			"",
-			"",
-			"",
-			""
-		]
+		"format": "BAT {capacity}% ",
 	},
-	"disk": {
-		"interval": 5,
-		"format": "Disk {percentage_used:2}%",
-		"path": "/"
-	},
-	"tray": {
-		"icon-size": 20
-	}
 }

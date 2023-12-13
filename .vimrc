@@ -7,7 +7,7 @@ Plug 'christoomey/vim-tmux-navigator'
 call plug#end()
 
 " Comments
-lua require('Comment').setup()
+" lua require('Comment').setup()
 
 " Copy & Paste
 set clipboard=unnamedplus
