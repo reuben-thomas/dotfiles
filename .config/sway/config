@@ -8,7 +8,7 @@
     set $right l
 
     # Terminal Emulator
-    set $term alacritty
+    set $term kitty
 
     # App Launcher
     set $menu wofi --show=drun
