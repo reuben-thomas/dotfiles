@@ -24,6 +24,15 @@
   # Borders
   default_border pixel 3
   for_window [class=".*"] border pixel 3
+  set $cl_high #962a54
+  set $cl_indi #962a54
+  set $cl_back #231f20
+  set $cl_fore #962a54
+  set $cl_urge #ee2e24
+  client.focused          $cl_high $cl_high $cl_fore $cl_indi $cl_high
+  client.focused_inactive $cl_back $cl_back $cl_fore $cl_back $cl_back
+  client.unfocused        $cl_back $cl_back $cl_fore $cl_back $cl_back
+  client.urgent           $cl_urge $cl_urge $cl_fore $cl_urge $cl_urge
 
 ### Appearance and Outputs
 #
