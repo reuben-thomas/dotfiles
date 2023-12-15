@@ -1,5 +1,6 @@
 return {
-  {
-    "github/copilot.vim",
-  },
+  "github/copilot.vim",
+  cmd = "Copilot",
+  build = ":Copilot auth",
+  enabled = false,
 }
