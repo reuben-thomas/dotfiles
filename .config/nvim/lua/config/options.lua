@@ -3,6 +3,7 @@
 -- Add any additional options here
 vim.opt.termguicolors = true
 vim.opt.relativenumber = false
+vim.api.nvim_set_hl(0, "LineNr", { fg = "red", bg = "black" })
 -- vim.opt.tabstop = 4
 -- vim.opt.softtabstop = 4
 -- vim.opt.shiftwidth = 4

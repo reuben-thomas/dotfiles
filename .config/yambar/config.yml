@@ -99,7 +99,7 @@ bar:
               ~activated: { empty: {} }
               activated:
                 - string: { text: "{app-id}", foreground: ffa0a0ff }
-                - string: { text: ": {title}" }
+                - string: { text: ": {title}", max: 65 }
 
   center:
     - clock:

@@ -1,4 +1,5 @@
 return {
+
   { "jacoborus/tender.vim" },
   {
     "LazyVim/LazyVim",
@@ -6,4 +7,13 @@ return {
       colorscheme = "tender",
     },
   },
+
+  -- { "Mofiqul/vscode.nvim" },
+  -- {
+  --   "LazyVim/LazyVim",
+  --   opts = {
+  --     colorscheme = "vscode",
+  --     background = "dark",
+  --   },
+  -- },
 }
