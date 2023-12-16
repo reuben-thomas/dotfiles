@@ -31,7 +31,7 @@
   for_window [class=".*"] border pixel 2
   set $cl_high #93cddb
   set $cl_indi #93cddb
-  set $cl_back #1b1f21
+  set $cl_back #6e7b91
   set $cl_fore #484c4f
   set $cl_urge #e35660
   client.focused          $cl_high $cl_high $cl_fore $cl_indi $cl_high

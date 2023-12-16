@@ -3,7 +3,6 @@ awesome_brands: &awesome_brands Font Awesome 6 Brands:pixelsize=16
 
 std_underline: &std_underline { underline: { size: 2, color: ff0000ff } }
 
-# This is THE bar configuration
 bar:
   height: 26
   location: top
@@ -110,23 +109,43 @@ bar:
           - string: { text: "{date}" }
 
   right:
-    - alsa:
-        card: default
-        mixer: Master
+    - backlight:
+        name: intel_backlight
+        content:
+          - string: { text: "LUM {percent}%" }
+          - string:
+              { text: " [-]", on-click: /bin/sh -c "ddcutil setvcp 10 - 10" }
+          - string:
+              { text: " [+]", on-click: /bin/sh -c "ddcutil setvcp 10 + 10" }
+    - pulse:
         content:
           map:
             conditions:
-              ~online: { string: { text: "ALSA ERR" } }
+              ~online: { string: { text: "SPK ERR" } }
               online:
                 map:
-                  on-click: /bin/sh -c "amixer -q sset Speaker unmute && amixer -q sset Headphone unmute && amixer -q sset Master toggle"
+                  on-click: /bin/sh -c "amixer set Master toggle"
                   conditions:
-                    muted: { string: { text: "VOL MUT" } }
-                    ~muted:
-                      - string: { text: "VOL {percent}%" }
-    - backlight:
-        name: intel_backlight
-        content: [string: { text: "LUM " }, string: { text: "{percent}%" }]
+                    sink_muted: { string: { text: "SPK MUT [{sink_port}]" } }
+                    ~sink_muted:
+                      - string: { text: "SPK {sink_percent}% [{sink_port}]" }
+    - pulse:
+        content:
+          map:
+            conditions:
+              ~online: { string: { text: "MIC ERR" } }
+              online:
+                map:
+                  on-click: /bin/sh -c "amixer set Capture toggle"
+                  conditions:
+                    source_muted:
+                      - string: { text: "MIC MUT" }
+                      # - string: { text: " [{source_port}", max: 10 }
+                      # - string: { text: "]" }
+                    ~source_muted:
+                      - string: { text: "MIC {source_percent}%" }
+                      # - string: { text: " [{source_port}", max: 10 }
+                      # - string: { text: "]" }
     - network:
         name: enp1s0
         content:
@@ -160,3 +179,9 @@ bar:
             string: { text: "{capacity}% [{estimate}]" },
           ]
         poll-interval: 30000
+    - label:
+        content:
+          string:
+            on-click: shutdown -h now
+            text: 
+            font: *awesome
