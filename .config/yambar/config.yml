@@ -13,7 +13,7 @@ bar:
   font: Hack Nerd Font Mono:pixelsize=12
 
   foreground: ffffffff
-  background: 111111cc
+  background: 000000ff
 
   left:
     - i3:

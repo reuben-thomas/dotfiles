@@ -8,7 +8,7 @@
     set $right l
 
     # Terminal Emulator
-    set $term alacritty
+    set $term foot
 
     # Fonts
     font pango:Hack Nerd Font Mono 12px
@@ -20,17 +20,21 @@
     exec mako
     include /etc/sway/config-vars.d/*
 
+    # Wallpaper
+    output * bg /home/reuben/Pictures/Wallpapers/porschediagonal.jpg fill
+
     # Chrome / Firefox Picture-in-Picture
     for_window [title="Picture-in-picture$"] floating enable, sticky enable, resize set 420 240, move position 1470 915
 
 ### Styling
 #
-  # hide_edge_borders --i3 smart
+  # smart_borders on
+  # hide_edge_borders smart
   default_border pixel 3
   for_window [class=".*"] border pixel 3
   set $cl_high #93cddb
   set $cl_indi #93cddb
-  set $cl_back #6e7b91
+  set $cl_back #495d66
   set $cl_fore #484c4f
   set $cl_urge #e35660
   client.focused          $cl_high $cl_high $cl_fore $cl_indi $cl_high
@@ -38,14 +42,18 @@
   client.unfocused        $cl_back $cl_back $cl_fore $cl_back $cl_back
   client.urgent           $cl_urge $cl_urge $cl_fore $cl_urge $cl_urge
 
-### Appearance and Outputs
+### Status Bar:
 #
-    # Wallpaper
-    output * bg /home/reuben/Pictures/Wallpapers/porschediagonal.jpg fill
+exec_always sh -c "killall yambar; yambar &"
 
-#   # Display
+### Display Outputs
+#
+    # Toggle built-in display upon closed/open events
     bindswitch lid:on output eDP-1 disable
     bindswitch lid:off output eDP-1 enable
+
+    # Disable internal display if laptop is closed on startup
+    exec_always cat /proc/acpi/button/lid/LID0/state | awk '{print $2}' | grep -q 'closed' && swaymsg output eDP-1 disable
 #
 # exec swayidle -w \
 #          timeout 300 'swaylock -f -c 000000' \
@@ -71,7 +79,7 @@
 
 ### Key bindings
 #
-# Volume & Brightness Control
+# Volume
 #
     # Volume
     exec pactl set-sink-volume @DEFAULT_SINK@ 0 150%
@@ -83,9 +91,6 @@
     exec brightnessctl set 5%
     bindsym XF86MonBrightnessUp exec brightnessctl set +5% && ddcutil setvcp 10 + 5
     bindsym XF86MonBrightnessDown exec brightnessctl set 5%- && ddcutil setvcp 10 - 5
-
-
-
 #
 # Basics:
 #
@@ -221,14 +226,5 @@ mode "resize" {
     bindsym Escape mode "default"
 }
 bindsym $mod+r mode "resize"
-
-#
-# Status Bar:
-#
-# Read `man 5 sway-bar` for more information about this section.
-exec_always sh -c "killall yambar; yambar &"
-# bar {
-#     swaybar_command yambar
-# }
 
 include /etc/sway/config.d/*

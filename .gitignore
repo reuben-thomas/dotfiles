@@ -2,6 +2,7 @@
 .config/*
 !.config/alacritty
 !.config/kitty
+!.config/foot
 !.config/mako
 !.config/monitors.xml
 !.config/nvim
