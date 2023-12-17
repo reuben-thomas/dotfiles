@@ -114,9 +114,9 @@ bar:
         content:
           - string: { text: "LUM {percent}%" }
           - string:
-              { text: " [-]", on-click: /bin/sh -c "ddcutil setvcp 10 - 10" }
+              { text: " [-]", on-click: /bin/sh -c "ddcutil setvcp 10 - 10 &" }
           - string:
-              { text: " [+]", on-click: /bin/sh -c "ddcutil setvcp 10 + 10" }
+              { text: " [+]", on-click: /bin/sh -c "ddcutil setvcp 10 + 10 &" }
     - pulse:
         content:
           map:
@@ -124,11 +124,29 @@ bar:
               ~online: { string: { text: "SPK ERR" } }
               online:
                 map:
-                  on-click: /bin/sh -c "amixer set Master toggle"
                   conditions:
-                    sink_muted: { string: { text: "SPK MUT [{sink_port}]" } }
+                    sink_muted:
+                      - string:
+                          {
+                            text: "SPK MUT",
+                            on-click: /bin/sh -c "amixer set Master toggle",
+                          }
+                      - string:
+                          {
+                            text: " [{sink_port}]",
+                            on-click: /bin/sh -c "/home/$USER/.config/yambar/scripts/toggle-sink.sh",
+                          }
                     ~sink_muted:
-                      - string: { text: "SPK {sink_percent}% [{sink_port}]" }
+                      - string:
+                          {
+                            text: "SPK {sink_percent}%",
+                            on-click: /bin/sh -c "amixer set Master toggle",
+                          }
+                      - string:
+                          {
+                            text: " [{sink_port}]",
+                            on-click: /bin/sh -c "/home/$USER/.config/yambar/scripts/toggle-sink.sh",
+                          }
     - pulse:
         content:
           map:
@@ -173,12 +191,34 @@ bar:
                 - string: { text: "NET {signal} [{ssid} {state}]" }
     - battery:
         name: BAT0
-        content:
-          [
-            string: { text: "BAT " },
-            string: { text: "{capacity}% [{estimate}]" },
-          ]
         poll-interval: 30000
+        content:
+          map:
+            conditions:
+              state == unknown:
+                - string:
+                    {
+                      text: "BAT {capacity}% [{estimate}]",
+                      on-click: /bin/sh -c "/home/$USER/.config/yambar/scripts/powerprofile.sh",
+                    }
+              state == discharging:
+                - string:
+                    {
+                      text: "BAT {capacity}% [{estimate}]",
+                      on-click: /bin/sh -c "/home/$USER/.config/yambar/scripts/powerprofile.sh",
+                    }
+              state == "not charging":
+                - string:
+                    {
+                      text: "BAT {capacity}% [EXT {estimate}]",
+                      on-click: /bin/sh -c "/home/$USER/.config/yambar/scripts/powerprofile.sh",
+                    }
+              state == charging:
+                - string:
+                    {
+                      text: "BAT {capacity}% [CHG {estimate}]",
+                      on-click: /bin/sh -c "/home/$USER/.config/yambar/scripts/powerprofile.sh",
+                    }
     - label:
         content:
           string:

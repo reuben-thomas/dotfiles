@@ -25,10 +25,9 @@
 
 ### Styling
 #
-  # # Bordershide_edge_borders
   # hide_edge_borders --i3 smart
-  default_border pixel 2
-  for_window [class=".*"] border pixel 2
+  default_border pixel 3
+  for_window [class=".*"] border pixel 3
   set $cl_high #93cddb
   set $cl_indi #93cddb
   set $cl_back #6e7b91
@@ -45,6 +44,8 @@
     output * bg /home/reuben/Pictures/Wallpapers/porschediagonal.jpg fill
 
 #   # Display
+    bindswitch lid:on output eDP-1 disable
+    bindswitch lid:off output eDP-1 enable
 #
 # exec swayidle -w \
 #          timeout 300 'swaylock -f -c 000000' \
