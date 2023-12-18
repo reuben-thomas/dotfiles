@@ -99,6 +99,9 @@ exec_always sh -c "killall yambar; yambar &"
     # Start a terminal
     bindsym $mod+Return exec $term
 
+    # Start a terminal with ranger instance
+    bindsym $mod+Shift+Return exec $term ranger
+
     # Kill focused window
     bindsym $mod+Shift+q kill
 

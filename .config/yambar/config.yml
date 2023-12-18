@@ -191,7 +191,7 @@ bar:
                 - string: { text: "NET {signal} [{ssid} {state}]" }
     - battery:
         name: BAT0
-        poll-interval: 30000
+        poll-interval: 15000
         content:
           map:
             conditions:
@@ -222,6 +222,6 @@ bar:
     - label:
         content:
           string:
-            on-click: shutdown -h now
+            on-click: /bin/sh -c "ddcutil setvcp D6 5; shutdown -h now"
             text: 
             font: *awesome
