@@ -90,7 +90,15 @@ bar:
                 state == unfocused: { string: { <<: *music } }
                 state == invisible: { string: { <<: [*music, *invisible] } }
                 state == urgent: { string: { <<: [*music, *urgent] } }
-
+    - label:
+        content:
+          - string: { text: "DSP" }
+          - string:
+              { text: "[ I", on-click: /bin/sh -c "sway output eDP-1 toggle &" }
+          - string:
+              { text: " 5 ", on-click: /bin/sh -c "sway output DP-5 toggle &" }
+          - string:
+              { text: "7 ]", on-click: /bin/sh -c "sway output DP-7 toggle &" }
     - foreign-toplevel:
         content:
           map:
@@ -112,11 +120,22 @@ bar:
     - backlight:
         name: intel_backlight
         content:
-          - string: { text: "LUM {percent}%" }
+          - string: { text: "LUM {percent}% " }
           - string:
-              { text: " [-]", on-click: /bin/sh -c "ddcutil setvcp 10 - 10 &" }
+              {
+                text: "[ -",
+                on-click: /bin/sh -c "ddcutil setvcp --display 1 10 - 20 && ddcutil setvcp --display 2 10 - 20 &",
+              }
           - string:
-              { text: " [+]", on-click: /bin/sh -c "ddcutil setvcp 10 + 10 &" }
+              {
+                text: " / ",
+                on-click: /bin/sh -c "ddcutil setvcp --display 1 10 40 && ddcutil setvcp --display 2 10 40 &",
+              }
+          - string:
+              {
+                text: "+ ]",
+                on-click: /bin/sh -c "ddcutil setvcp --display 1 10 + 20 && ddcutil setvcp --display 2 10 + 20 &",
+              }
     - pulse:
         content:
           map:

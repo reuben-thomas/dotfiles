@@ -44,10 +44,21 @@
 
 ### Status Bar:
 #
-exec_always sh -c "killall yambar; yambar &"
+  # TODO Configure yambar monitor  
+  exec_always sh -c "killall yambar; yambar &"
 
 ### Display Outputs
 #
+    # Home Dock Setup (Most monitors, least amount of work)
+    workspace 1 output DP-5
+    workspace 2 output DP-7
+    workspace 3 output eDP-1
+    output eDP-1 pos 740 1680
+    output DP-5 pos 0 240
+    output DP-7 transform 90
+    output DP-7 pos 3400 0
+
+
     # Toggle built-in display upon closed/open events
     bindswitch lid:on output eDP-1 disable
     bindswitch lid:off output eDP-1 enable
