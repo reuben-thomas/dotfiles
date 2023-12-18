@@ -49,32 +49,32 @@
 
 ### Display Outputs
 #
+    # Monitor Config
+    set $builtin-monitor eDP-1
+    set $primary-monitor DP-5 DP-7 eDP-1
+
     # Home Dock Setup (Most monitors, least amount of work)
-    workspace 1 output DP-5
-    workspace 2 output DP-7
-    workspace 3 output eDP-1
-    output eDP-1 pos 740 1680
+    output $builtin-monitor pos 740 1680
     output DP-5 pos 0 240
     output DP-7 transform 90
     output DP-7 pos 3400 0
 
+    # Workspace Allocation
+    workspace 1 output $primary-monitor
+    workspace 2 output $primary-monitor
+    workspace 3 output $primary-monitor
+    workspace 4 output $primary-monitor
+    workspace 5 output $primary-monitor
+    workspace 6 output $primary-monitor
+    workspace 7 output $primary-monitor
+    workspace 8 output $primary-monitor
+    workspace 9 output $primary-monitor
+    workspace 10 output $primary-monitor
 
     # Toggle built-in display upon closed/open events
-    bindswitch lid:on output eDP-1 disable
-    bindswitch lid:off output eDP-1 enable
-
-    # Disable internal display if laptop is closed on startup
-    exec_always cat /proc/acpi/button/lid/LID0/state | awk '{print $2}' | grep -q 'closed' && swaymsg output eDP-1 disable
-#
-# exec swayidle -w \
-#          timeout 300 'swaylock -f -c 000000' \
-#          timeout 600 'swaymsg "output * dpms off"' resume 'swaymsg "output * dpms on"' \
-#          before-sleep 'swaylock -f -c 000000'
-#
-# TODO: Add function to disable DDC/CI Monitors
-# This will lock your screen after 300 seconds of inactivity, then turn off
-# your displays after another 300 seconds, and turn your screens back on when
-# resumed. It will also lock your screen before your computer goes to sleep.
+    bindswitch lid:on output $builtin-monitor disable
+    bindswitch lid:off output $builtin-monitor enable
+    exec_always cat /proc/acpi/button/lid/LID0/state | awk '{print $2}' | grep -q 'closed' && swaymsg output $builtin-monitor disable
 
 ### Input configuration
 #
@@ -207,9 +207,6 @@
 #
 # Scratchpad:
 #
-    # Sway has a "scratchpad", which is a bag of holding for windows.
-    # You can send windows there and get them back later.
-
     # Move the currently focused window to the scratchpad
     bindsym $mod+Shift+minus move scratchpad
 
@@ -228,6 +225,10 @@ mode "resize" {
     bindsym $down resize grow height 10px
     bindsym $up resize shrink height 10px
     bindsym $right resize grow width 10px
+    bindsym Shift+$left resize shrink width 60px
+    bindsym Shift+$down resize grow height 60px
+    bindsym Shift+$up resize shrink height 60px
+    bindsym SHift+$right resize grow width 60px
 
     # Ditto, with arrow keys
     bindsym Left resize shrink width 10px
