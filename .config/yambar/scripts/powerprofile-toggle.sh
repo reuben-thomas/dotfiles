@@ -21,4 +21,6 @@ next_index=$(((current_index + 1) % ${#profiles[@]}))
 powerprofilesctl set ${profiles[$next_index]}
 
 # Send desktop notification
-notify-send "Power Profile" "Switched to ${profiles[$next_index]} mode."
+# notify-send "Power Profile" "Switched to ${profiles[$next_index]} mode." -h string:x-canonical-private-synchronous:yambarpowerprofilesctl &
+notify-send "Power Profile" "Switched to ${profiles[$next_index]} mode." \
+	-h string:x-canonical-private-synchronous:yambar-powerprofile-notification &

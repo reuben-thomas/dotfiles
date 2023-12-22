@@ -23,6 +23,9 @@
     # Wallpaper
     output * bg /home/reuben/Pictures/Wallpapers/porschediagonal.jpg fill
 
+    # Dynamic Tiling
+    # exec_always autotiling
+
     # Chrome / Firefox Picture-in-Picture
     for_window [title="Picture-in-picture$"] floating enable, sticky enable, resize set 420 240, move position 1470 915
 
@@ -30,16 +33,17 @@
 #
   # smart_borders on
   # hide_edge_borders smart
-  default_border pixel 3
+  default_border pixel 4
   for_window [class=".*"] border pixel 3
+  set $cl_indi #ff5e89
   set $cl_high #93cddb
-  set $cl_indi #93cddb
   set $cl_back #495d66
   set $cl_fore #484c4f
   set $cl_urge #e35660
+  #                       border   bg       text     indi     child
   client.focused          $cl_high $cl_high $cl_fore $cl_indi $cl_high
-  client.focused_inactive $cl_back $cl_back $cl_fore $cl_back $cl_back
-  client.unfocused        $cl_back $cl_back $cl_fore $cl_back $cl_back
+  client.focused_inactive $cl_high $cl_back $cl_high $cl_back $cl_back
+  client.unfocused        $cl_back $cl_back $cl_high $cl_back $cl_back
   client.urgent           $cl_urge $cl_urge $cl_fore $cl_urge $cl_urge
 
 ### Status Bar:
@@ -142,7 +146,7 @@
     bindsym $mod+Up focus up
     bindsym $mod+Right focus right
 
-    # Move the focused window with the same, but add Shift
+    # Move the focused windowlwith the same, but add Shift
     bindsym $mod+Shift+$left move left
     bindsym $mod+Shift+$down move down
     bindsym $mod+Shift+$up move up
@@ -187,16 +191,17 @@
     # respectively.
     bindsym $mod+b splith
     bindsym $mod+v splitv
+    bindsym $mod+o split none
+    bindsym $mod+i split toggle
 
     # Switch the current container between different layout styles
-    bindsym $mod+s layout stacking
     bindsym $mod+w layout tabbed
     bindsym $mod+e layout toggle split
 
     # Make the current focus fullscreen
     bindsym $mod+f fullscreen
+# Toggle the current focus between tiling and floating mode
 
-    # Toggle the current focus between tiling and floating mode
     bindsym $mod+Shift+space floating toggle
 
     # Swap focus between the tiling area and the floating area
@@ -204,6 +209,7 @@
 
     # Move focus to the parent container
     bindsym $mod+a focus parent
+    bindsym $mod+s focus child
 #
 # Scratchpad:
 #

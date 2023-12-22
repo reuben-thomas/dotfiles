@@ -92,13 +92,19 @@ bar:
                 state == urgent: { string: { <<: [*music, *urgent] } }
     - label:
         content:
-          - string: { text: "DSP" }
+          - string: { text: "DSP " }
           - string:
               { text: "[ I", on-click: /bin/sh -c "sway output eDP-1 toggle &" }
           - string:
-              { text: " 5 ", on-click: /bin/sh -c "sway output DP-5 toggle &" }
+              {
+                text: " A ",
+                on-click: /bin/sh -c "sway output DP-5 toggle && ddcutil setvcp -display 1 setvcp D6 05 &",
+              }
           - string:
-              { text: "7 ]", on-click: /bin/sh -c "sway output DP-7 toggle &" }
+              {
+                text: "B ]",
+                on-click: /bin/sh -c "sway output DP-7 toggle && ddcutil setvcp --display 2 D6 04 &",
+              }
     - foreign-toplevel:
         content:
           map:
@@ -124,17 +130,17 @@ bar:
           - string:
               {
                 text: "[ -",
-                on-click: /bin/sh -c "ddcutil setvcp --display 1 10 - 20 && ddcutil setvcp --display 2 10 - 20 &",
+                on-click: /bin/sh -c "/home/$USER/.config/yambar/scripts/ddc-brightness-notification.sh 0",
               }
           - string:
               {
                 text: " / ",
-                on-click: /bin/sh -c "ddcutil setvcp --display 1 10 40 && ddcutil setvcp --display 2 10 40 &",
+                on-click: /bin/sh -c "/home/$USER/.config/yambar/scripts/ddc-brightness-notification.sh 1",
               }
           - string:
               {
                 text: "+ ]",
-                on-click: /bin/sh -c "ddcutil setvcp --display 1 10 + 20 && ddcutil setvcp --display 2 10 + 20 &",
+                on-click: /bin/sh -c "/home/$USER/.config/yambar/scripts/ddc-brightness-notification.sh 2",
               }
     - pulse:
         content:
@@ -153,7 +159,7 @@ bar:
                       - string:
                           {
                             text: " [{sink_port}]",
-                            on-click: /bin/sh -c "/home/$USER/.config/yambar/scripts/toggle-sink.sh",
+                            on-click: /bin/sh -c "/home/$USER/.config/yambar/scripts/pulse-sink-toggle.sh",
                           }
                     ~sink_muted:
                       - string:
@@ -164,7 +170,7 @@ bar:
                       - string:
                           {
                             text: " [{sink_port}]",
-                            on-click: /bin/sh -c "/home/$USER/.config/yambar/scripts/toggle-sink.sh",
+                            on-click: /bin/sh -c "/home/$USER/.config/yambar/scripts/pulse-sink-toggle.sh",
                           }
     - pulse:
         content:
@@ -218,25 +224,25 @@ bar:
                 - string:
                     {
                       text: "BAT {capacity}% [{estimate}]",
-                      on-click: /bin/sh -c "/home/$USER/.config/yambar/scripts/powerprofile.sh",
+                      on-click: /bin/sh -c "/home/$USER/.config/yambar/scripts/powerprofile-toggle.sh",
                     }
               state == discharging:
                 - string:
                     {
                       text: "BAT {capacity}% [{estimate}]",
-                      on-click: /bin/sh -c "/home/$USER/.config/yambar/scripts/powerprofile.sh",
+                      on-click: /bin/sh -c "/home/$USER/.config/yambar/scripts/powerprofile-toggle.sh",
                     }
               state == "not charging":
                 - string:
                     {
                       text: "BAT {capacity}% [EXT {estimate}]",
-                      on-click: /bin/sh -c "/home/$USER/.config/yambar/scripts/powerprofile.sh",
+                      on-click: /bin/sh -c "/home/$USER/.config/yambar/scripts/powerprofile-toggle.sh",
                     }
               state == charging:
                 - string:
                     {
                       text: "BAT {capacity}% [CHG {estimate}]",
-                      on-click: /bin/sh -c "/home/$USER/.config/yambar/scripts/powerprofile.sh",
+                      on-click: /bin/sh -c "/home/$USER/.config/yambar/scripts/powerprofile-toggle.sh",
                     }
     - label:
         content:
