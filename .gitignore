@@ -6,7 +6,7 @@
 !.config/mako
 !.config/monitors.xml
 !.config/nvim
-!.config/nvim.bak
+!.config/nvim_raw
 !.config/okularpartrc
 !.config/pulse
 !.config/ranger

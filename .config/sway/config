@@ -37,13 +37,14 @@
   for_window [class=".*"] border pixel 3
   set $cl_indi #ff5e89
   set $cl_high #93cddb
+  set $cl_fade #597c85
   set $cl_back #495d66
   set $cl_fore #484c4f
   set $cl_urge #e35660
   #                       border   bg       text     indi     child
   client.focused          $cl_high $cl_high $cl_fore $cl_indi $cl_high
-  client.focused_inactive $cl_high $cl_back $cl_high $cl_back $cl_back
-  client.unfocused        $cl_back $cl_back $cl_high $cl_back $cl_back
+  client.focused_inactive $cl_high $cl_fade $cl_high $cl_back $cl_back
+  client.unfocused        $cl_fade $cl_back $cl_high $cl_back $cl_back
   client.urgent           $cl_urge $cl_urge $cl_fore $cl_urge $cl_urge
 
 ### Status Bar:
@@ -58,7 +59,8 @@
     set $primary-monitor DP-5 DP-7 eDP-1
 
     # Home Dock Setup (Most monitors, least amount of work)
-    output $builtin-monitor pos 740 1680
+    output $builtin-monitor pos 0 0
+    # output $builtin-monitor pos 740 1680
     output DP-5 pos 0 240
     output DP-7 transform 90
     output DP-7 pos 3400 0
@@ -113,9 +115,8 @@
 
     # Start a terminal
     bindsym $mod+Return exec $term
-
-    # Start a terminal with ranger instance
     bindsym $mod+Shift+Return exec $term ranger
+    bindsym $mod+Alt+Return exec $term tmux
 
     # Kill focused window
     bindsym $mod+Shift+q kill

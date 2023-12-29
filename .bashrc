@@ -122,3 +122,4 @@ alias pcipm-enable='echo auto | sudo tee /sys/bus/pci/devices/*/power/control'
 
 # Created by `pipx` on 2023-12-13 10:18:49
 export PATH="$PATH:/home/reuben/.local/bin"
+. "$HOME/.cargo/env"

@@ -206,7 +206,7 @@ bar:
                       { string: { text: , font: *awesome } }
     - network:
         name: wlp0s20f3
-        poll-interval: 5000
+        poll-interval: 60
         content:
           map:
             default: { string: { text: "NET OK" } }
@@ -216,7 +216,7 @@ bar:
                 - string: { text: "NET {signal} [{ssid} {state}]" }
     - battery:
         name: BAT0
-        poll-interval: 15000
+        poll-interval: 60
         content:
           map:
             conditions:
@@ -242,6 +242,12 @@ bar:
                 - string:
                     {
                       text: "BAT {capacity}% [CHG {estimate}]",
+                      on-click: /bin/sh -c "/home/$USER/.config/yambar/scripts/powerprofile-toggle.sh",
+                    }
+              state == full:
+                - string:
+                    {
+                      text: "BAT {capacity}% [CHG FULL]",
                       on-click: /bin/sh -c "/home/$USER/.config/yambar/scripts/powerprofile-toggle.sh",
                     }
     - label:
