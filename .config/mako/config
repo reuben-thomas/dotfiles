@@ -6,12 +6,12 @@ height=110
 anchor=top-right
 padding=0,7,15
 border-size=3
-border-color=#bde8ff
+border-color=#9d68d9
 border-radius=5
 default-timeout=5000
 
 [urgency=normal]
-border-color=#bde8ff
+border-color=#9d68d9
 
 [urgency=high]
 border-color=#bf616a

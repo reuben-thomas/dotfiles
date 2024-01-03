@@ -20,6 +20,11 @@
     exec mako
     include /etc/sway/config-vars.d/*
 
+    # Gnome Keyring
+    exec dbus-update-activation-environment --all
+    # exec gnome-keyring-daemon --start --components=secrets
+    # exec export $(gnome-keyring-daemon)
+
     # Wallpaper
     output * bg /home/reuben/Pictures/Wallpapers/porschediagonal.jpg fill
 
@@ -35,7 +40,8 @@
   # hide_edge_borders smart
   default_border pixel 4
   for_window [class=".*"] border pixel 3
-  set $cl_indi #ff5e89
+  # set $cl_indi #ff5e89
+  set $cl_indi #9d68d9
   set $cl_high #93cddb
   set $cl_fade #597c85
   set $cl_back #495d66
@@ -100,19 +106,17 @@
 #
     # Volume
     exec pactl set-sink-volume @DEFAULT_SINK@ 0 150%
-    bindsym XF86AudioRaiseVolume exec pactl set-sink-volume @DEFAULT_SINK@ +5%
-    bindsym	XF86AudioLowerVolume exec pactl	set-sink-volume	@DEFAULT_SINK@ -5%
-    bindsym	XF86AudioMute exec pactl	set-sink-mute	@DEFAULT_SINK@ toggle
+    bindsym XF86AudioRaiseVolume exec pactl set-sink-mute @DEFAULT_SINK@ 0 && pactl set-sink-volume @DEFAULT_SINK@ +5%
+    bindsym	XF86AudioLowerVolume exec pactl set-sink-mute @DEFAULT_SINK@ 0 && pactl set-sink-volume	@DEFAULT_SINK@ -5%
+    bindsym	XF86AudioMute exec pactl set-sink-mute @DEFAULT_SINK@ toggle
 
     # Brightness
-    exec brightnessctl set 5%
+    exec brightnessctl set 55%
     bindsym XF86MonBrightnessUp exec brightnessctl set +5% && ddcutil setvcp 10 + 5
     bindsym XF86MonBrightnessDown exec brightnessctl set 5%- && ddcutil setvcp 10 - 5
 #
 # Basics:
 #
-    exec brightnessctl set 5%
-
     # Start a terminal
     bindsym $mod+Return exec $term
     bindsym $mod+Shift+Return exec $term ranger
@@ -192,8 +196,10 @@
     # respectively.
     bindsym $mod+b splith
     bindsym $mod+v splitv
+    bindsym $mod+u splitv
+    bindsym $mod+i splith
     bindsym $mod+o split none
-    bindsym $mod+i split toggle
+    bindsym $mod+p split toggle
 
     # Switch the current container between different layout styles
     bindsym $mod+w layout tabbed

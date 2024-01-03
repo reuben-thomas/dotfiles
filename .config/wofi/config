@@ -1,6 +1,6 @@
 mode=run
-width=600
-height=350
+width=500
+height=300
 insensitive=true
 location=center
 allow_images=true
@@ -8,4 +8,3 @@ hide_scroll=false
 dynamic_lines=true
 term=alacritty
 allow_markup=true
-no_actions=true

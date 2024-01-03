@@ -13,7 +13,7 @@ bar:
   font: Hack Nerd Font Mono:pixelsize=12
 
   foreground: ffffffff
-  background: 000000ff
+  background: 362e3bff
 
   left:
     - i3:
@@ -92,19 +92,26 @@ bar:
                 state == urgent: { string: { <<: [*music, *urgent] } }
     - label:
         content:
-          - string: { text: "DSP " }
-          - string:
-              { text: "[ I", on-click: /bin/sh -c "sway output eDP-1 toggle &" }
+          - string: { text: "DSP [" }
           - string:
               {
-                text: " A ",
+                text: " ⬓ ",
+                font: *awesome,
+                on-click: /bin/sh -c "sway output eDP-1 toggle &",
+              }
+          - string:
+              {
+                text: " ▭ ",
+                font: *awesome,
                 on-click: /bin/sh -c "sway output DP-5 toggle && ddcutil setvcp -display 1 setvcp D6 05 &",
               }
           - string:
               {
-                text: "B ]",
+                text: " ▯ ",
+                font: *awesome,
                 on-click: /bin/sh -c "sway output DP-7 toggle && ddcutil setvcp --display 2 D6 04 &",
               }
+          - string: { text: "] " }
     - foreign-toplevel:
         content:
           map:
@@ -129,7 +136,7 @@ bar:
           - string: { text: "LUM {percent}% " }
           - string:
               {
-                text: "[ -",
+                text: "[+",
                 on-click: /bin/sh -c "/home/$USER/.config/yambar/scripts/ddc-brightness-notification.sh 0",
               }
           - string:
@@ -139,7 +146,7 @@ bar:
               }
           - string:
               {
-                text: "+ ]",
+                text: "-]",
                 on-click: /bin/sh -c "/home/$USER/.config/yambar/scripts/ddc-brightness-notification.sh 2",
               }
     - pulse:
@@ -159,6 +166,7 @@ bar:
                       - string:
                           {
                             text: " [{sink_port}]",
+                            max: 15,
                             on-click: /bin/sh -c "/home/$USER/.config/yambar/scripts/pulse-sink-toggle.sh",
                           }
                     ~sink_muted:
@@ -170,6 +178,7 @@ bar:
                       - string:
                           {
                             text: " [{sink_port}]",
+                            max: 15,
                             on-click: /bin/sh -c "/home/$USER/.config/yambar/scripts/pulse-sink-toggle.sh",
                           }
     - pulse:
@@ -183,11 +192,11 @@ bar:
                   conditions:
                     source_muted:
                       - string: { text: "MIC MUT" }
-                      # - string: { text: " [{source_port}", max: 10 }
+                      # - string: { text: " [{source_port}", max: 11 }
                       # - string: { text: "]" }
                     ~source_muted:
                       - string: { text: "MIC {source_percent}%" }
-                      # - string: { text: " [{source_port}", max: 10 }
+                      # - string: { text: " [{source_port}", max: 11 }
                       # - string: { text: "]" }
     - network:
         name: enp1s0
@@ -213,7 +222,9 @@ bar:
             conditions:
               state == down: { string: { text: "OFFLINE" } }
               state == up:
-                - string: { text: "NET {signal} [{ssid} {state}]" }
+                - string: { text: "NET {signal} [" }
+                - string: { text: "{ssid}", max: 15 }
+                - string: { text: " {state}]" }
     - battery:
         name: BAT0
         poll-interval: 60
@@ -250,6 +261,12 @@ bar:
                       text: "BAT {capacity}% [CHG FULL]",
                       on-click: /bin/sh -c "/home/$USER/.config/yambar/scripts/powerprofile-toggle.sh",
                     }
+    - label:
+        content:
+          string:
+            on-click: /bin/sh -c "swaymsg reload"
+            text: 󰜉
+            font: *awesome
     - label:
         content:
           string:
