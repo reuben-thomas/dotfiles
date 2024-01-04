@@ -4,6 +4,9 @@
 vim.opt.termguicolors = true
 vim.opt.relativenumber = false
 vim.api.nowrap = true
+vim.g.copilot_enabled = false
+
+-- Useful Default Formats
 -- vim.opt.tabstop = 4
 -- vim.opt.softtabstop = 4
 -- vim.opt.shiftwidth = 4

@@ -14,7 +14,7 @@
     font pango:Hack Nerd Font Mono 12px
 
     # App Launcher
-    set $menu wofi --show=drun
+    set $menu wofi --show=drun -a
 
     # Notifications
     exec mako
