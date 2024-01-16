@@ -56,7 +56,8 @@
 ### Status Bar:
 #
   # TODO Configure yambar monitor  
-  exec_always sh -c "killall yambar; yambar &"
+  exec_always export PATH="${PATH}:/home/$USER/.config/scripts/"
+  exec_always /bin/sh -c 'killall yambar; yambar &'
 
 ### Display Outputs
 #
@@ -102,7 +103,7 @@
 
 ### Key bindings
 #
-# Volume
+# Volume & Brightness
 #
     # Volume
     exec pactl set-sink-volume @DEFAULT_SINK@ 0 150%
@@ -110,10 +111,14 @@
     bindsym	XF86AudioLowerVolume exec pactl set-sink-mute @DEFAULT_SINK@ 0 && pactl set-sink-volume	@DEFAULT_SINK@ -5%
     bindsym	XF86AudioMute exec pactl set-sink-mute @DEFAULT_SINK@ toggle
 
-    # Brightness
+    # Built-in Brightness
     exec brightnessctl set 55%
-    bindsym XF86MonBrightnessUp exec brightnessctl set +5% && ddcutil setvcp 10 + 5
-    bindsym XF86MonBrightnessDown exec brightnessctl set 5%- && ddcutil setvcp 10 - 5
+    bindsym XF86MonBrightnessUp exec brightnessctl set +5% &
+    bindsym XF86MonBrightnessDown exec brightnessctl set 5% &
+
+    # External Display Brightness
+    bindsym $mod+Shift+Down exec ddcutil setvcp 10 - 10 --noverify --async &
+    bindsym $mod+Shift+Up exec ddcutil setvcp 10 + 10 --noverify --async &
 #
 # Basics:
 #
@@ -132,6 +137,9 @@
     # Resize them with right mouse button + $mod.
     floating_modifier $mod normal
 
+    # Take a screenshot
+    bindsym $mod+Shift+p exec sh -c "/home/reuben/.config/scripts/screenshot.sh"
+
     # Reload the configuration file
     bindsym $mod+Shift+c reload
 
@@ -145,22 +153,12 @@
     bindsym $mod+$down focus down
     bindsym $mod+$up focus up
     bindsym $mod+$right focus right
-    # Or use $mod+[up|down|left|right]
-    bindsym $mod+Left focus left
-    bindsym $mod+Down focus down
-    bindsym $mod+Up focus up
-    bindsym $mod+Right focus right
 
     # Move the focused windowlwith the same, but add Shift
     bindsym $mod+Shift+$left move left
     bindsym $mod+Shift+$down move down
     bindsym $mod+Shift+$up move up
     bindsym $mod+Shift+$right move right
-    # Ditto, with arrow keys
-    bindsym $mod+Shift+Left move left
-    bindsym $mod+Shift+Down move down
-    bindsym $mod+Shift+Up move up
-    bindsym $mod+Shift+Right move right
 #
 # Workspaces:
 #
@@ -217,6 +215,8 @@
     # Move focus to the parent container
     bindsym $mod+a focus parent
     bindsym $mod+s focus child
+    bindsym $mod+Shift+a focus parent, focus parent
+    bindsym $mod+Shift+s focus child, focus child
 #
 # Scratchpad:
 #
@@ -235,12 +235,12 @@ mode "resize" {
     # up will shrink the containers height
     # down will grow the containers height
     bindsym $left resize shrink width 10px
-    bindsym $down resize grow height 10px
-    bindsym $up resize shrink height 10px
+    bindsym $down resize shrink height 10px
+    bindsym $up resize grow height 10px
     bindsym $right resize grow width 10px
     bindsym Shift+$left resize shrink width 60px
-    bindsym Shift+$down resize grow height 60px
-    bindsym Shift+$up resize shrink height 60px
+    bindsym Shift+$down resize shrink height 60px
+    bindsym Shift+$up resize grow height 60px
     bindsym SHift+$right resize grow width 60px
 
     # Ditto, with arrow keys

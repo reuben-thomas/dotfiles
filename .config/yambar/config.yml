@@ -13,7 +13,7 @@ bar:
   font: Hack Nerd Font Mono:pixelsize=12
 
   foreground: ffffffff
-  background: 362e3bff
+  background: 472730ff
 
   left:
     - i3:
@@ -92,7 +92,17 @@ bar:
                 state == urgent: { string: { <<: [*music, *urgent] } }
     - label:
         content:
-          - string: { text: "DSP [" }
+          - string:
+              on-click: /bin/sh -c "/home/$USER/.config/scripts/theme-toggle.sh dark"
+              text: "○ "
+              font: *awesome
+          - string:
+              on-click: /bin/sh -c "/home/$USER/.config/scripts/theme-toggle.sh light"
+              text: " ●"
+              font: *awesome
+    - label:
+        content:
+          - string: { text: "DSP [", on-click: /bin/sh -c "wdisplays" }
           - string:
               {
                 text: " ⬓ ",
@@ -119,7 +129,7 @@ bar:
               ~activated: { empty: {} }
               activated:
                 - string: { text: "{app-id}", foreground: ffa0a0ff }
-                - string: { text: ": {title}", max: 65 }
+                - string: { text: ": {title}", max: 50 }
 
   center:
     - clock:
@@ -133,22 +143,7 @@ bar:
     - backlight:
         name: intel_backlight
         content:
-          - string: { text: "LUM {percent}% " }
-          - string:
-              {
-                text: "[+",
-                on-click: /bin/sh -c "/home/$USER/.config/yambar/scripts/ddc-brightness-notification.sh 0",
-              }
-          - string:
-              {
-                text: " / ",
-                on-click: /bin/sh -c "/home/$USER/.config/yambar/scripts/ddc-brightness-notification.sh 1",
-              }
-          - string:
-              {
-                text: "-]",
-                on-click: /bin/sh -c "/home/$USER/.config/yambar/scripts/ddc-brightness-notification.sh 2",
-              }
+          - string: { text: " LUM {percent}% " }
     - pulse:
         content:
           map:

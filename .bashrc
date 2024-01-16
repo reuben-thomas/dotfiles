@@ -56,6 +56,14 @@ if [ -n "$force_color_prompt" ]; then
 	fi
 fi
 
+# if command -v theme.sh >/dev/null; then
+# 	[ -e ~/.theme_history ] && theme.sh "$(theme.sh -l | tail -n1)"
+# 	bind -x '"\C-o":"theme.sh $(theme.sh -l|tail -n2|head -n1)"'
+# 	alias th='theme.sh -i'
+# 	alias thl='theme.sh --light -i'
+# 	alias thd='theme.sh --dark -i'
+# fi
+
 if [ "$color_prompt" = yes ]; then
 	PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '
 else
@@ -115,6 +123,8 @@ fi
 alias obsidian-sync='/home/reuben/.config/scripts/obsidian-sync.sh'
 alias socvpn-start='sudo openfortivpn webvpn.comp.nus.edu.sg --username=e1123003'
 alias chrome='google-chrome --password-store=gnome-libsecret'
+alias ssh-enable='ssh-agent; ssh-add ~/.ssh/id_rsa'
+alias typetest='tt -showwpm -notheme -blockcursor'
 
 # System Shortcuts
 alias powerstatus='upower -i /org/freedesktop/UPower/devices/battery_BAT0'

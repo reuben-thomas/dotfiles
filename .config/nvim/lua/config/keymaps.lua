@@ -18,8 +18,7 @@ vim.cmd([[hi FloatBorder guibg=NONE]]) -- if you don't want weird border backgro
 
 -- Completion Toggle
 local cmp_enabled = false
-vim.api.nvim_create_user_command("CMP", function()
-  -- Toggle cmp
+vim.api.nvim_create_user_command("Complete", function()
   if cmp_enabled then
     require("cmp").setup.buffer({ enabled = false })
     vim.cmd("Copilot disable")
@@ -30,5 +29,17 @@ vim.api.nvim_create_user_command("CMP", function()
     vim.cmd("Copilot enable")
     print("Completion Enabled")
     cmp_enabled = true
+  end
+end, {})
+
+-- VSCode Mode Toggle
+local vs_code_enabled = false
+vim.api.nvim_create_user_command("Code", function()
+  if vs_code_enabled then
+    require("neo-tree").setup.buffer({ enabled = true })
+    print("VSCode Enabled")
+  else
+    require("neo-tree").setup.buffer({ enabled = false })
+    print("VSCode Disabled")
   end
 end, {})
