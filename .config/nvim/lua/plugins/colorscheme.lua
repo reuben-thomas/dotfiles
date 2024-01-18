@@ -1,9 +1,12 @@
 return {
-
   -- { "jacoborus/tender.vim" },
   -- { "Mofiqul/vscode.nvim" },
   -- { "catppuccin/nvim" },
-  { "folke/tokyonight.nvim" },
+  -- { "folke/tokyonight.nvim" },
+  -- { "willian/envylabs.vim" },
+  -- { "mgutz/vim-colors" },
+  -- { "kjssad/quantum.vim" },
+  { "habamax/vim-polar" },
   {
     "navarasu/onedark.nvim",
     config = function()

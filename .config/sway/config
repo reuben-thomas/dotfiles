@@ -14,7 +14,7 @@
     font pango:Hack Nerd Font Mono 12px
 
     # App Launcher
-    set $menu wofi --show=drun -a
+    set $menu wofi
 
     # Notifications
     exec mako
@@ -134,7 +134,8 @@
     bindsym $mod+Shift+q kill
 
     # Start your launcher
-    bindsym $mod+d exec $menu
+    bindsym $mod+d exec $menu --show=drun -a
+    bindsym $mod+Shift+d exec $menu
 
     # Drag windows by holding down $mod and left mouse button.
     # Resize them with right mouse button + $mod.
@@ -148,6 +149,9 @@
 
     # Exit sway (logs you out of your Wayland session)
     bindsym $mod+Shift+e exec swaymsg exit
+
+    # Launch Power Menu
+    bindsym $mod+q exec /bin/sh -c "/home/$USER/.config/wofi/powermenu/launch.sh"
 #
 # Moving around:
 #

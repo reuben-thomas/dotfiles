@@ -15,7 +15,7 @@ fi
 set_light_theme() {
 	gsettings set org.gnome.desktop.interface color-scheme 'prefer-light'
 	for server in $(nvr --serverlist); do
-		nvr --servername "$server" -cc 'colorscheme tokyonight | set background=light'
+		nvr --servername "$server" -cc 'colorscheme polar | set background=light'
 	done
 	echo "Light Theme Set"
 	notify-send "System Theme" "Light Mode Set" \

@@ -284,6 +284,6 @@ bar:
     - label:
         content:
           string:
-            on-click: /bin/sh -c "ddcutil setvcp D6 5; swaymsg exit"
+            on-click: /bin/sh -c "/home/$USER/.config/wofi/powermenu/launch.sh"
             text: 
             font: *awesome
