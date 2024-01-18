@@ -31,15 +31,3 @@ vim.api.nvim_create_user_command("Complete", function()
     cmp_enabled = true
   end
 end, {})
-
--- VSCode Mode Toggle
-local vs_code_enabled = false
-vim.api.nvim_create_user_command("Code", function()
-  if vs_code_enabled then
-    require("neo-tree").setup.buffer({ enabled = true })
-    print("VSCode Enabled")
-  else
-    require("neo-tree").setup.buffer({ enabled = false })
-    print("VSCode Disabled")
-  end
-end, {})

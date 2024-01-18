@@ -56,14 +56,13 @@
 ### Status Bar:
 #
   # TODO Configure yambar monitor  
-  exec_always export PATH="${PATH}:/home/$USER/.config/scripts/"
   exec_always /bin/sh -c 'killall yambar; yambar &'
 
 ### Display Outputs
 #
     # Monitor Config
     set $builtin-monitor eDP-1
-    set $primary-monitor DP-5 DP-7 eDP-1
+    set $primary-monitor DP-2 DP-5 DP-7 eDP-1
 
     # Home Dock Setup (Most monitors, least amount of work)
     output $builtin-monitor pos 0 0
@@ -114,11 +113,15 @@
     # Built-in Brightness
     exec brightnessctl set 55%
     bindsym XF86MonBrightnessUp exec brightnessctl set +5% &
-    bindsym XF86MonBrightnessDown exec brightnessctl set 5% &
+    bindsym XF86MonBrightnessDown exec brightnessctl set 5%- &
 
     # External Display Brightness
-    bindsym $mod+Shift+Down exec ddcutil setvcp 10 - 10 --noverify --async &
-    bindsym $mod+Shift+Up exec ddcutil setvcp 10 + 10 --noverify --async &
+    bindsym $mod+Alt+Down exec ddcutil setvcp 10 - 10 --noverify --async &
+    bindsym $mod+Alt+Up exec ddcutil setvcp 10 + 10 --noverify --async &
+
+    # Toggle Theme
+    bindsym $mod+n exec /bin/sh -c "/home/$USER/.config/scripts/theme-toggle.sh dark"
+    bindsym $mod+Shift+n exec /bin/sh -c "/home/$USER/.config/scripts/theme-toggle.sh light"
 #
 # Basics:
 #
@@ -138,7 +141,7 @@
     floating_modifier $mod normal
 
     # Take a screenshot
-    bindsym $mod+Shift+p exec sh -c "/home/reuben/.config/scripts/screenshot.sh"
+    bindsym $mod+Shift+s exec sh -c "/home/reuben/.config/scripts/screenshot.sh"
 
     # Reload the configuration file
     bindsym $mod+Shift+c reload
@@ -152,13 +155,23 @@
     bindsym $mod+$left focus left
     bindsym $mod+$down focus down
     bindsym $mod+$up focus up
-    bindsym $mod+$right focus right
+    bindsym $mod+$right focus right    
+    # Or use $mod+[up|down|left|right]
+    bindsym $mod+Left focus left
+    bindsym $mod+Down focus down
+    bindsym $mod+Up focus up
+    bindsym $mod+Right focus right
 
     # Move the focused windowlwith the same, but add Shift
     bindsym $mod+Shift+$left move left
     bindsym $mod+Shift+$down move down
     bindsym $mod+Shift+$up move up
     bindsym $mod+Shift+$right move right
+    # Ditto, with arrow keys
+    bindsym $mod+Shift+Left move left
+    bindsym $mod+Shift+Down move down
+    bindsym $mod+Shift+Up move up
+    bindsym $mod+Shift+Right move right
 #
 # Workspaces:
 #
@@ -215,8 +228,8 @@
     # Move focus to the parent container
     bindsym $mod+a focus parent
     bindsym $mod+s focus child
-    bindsym $mod+Shift+a focus parent, focus parent
-    bindsym $mod+Shift+s focus child, focus child
+    bindsym $mod+Alt+a focus parent, focus parent
+    bindsym $mod+Alt+s focus child, focus child
 #
 # Scratchpad:
 #

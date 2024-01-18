@@ -17,7 +17,7 @@ done
 
 # If the current sink was not found or there's only one sink, exit the script
 if [ "$current_sink_index" -eq -1 ] || [ "${#sinks[@]}" -eq 1 ]; then
-	echo "Cannot cycle sinks."
+  bluetoothctl connect DC:69:E2:BA:90:08
 	exit 1
 fi
 

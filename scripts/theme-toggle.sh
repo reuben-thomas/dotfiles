@@ -1,28 +1,31 @@
 #!/bin/bash
 
-# Check if an argument is provided
+# If no argument provided, just toggle
 if [ "$#" -ne 1 ]; then
-	echo "Usage: $0 [light|dark]"
-	exit 1
+	CURRENT_THEME=$(gsettings get org.gnome.desktop.interface color-scheme)
+	if [ "$CURRENT_THEME" = "'prefer-dark'" ]; then
+		THEME='light'
+	else
+		THEME='dark'
+	fi
+else
+	THEME=$1
 fi
-
-THEME=$1
 
 set_light_theme() {
 	gsettings set org.gnome.desktop.interface color-scheme 'prefer-light'
 	for server in $(nvr --serverlist); do
-		nvr --servername "$server" -cc 'set background=light'
+		nvr --servername "$server" -cc 'colorscheme tokyonight | set background=light'
 	done
 	echo "Light Theme Set"
 	notify-send "System Theme" "Light Mode Set" \
 		-h string:x-canonical-private-synchronous:yambar-ddcutil-notification &
 }
 
-# Function to set dark theme
 set_dark_theme() {
 	gsettings set org.gnome.desktop.interface color-scheme 'prefer-dark'
 	for server in $(nvr --serverlist); do
-		nvr --servername "$server" -cc 'set background=dark'
+		nvr --servername "$server" -cc 'colorscheme onedark | set background=dark'
 	done
 	echo "Dark Theme Set"
 	notify-send "System Theme" "Dark Mode Set" \

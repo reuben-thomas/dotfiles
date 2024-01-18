@@ -1,4 +1,4 @@
 return {
   "hrsh7th/nvim-cmp",
-  require("cmp").setup.buffer({ enabled = false }),
+  require("cmp").setup.buffer({ enabled = true }),
 }

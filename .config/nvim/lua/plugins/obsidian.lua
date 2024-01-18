@@ -7,11 +7,15 @@ return {
     "nvim-lua/plenary.nvim",
   },
   opts = {
+    disable_frontmatter = true,
     workspaces = {
       {
         name = "main",
         path = "~/Documents/Obsidian",
       },
+    },
+    completion = {
+      nvim_cmp = false,
     },
   },
 }

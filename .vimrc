@@ -1,7 +1,8 @@
 " Copy & Paste
-set clipboard=unnamedplus
+set clipboard=unnamed
 
 " Visual
+colorscheme slate
 syntax on
 set number
 set ruler

@@ -1,11 +1,19 @@
-[Document]
-ChangeColors=true
+[Core General]
+ExternalEditor=Texstudio
+
+[General]
+ShellOpenFileInTabs=true
+ShowEmbeddedContentMessages=false
+ShowOSD=false
 
 [Main View]
 ShowLeftPanel=false
+SplitterSizes=200,1708
 
 [PageView]
+MouseMode=TextSelect
 UseCustomBackgroundColor=true
+ViewColumns=2
 
 [Reviews]
-QuickAnnotationTools=<tool default="true" type="highlight" id="1" name="Yellow Highlighter"><engine type="TextSelector" color="#ffff00"><annotation type="Highlight" color="#ffffff00"/></engine><shortcut>1</shortcut></tool>,<tool default="true" type="highlight" id="2" name="Green Highlighter"><engine type="TextSelector" color="#00ff00"><annotation type="Highlight" color="#ff00ff00"/></engine><shortcut>2</shortcut></tool>,<tool type="underline" id="3"><engine type="TextSelector" color="#ff0000"><annotation type="Underline" color="#ffff0000"/></engine><shortcut>3</shortcut></tool>,<tool default="true" type="typewriter" id="4" name="Insert Text"><engine block="true" type="PickPoint"><annotation width="0" type="Typewriter" color="#00ffffff" textColor="#000000"/></engine><shortcut>4</shortcut></tool>,<tool type="note-inline" id="5"><engine block="true" type="PickPoint" hoverIcon="tool-note-inline" color="#ffff00"><annotation type="FreeText" color="#ffffff00" textColor="#ff000000"/></engine><shortcut>5</shortcut></tool>,<tool type="note-linked" id="6"><engine type="PickPoint" hoverIcon="tool-note" color="#ffff00"><annotation type="Text" color="#ffffff00" icon="Note"/></engine><shortcut>6</shortcut></tool>
+QuickAnnotationTools=<tool type="highlight" id="1" name="Red Highlighter"><engine type="TextSelector" color="#ffff4949"><annotation type="Highlight" opacity="0.8" color="#ffff4949"/></engine><shortcut>1</shortcut></tool>,<tool type="highlight" id="2" name="Yellow Highlighter"><engine type="TextSelector" color="#ffffd500"><annotation type="Highlight" opacity="0.8" color="#ffffd500"/></engine><shortcut>2</shortcut></tool>,<tool type="highlight" id="3" name="Green Highlighter"><engine type="TextSelector" color="#ff6cd355"><annotation type="Highlight" opacity="0.8" color="#ff6cd355"/></engine><shortcut>3</shortcut></tool>,<tool type="highlight" id="4" name="Blue Highlighter"><engine type="TextSelector" color="#ff62a1ff"><annotation type="Highlight" opacity="0.8" color="#ff62a1ff"/></engine><shortcut>4</shortcut></tool>,<tool type="underline" id="5"><engine type="TextSelector" color="#ff0000"><annotation type="Underline" color="#ffff0000"/></engine><shortcut>5</shortcut></tool>,<tool type="typewriter" id="6" name="Insert Text" default="true"><engine type="PickPoint" block="true"><annotation type="Typewriter" color="#00ffffff" textColor="#000000" width="0"/></engine><shortcut>6</shortcut></tool>,<tool type="note-inline" id="7"><engine type="PickPoint" color="#ffff00" hoverIcon="tool-note-inline" block="true"><annotation type="FreeText" color="#ffffff00" textColor="#ff000000"/></engine><shortcut>7</shortcut></tool>,<tool type="note-linked" id="8"><engine type="PickPoint" color="#ffff00" hoverIcon="tool-note"><annotation type="Text" icon="Note" color="#ffffff00"/></engine><shortcut>8</shortcut></tool>

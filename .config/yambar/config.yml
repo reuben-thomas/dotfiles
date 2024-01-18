@@ -148,6 +148,40 @@ bar:
         content:
           map:
             conditions:
+              ~online: { string: { text: "MIC ERR" } }
+              online:
+                map:
+                  conditions:
+                    source_muted:
+                      - string:
+                          {
+                            text: "MIC MUT ",
+                            on-click: /bin/sh -c "amixer set Capture toggle",
+                          }
+                      # - string:
+                      #     {
+                      #       text: "[{source_port}",
+                      #       max: 10,
+                      #       on-click: /bin/sh -c "/home/$USER/.config/yambar/scripts/pulse-source-toggle.sh",
+                      #     }
+                      # - string: { text: "]" }
+                    ~source_muted:
+                      - string:
+                          {
+                            text: "MIC {source_percent}% ",
+                            on-click: /bin/sh -c "amixer set Capture toggle",
+                          }
+                      # - string:
+                      #     {
+                      #       text: "[{source_port}",
+                      #       max: 10,
+                      #       on-click: /bin/sh -c "/home/$USER/.config/yambar/scripts/pulse-source-toggle.sh",
+                      #     }
+                      # - string: { text: "]" }
+    - pulse:
+        content:
+          map:
+            conditions:
               ~online: { string: { text: "SPK ERR" } }
               online:
                 map:
@@ -160,10 +194,11 @@ bar:
                           }
                       - string:
                           {
-                            text: " [{sink_port}]",
-                            max: 15,
+                            text: " [{sink_port}",
+                            max: 10,
                             on-click: /bin/sh -c "/home/$USER/.config/yambar/scripts/pulse-sink-toggle.sh",
                           }
+                      - string: { text: "]" }
                     ~sink_muted:
                       - string:
                           {
@@ -172,27 +207,11 @@ bar:
                           }
                       - string:
                           {
-                            text: " [{sink_port}]",
-                            max: 15,
+                            text: " [{sink_port}",
+                            max: 10,
                             on-click: /bin/sh -c "/home/$USER/.config/yambar/scripts/pulse-sink-toggle.sh",
                           }
-    - pulse:
-        content:
-          map:
-            conditions:
-              ~online: { string: { text: "MIC ERR" } }
-              online:
-                map:
-                  on-click: /bin/sh -c "amixer set Capture toggle"
-                  conditions:
-                    source_muted:
-                      - string: { text: "MIC MUT" }
-                      # - string: { text: " [{source_port}", max: 11 }
-                      # - string: { text: "]" }
-                    ~source_muted:
-                      - string: { text: "MIC {source_percent}%" }
-                      # - string: { text: " [{source_port}", max: 11 }
-                      # - string: { text: "]" }
+                      - string: { text: "]" }
     - network:
         name: enp1s0
         content:
@@ -265,6 +284,6 @@ bar:
     - label:
         content:
           string:
-            on-click: /bin/sh -c "ddcutil setvcp D6 5; shutdown -h now"
+            on-click: /bin/sh -c "ddcutil setvcp D6 5; swaymsg exit"
             text: 
             font: *awesome
