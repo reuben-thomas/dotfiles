@@ -6,5 +6,5 @@ location=center
 allow_images=true
 hide_scroll=false
 dynamic_lines=true
-term=alacritty
+term=foot
 allow_markup=true

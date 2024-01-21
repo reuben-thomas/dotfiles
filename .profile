@@ -26,10 +26,13 @@ if [ -d "$HOME/.local/bin" ]; then
 	PATH="$HOME/.local/bin:$PATH"
 fi
 
-# IDK bro
+# Run keyring on startup
 if [ "$XDG_SESSION_DESKTOP" = "sway" ]; then
-	eval $(gnome-keyring-daemon --start)
-	export SSH_AUTH_SOCK
+	# Do not restart for tmux sessions
+	if [ "$TERM" != "tmux-256color" ]; then
+		eval $(gnome-keyring-daemon --start)
+		export SSH_AUTH_SOCK
+	fi
 fi
 
 # export directory for scripts

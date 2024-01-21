@@ -9,6 +9,8 @@ border-size=3
 border-color=#9d68d9
 border-radius=5
 default-timeout=5000
+icons=1
+icon-path=/usr/share/icons/
 
 [urgency=normal]
 border-color=#9d68d9

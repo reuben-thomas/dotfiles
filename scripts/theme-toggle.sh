@@ -13,20 +13,38 @@ else
 fi
 
 set_light_theme() {
+	# Global
 	gsettings set org.gnome.desktop.interface color-scheme 'prefer-light'
+
+	# Neovim Setting
 	for server in $(nvr --serverlist); do
 		nvr --servername "$server" -cc 'colorscheme polar | set background=light'
 	done
+	sed -i 's/vim.go.background = "dark"/vim.go.background = "light"/' \
+		/home/$USER/.config/nvim/lua/config/options.lua
+	sed -i 's/colorscheme = "onedark"/colorscheme = "polar"/' \
+		/home/$USER/.config/nvim/lua/plugins/colorscheme.lua
+
+	# Notification
 	echo "Light Theme Set"
 	notify-send "System Theme" "Light Mode Set" \
 		-h string:x-canonical-private-synchronous:yambar-ddcutil-notification &
 }
 
 set_dark_theme() {
+	# Global
 	gsettings set org.gnome.desktop.interface color-scheme 'prefer-dark'
+
+	# Neovim Setting
 	for server in $(nvr --serverlist); do
 		nvr --servername "$server" -cc 'colorscheme onedark | set background=dark'
 	done
+	sed -i 's/vim.go.background = "light"/vim.go.background = "dark"/' \
+		/home/$USER/.config/nvim/lua/config/options.lua
+	sed -i 's/colorscheme = "polar"/colorscheme = "onedark"/' \
+		/home/$USER/.config/nvim/lua/plugins/colorscheme.lua
+
+	# Notification
 	echo "Dark Theme Set"
 	notify-send "System Theme" "Dark Mode Set" \
 		-h string:x-canonical-private-synchronous:yambar-ddcutil-notification &

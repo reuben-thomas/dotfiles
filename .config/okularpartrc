@@ -11,7 +11,6 @@ ShowLeftPanel=false
 SplitterSizes=200,1708
 
 [PageView]
-MouseMode=TextSelect
 UseCustomBackgroundColor=true
 ViewColumns=2
 

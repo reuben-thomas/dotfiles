@@ -1,5 +1,5 @@
-awesome: &awesome Font Awesome 6 Free:style=solid:pixelsize=14
-awesome_brands: &awesome_brands Font Awesome 6 Brands:pixelsize=16
+awesome: &awesome Hack Nerd Font Mono 6 Free:style=solid:pixelsize=14
+awesome_brands: &awesome_brands Hack Nerd Font Mono 6 Brands:pixelsize=16
 
 std_underline: &std_underline { underline: { size: 2, color: ff0000ff } }
 
@@ -28,7 +28,7 @@ bar:
           - string: &surfing { <<: *i3_common, text: , font: *awesome_brands }
           - string: &misc { <<: *i3_common, text: , font: *awesome }
           - string: &mail { <<: *i3_common, text: , font: *awesome }
-          - string: &music { <<: *i3_common, text: , font: *awesome }
+          - string: &music { <<: *i3_common, text: 󰼛, font: *awesome }
           - focused: &focused
               deco:
                 { stack: [background: { color: ffa0a04c }, <<: *std_underline] }
@@ -102,26 +102,20 @@ bar:
               font: *awesome
     - label:
         content:
-          - string: { text: "DSP [", on-click: /bin/sh -c "wdisplays" }
           - string:
               {
-                text: " ⬓ ",
+                text: "DEV [",
+                on-click: /bin/sh -c "/home/$USER/.config/wofi/bt_device_toggle/launch.sh",
+              }
+          - string:
+              {
+                text: "⬓ ",
                 font: *awesome,
                 on-click: /bin/sh -c "sway output eDP-1 toggle &",
               }
           - string:
-              {
-                text: " ▭ ",
-                font: *awesome,
-                on-click: /bin/sh -c "sway output DP-5 toggle && ddcutil setvcp -display 1 setvcp D6 05 &",
-              }
-          - string:
-              {
-                text: " ▯ ",
-                font: *awesome,
-                on-click: /bin/sh -c "sway output DP-7 toggle && ddcutil setvcp --display 2 D6 04 &",
-              }
-          - string: { text: "] " }
+              { text: "▭  ▯", font: *awesome, on-click: /bin/sh -c "wdisplays" }
+          - string: { text: "]" }
     - foreign-toplevel:
         content:
           map:

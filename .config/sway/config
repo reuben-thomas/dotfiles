@@ -26,7 +26,7 @@
     # exec export $(gnome-keyring-daemon)
 
     # Wallpaper
-    output * bg /home/reuben/Pictures/Wallpapers/porschediagonal.jpg fill
+    output * bg /home/reuben/Pictures/Wallpapers/w14.png fill
 
     # Dynamic Tiling
     # exec_always autotiling
@@ -65,11 +65,11 @@
     set $primary-monitor DP-2 DP-5 DP-7 eDP-1
 
     # Home Dock Setup (Most monitors, least amount of work)
-    output $builtin-monitor pos 0 0
+    # output $builtin-monitor pos 0 0
     # output $builtin-monitor pos 740 1680
-    output DP-5 pos 0 240
-    output DP-7 transform 90
-    output DP-7 pos 3400 0
+    # output DP-5 pos 0 240
+    # output DP-7 transform 90
+    # output DP-7 pos 3400 0
 
     # Workspace Allocation
     workspace 1 output $primary-monitor
@@ -135,7 +135,8 @@
 
     # Start your launcher
     bindsym $mod+d exec $menu --show=drun -a
-    bindsym $mod+Shift+d exec $menu
+    bindsym $mod+Shift+d exec /bin/sh -c "/home/$USER/.config/wofi/window_switcher/launch.sh"
+    bindsym $mod+Alt+d exec $menu
 
     # Drag windows by holding down $mod and left mouse button.
     # Resize them with right mouse button + $mod.
@@ -152,6 +153,14 @@
 
     # Launch Power Menu
     bindsym $mod+q exec /bin/sh -c "/home/$USER/.config/wofi/powermenu/launch.sh"
+
+    # Launch Bluetooth Device menu
+    bindsym $mod+p exec /bin/sh -c "/home/$USER/.config/wofi/bt_device_toggle/launch.sh"
+
+    # Gaps when i feel like it
+    bindcode $mod+34  exec swaymsg gaps inner current minus 10
+    bindcode $mod+35 exec swaymsg gaps inner current plus 10
+    bindcode $mod+51 exec swaymsg gaps inner current set 0
 #
 # Moving around:
 #
@@ -214,7 +223,6 @@
     bindsym $mod+u splitv
     bindsym $mod+i splith
     bindsym $mod+o split none
-    bindsym $mod+p split toggle
 
     # Switch the current container between different layout styles
     bindsym $mod+w layout tabbed

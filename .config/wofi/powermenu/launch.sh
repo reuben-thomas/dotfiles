@@ -2,24 +2,42 @@
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" &>/dev/null && pwd)"
 
-entries="⇠ Logout\n⏾ Suspend\n⭮ Reboot\n⏻ Shutdown"
-selected=$(echo -e $entries | wofi --dmenu -c $SCRIPT_DIR/config \
-	-s $SCRIPT_DIR/style.css \
-	--cache-file /dev/null | awk '{print tolower($2)}')
+op=$(echo -e " Lock\n⭘ Suspend\n󰜉 Restart\n󰐥 Poweroff" |
+	wofi -i --dmenu \
+		-c $SCRIPT_DIR/config \
+		-s $SCRIPT_DIR/style.css |
+	awk '{print tolower($2)}')
 
-case $selected in
-logout)
-	exec swaylock -c 000000ff
-	;;
-suspend)
-	exec swaymsg exit
-	;;
-reboot)
-	exec systemctl reboot
-	;;
-shutdown)
-	exec ddcutil setvcp D6 5
+case $op in
+poweroff)
+	notify-send "System" "Shutting Down" \
+		-i $SCRIPT_DIR\gear.png \
+		-h string:x-canonical-private-synchronous:powermenu-notif &
 	systemctl poweroff
+	;&
+restart)
+	notify-send "System" "Restarting" \
+		-i $SCRIPT_DIR\gear.png \
+		-h string:x-canonical-private-synchronous:powermenu-notif &
+	systemctl reboot
+	;&
+suspend)
+	notify-send "System" "Exiting Sway" \
+		-i $SCRIPT_DIR\gear.png \
+		-h string:x-canonical-private-synchronous:powermenu-notif &
+	swaymsg exit
 	;;
-	# it used to be poweroff -i
+lock)
+	notify-send "System" "Swaylock" \
+		-i $SCRIPT_DIR\gear.png \
+		-h string:x-canonical-private-synchronous:powermenu-notif &
+	swaylock -c 000000ff \
+		--inside-wrong-color 000000ff \
+		--inside-clear-color 000000ff \
+		--inside-ver-color 000000ff \
+		--ring-wrong-color 9c283cff \
+		--ring-ver-color 3827cfff \
+		--ring-clear-color ffffffff \
+		-i /home/$USER/Pictures/Wallpapers/w14.png
+	;;
 esac

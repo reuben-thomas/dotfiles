@@ -18,3 +18,5 @@ git commit -m "Auto Commit on $TIMESTAMP"
 # Push the changes
 git push
 
+# Notification
+notify-send "Obsidian Sync" "Successfully synced at $TIMESTAMP"
