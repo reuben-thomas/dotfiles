@@ -28,11 +28,19 @@
     # Wallpaper
     output * bg /home/reuben/Pictures/Wallpapers/w14.png fill
 
+### App Setting
+#
     # Dynamic Tiling
     # exec_always autotiling
 
     # Chrome / Firefox Picture-in-Picture
     for_window [title="Picture-in-picture$"] floating enable, sticky enable, resize set 420 240, move position 1470 915
+
+    # Zoom Ruins my Life
+    for_window [app_id="zoom" title="^zoom$"] border none, floating enable
+    for_window [app_id="zoom" title="^(Zoom|About)$"] border pixel, floating enable
+    for_window [app_id="zoom" title="Settings"] floating enable, floating_minimum_size 960 x 700
+    for_window [app_id="zoom" title="Zoom Meeting(.*)?"] workspace next_on_output --create, move container to workspace current, floating disable, inhibit_idle open
 
 ### Styling
 #
@@ -158,8 +166,8 @@
     bindsym $mod+p exec /bin/sh -c "/home/$USER/.config/wofi/bt_device_toggle/launch.sh"
 
     # Gaps when i feel like it
-    bindcode $mod+34  exec swaymsg gaps inner current minus 10
-    bindcode $mod+35 exec swaymsg gaps inner current plus 10
+    bindcode $mod+35  exec swaymsg gaps inner current minus 10
+    bindcode $mod+34 exec swaymsg gaps inner current plus 10
     bindcode $mod+51 exec swaymsg gaps inner current set 0
 #
 # Moving around:
@@ -254,6 +262,9 @@
 #
 # Resizing containers:
 #
+  # Make an item a third height
+  bindsym $mod+t resize set height 30 ppt
+
 mode "resize" {
     # left will shrink the containers width
     # right will grow the containers width
