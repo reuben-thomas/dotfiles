@@ -27,13 +27,13 @@ if [ -n "$selected_mac" ]; then
 	if [ -n "$is_connected" ]; then
 		bluetoothctl disconnect "$selected_mac"
 		echo "Disconnected $selected_device"
-		notify-send "Bluetooth Devices" "Disconnected from $selected_device" \
-			-h string:x-canonical-private-synchronous:bt-device-menu &
+		# notify-send "Bluetooth Devices" "Disconnected from $selected_device" \
+		# 	-h string:x-canonical-private-synchronous:bt-device-menu &
 	else
 		bluetoothctl connect "$selected_mac"
 		echo "Connected $selected_device"
-		notify-send "Bluetooth Devices" "Connected to $selected_device" \
-			-h string:x-canonical-private-synchronous:bt-device-menu &
+		# notify-send "Bluetooth Devices" "Connected to $selected_device" \
+		# 	-h string:x-canonical-private-synchronous:bt-device-menu &
 	fi
 else
 	echo "Device not found."

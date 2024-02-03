@@ -1,5 +1,5 @@
 font=Hack Nerd Font Mono 8
-background-color=#424f5e
+background-color=#00002acc
 text-color=#ffffff
 width=300
 height=110
@@ -9,11 +9,20 @@ border-size=3
 border-color=#9d68d9
 border-radius=5
 default-timeout=5000
-icons=1
-icon-path=/usr/share/icons/
 
 [urgency=normal]
 border-color=#9d68d9
 
 [urgency=high]
+anchor=top-center
+background-color=#792424cc
 border-color=#bf616a
+default-timeout=10000
+
+[app-name=Spotify]
+anchor=top-left
+border-color=#ffffffcc
+
+[app-name=user-script]
+anchor=top-center
+

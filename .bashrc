@@ -119,6 +119,15 @@ if ! shopt -oq posix; then
 	fi
 fi
 
+# Using theme.sh
+# if command -v theme.sh > /dev/null; then
+# 	[ -e ~/.theme_history ] && theme.sh "$(theme.sh -l|tail -n1)"
+# 	bind -x '"\C-o":"theme.sh $(theme.sh -l|tail -n2|head -n1)"'
+# 	alias th='theme.sh -i'
+# 	alias thl='theme.sh --light -i'
+# 	alias thd='theme.sh --dark -i'
+# fi
+
 # App Shortcuts
 alias obsidian-sync='/home/reuben/.config/scripts/obsidian-sync.sh'
 alias socvpn-start='sudo openfortivpn webvpn.comp.nus.edu.sg --username=e1123003'
@@ -126,16 +135,21 @@ alias chrome='google-chrome --password-store=gnome-libsecret'
 alias typetest='tt -showwpm -notheme -blockcursor'
 
 # Obsidian Notes
-alias obs='nvim ~/Documents/Obsidian'
-alias note='nvim ~/Documents/Notes'
+alias obs='nvim ~/Documents/Obsidian -c "colorscheme tokyonight"'
+alias note='nvim ~/Documents/Notes -c "colorscheme tokyonight"'
 
 # System Shortcuts
 alias powerstatus='upower -i /org/freedesktop/UPower/devices/battery_BAT0'
 alias pcipm-enable='echo auto | sudo tee /sys/bus/pci/devices/*/power/control'
-alias activate='source .venv/base/bin/activate'
+alias activate='source ~/.venv/base/bin/activate'
+alias buds='sudo service bluetooth restart; bluetoothctl connect DC:69:E2:BA:90:08'
 
 # Created by `pipx` on 2023-12-13 10:18:49
 export PATH="$PATH:/home/reuben/.local/bin"
 . "$HOME/.cargo/env"
 
 export PATH="$PATH:/home/reuben/.config/scripts"
+
+# bun
+export BUN_INSTALL="$HOME/.bun"
+export PATH=$BUN_INSTALL/bin:$PATH

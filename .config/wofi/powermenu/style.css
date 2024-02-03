@@ -1,12 +1,12 @@
 * {
   font-family: Hack Nerd Font Mono;
-  font-size: 13.5px;
+  font-size: 13px;
   color: #e5e9f0;
 }
 
 window {
   background-color: #2e3440;
-  border: 4px solid #ad424e;
+  border: 4px solid #ff4a86;
   border-radius: 8px;
 }
 

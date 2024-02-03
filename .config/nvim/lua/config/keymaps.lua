@@ -3,9 +3,9 @@
 -- Add any additional keymaps here
 
 -- Color Picker Keymaps
-local opts = { noremap = true, silent = true }
-vim.keymap.set("n", "<C-c>", "<cmd>PickColor<cr>", opts)
-vim.keymap.set("i", "<C-c>", "<cmd>PickColorInsert<cr>", opts)
+-- local opts = { noremap = true, silent = true }
+-- vim.keymap.set("n", "<C-c>", "<cmd>PickColor<cr>", opts)
+-- vim.keymap.set("i", "<C-c>", "<cmd>PickColorInsert<cr>", opts)
 
 -- Vim Tmux Navigator
 vim.keymap.set("n", "<C-h>", "<Cmd>TmuxNavigateLeft<CR>", { silent = true })

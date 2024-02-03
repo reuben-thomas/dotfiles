@@ -1,3 +1,6 @@
+[$Version]
+update_info=okular.upd:annotation-toolbar,okular.upd:builtin-annotations
+
 [Core General]
 ExternalEditor=Texstudio
 
@@ -8,9 +11,10 @@ ShowOSD=false
 
 [Main View]
 ShowLeftPanel=false
-SplitterSizes=200,1708
+SplitterSizes=226,1690
 
 [PageView]
+MouseMode=TextSelect
 UseCustomBackgroundColor=true
 ViewColumns=2
 

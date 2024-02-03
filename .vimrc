@@ -4,7 +4,7 @@ autocmd TextYankPost * if (v:event.operator == 'y' || v:event.operator == 'd') |
 nnoremap p :let @"=substitute(system("wl-paste --no-newline"), '<C-v><C-m>', '', 'g')<cr>p
 
 " Visual
-colorscheme elford
+colorscheme default
 syntax on
 set number
 set ruler
@@ -39,4 +39,6 @@ set ignorecase
 set smartcase
 set showmatch
 map <leader><space> :let @/=''<cr> " clear search
+"
+" set guicursor=n-v-c:block-Cursor,i-ci-ve:ver25-Cursor,r-cr-o:hor20-Cursor
 

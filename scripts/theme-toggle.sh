@@ -22,7 +22,7 @@ set_light_theme() {
 	done
 	sed -i 's/vim.go.background = "dark"/vim.go.background = "light"/' \
 		/home/$USER/.config/nvim/lua/config/options.lua
-	sed -i 's/colorscheme = "onedark"/colorscheme = "polar"/' \
+	sed -i 's/colorscheme = "tokyonight"/colorscheme = "polar"/' \
 		/home/$USER/.config/nvim/lua/plugins/colorscheme.lua
 
 	# Notification
@@ -37,11 +37,11 @@ set_dark_theme() {
 
 	# Neovim Setting
 	for server in $(nvr --serverlist); do
-		nvr --servername "$server" -cc 'colorscheme onedark | set background=dark'
+		nvr --servername "$server" -cc 'colorscheme tokyonight | set background=dark'
 	done
 	sed -i 's/vim.go.background = "light"/vim.go.background = "dark"/' \
 		/home/$USER/.config/nvim/lua/config/options.lua
-	sed -i 's/colorscheme = "polar"/colorscheme = "onedark"/' \
+	sed -i 's/colorscheme = "polar"/colorscheme = "tokyonight"/' \
 		/home/$USER/.config/nvim/lua/plugins/colorscheme.lua
 
 	# Notification

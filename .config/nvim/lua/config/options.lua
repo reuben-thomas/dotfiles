@@ -7,7 +7,6 @@ vim.api.nowrap = true
 vim.g.copilot_enabled = false
 vim.opt.relativenumber = false
 vim.go.background = "dark"
-vim.b.autoformat = false
 -- Other
 -- vim.opt.tabstop = 4
 -- vim.opt.softtabstop = 4

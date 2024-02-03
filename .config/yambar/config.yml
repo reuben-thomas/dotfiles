@@ -1,6 +1,8 @@
+# Fonts
 awesome: &awesome Hack Nerd Font Mono 6 Free:style=solid:pixelsize=14
 awesome_brands: &awesome_brands Hack Nerd Font Mono 6 Brands:pixelsize=16
 
+# Styling
 std_underline: &std_underline { underline: { size: 2, color: ff0000ff } }
 
 bar:
@@ -127,13 +129,25 @@ bar:
 
   center:
     - clock:
-        time-format: "%H:%M %p - "
+        time-format: "%H:%M %p"
         date-format: "%^a %d.%m.%Y"
         content:
-          - string: { text: "{time}" }
-          - string: { text: "{date}" }
+          - string:
+              {
+                text: "{time} - {date}",
+                font: Hack Nerd Font Mono:pixelsize=13,
+                foreground: 472730ff,
+                margin: 25,
+                deco: { background: { color: f2ebecff } },
+              }
 
   right:
+    - script:
+        path: /home/reuben/.config/scripts/battery-check.sh
+        poll-interval: 1000
+        content:
+          - string: { text: "" }
+
     - backlight:
         name: intel_backlight
         content:
@@ -150,6 +164,8 @@ bar:
                       - string:
                           {
                             text: "MIC MUT ",
+                            margin: 10,
+                            deco: { background: { color: ff003cff } },
                             on-click: /bin/sh -c "amixer set Capture toggle",
                           }
                       # - string:
@@ -184,6 +200,8 @@ bar:
                       - string:
                           {
                             text: "SPK MUT",
+                            margin: 10,
+                            deco: { background: { color: ff003cff } },
                             on-click: /bin/sh -c "amixer set Master toggle",
                           }
                       - string:
@@ -207,32 +225,30 @@ bar:
                           }
                       - string: { text: "]" }
     - network:
-        name: enp1s0
-        content:
-          map:
-            conditions:
-              ~carrier: { empty: {} }
-              carrier:
-                map:
-                  default:
-                    {
-                      string: { text: , font: *awesome, foreground: ffffff66 },
-                    }
-                  conditions:
-                    state == up && ipv4 != "":
-                      { string: { text: , font: *awesome } }
-    - network:
         name: wlp0s20f3
         poll-interval: 60
         content:
           map:
-            default: { string: { text: "NET OK" } }
+            default:
+              - string:
+                  {
+                    text: "NET OK",
+                    margin: 10,
+                    deco: { background: { color: ff003cff } },
+                    on-click: /bin/sh -c "foot nmtui",
+                  }
             conditions:
-              state == down: { string: { text: "OFFLINE" } }
+              state == down:
+                - string:
+                    {
+                      text: "OFFLINE",
+                      margin: 10,
+                      deco: { background: { color: ff003cff } },
+                    }
               state == up:
                 - string: { text: "NET {signal} [" }
                 - string: { text: "{ssid}", max: 15 }
-                - string: { text: " {state}]" }
+                - string: { text: "]" }
     - battery:
         name: BAT0
         poll-interval: 60
@@ -246,23 +262,49 @@ bar:
                       on-click: /bin/sh -c "/home/$USER/.config/yambar/scripts/powerprofile-toggle.sh",
                     }
               state == discharging:
-                - string:
-                    {
-                      text: "BAT {capacity}% [{estimate}]",
-                      on-click: /bin/sh -c "/home/$USER/.config/yambar/scripts/powerprofile-toggle.sh",
-                    }
+                map:
+                  conditions:
+                    capacity > 20:
+                      - string:
+                          {
+                            text: "BAT {capacity}% [{estimate}]",
+                            on-click: /bin/sh -c "/home/$USER/.config/yambar/scripts/powerprofile-toggle.sh",
+                          }
+                    capacity <= 20:
+                      - string:
+                          {
+                            text: "BAT LOW {capacity}% [{estimate}]",
+                            margin: 10,
+                            deco: { background: { color: ff003cff } },
+                            on-click: /bin/sh -c "/home/$USER/.config/yambar/scripts/powerprofile-toggle.sh",
+                          }
               state == "not charging":
                 - string:
                     {
                       text: "BAT {capacity}% [EXT {estimate}]",
+                      margin: 10,
+                      deco: { background: { color: 334437ff } },
                       on-click: /bin/sh -c "/home/$USER/.config/yambar/scripts/powerprofile-toggle.sh",
                     }
               state == charging:
-                - string:
-                    {
-                      text: "BAT {capacity}% [CHG {estimate}]",
-                      on-click: /bin/sh -c "/home/$USER/.config/yambar/scripts/powerprofile-toggle.sh",
-                    }
+                map:
+                  conditions:
+                    capacity > 80:
+                      - string:
+                          {
+                            text: "BAT HIGH {capacity}% [{estimate}]",
+                            margin: 10,
+                            deco: { background: { color: ff003cff } },
+                            on-click: /bin/sh -c "/home/$USER/.config/yambar/scripts/powerprofile-toggle.sh",
+                          }
+                    capacity <= 80:
+                      - string:
+                          {
+                            text: "BAT {capacity}% [{estimate}]",
+                            margin: 10,
+                            deco: { background: { color: 4ac29cff } },
+                            on-click: /bin/sh -c "/home/$USER/.config/yambar/scripts/powerprofile-toggle.sh",
+                          }
               state == full:
                 - string:
                     {

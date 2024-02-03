@@ -32,9 +32,10 @@ lock)
 		-i $SCRIPT_DIR\gear.png \
 		-h string:x-canonical-private-synchronous:powermenu-notif &
 	swaylock -c 000000ff \
-		--inside-wrong-color 000000ff \
-		--inside-clear-color 000000ff \
-		--inside-ver-color 000000ff \
+		--text-color 00000000 \
+		--text-clear-color 00000000 \
+		--text-wrong-color 00000000 \
+		--text-ver-color 00000000 \
 		--ring-wrong-color 9c283cff \
 		--ring-ver-color 3827cfff \
 		--ring-clear-color ffffffff \

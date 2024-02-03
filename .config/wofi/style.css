@@ -1,13 +1,18 @@
+@define-color bg #2e3440;
+@define-color selected #44475a;
+@define-color accent #9d68d9;
+@define-color txt #e5e9f0;
+
 * {
   font-family: Hack Nerd Font Mono;
-  font-size: 13.5px;
-  color: #e5e9f0;
+  font-size: 13px;
+  color: @txt;
 }
 
 window {
-  background-color: #2e3440;
-  border: 4px solid #9d68d9;
-  border-radius: 8px;
+  background-color: @bg;
+  border: 4px solid @accent;
+  border-radius: 6px;
 }
 
 #outer-box {
@@ -15,19 +20,24 @@ window {
 }
 
 #input {
+  background-color: @bg;
   border: none;
-  background-color: #2e3440;
   margin: 7px;
-  box-shadow: none; /* Remove blue "border" */
+  margin-top: 15px;
+  box-shadow: none;
 }
 
-#inner-box {
-  background-color: #2e3440;
-  margin: 7px;
-  margin-top: 0;
+#input:focus {
+  background-color: @accent;
+  margin: 0px;
+  margin-top: 15px;
+  margin-bottom: 10px;
+  padding-top: 5px;
+  padding-bottom: 5px;
 }
 
 #entry {
+  padding: 5px;
   padding-left: 10px;
   margin-left: -0px;
   margin-right: -0px;
@@ -40,8 +50,8 @@ window {
 }
 
 #entry:selected {
-  background-color: #44475a;
-  border-radius: 6px;
+  background-color: @selected;
+  border-radius: 0px;
 }
 
 #text {

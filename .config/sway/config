@@ -26,7 +26,7 @@
     # exec export $(gnome-keyring-daemon)
 
     # Wallpaper
-    output * bg /home/reuben/Pictures/Wallpapers/w14.png fill
+    output * bg /home/reuben/Pictures/Wallpapers/ruffiangt40.jpg fill
 
 ### App Setting
 #
@@ -37,18 +37,17 @@
     for_window [title="Picture-in-picture$"] floating enable, sticky enable, resize set 420 240, move position 1470 915
 
     # Zoom Ruins my Life
-    for_window [app_id="zoom" title="^zoom$"] border none, floating enable
-    for_window [app_id="zoom" title="^(Zoom|About)$"] border pixel, floating enable
-    for_window [app_id="zoom" title="Settings"] floating enable, floating_minimum_size 960 x 700
-    for_window [app_id="zoom" title="Zoom Meeting(.*)?"] workspace next_on_output --create, move container to workspace current, floating disable, inhibit_idle open
+    for_window [title="^zoom$"] border none, floating enable
+    for_window [title="^(Zoom|About)$"] border pixel, floating enable
+    for_window [title="Settings"] floating enable, floating_minimum_size 960 x 700
+    for_window [title="Zoom Meeting(.*)?"] workspace next_on_output --create, move container to workspace current, floating disable, inhibit_idle open
 
 ### Styling
 #
-  # smart_borders on
-  # hide_edge_borders smart
+  smart_borders on
+  hide_edge_borders smart
   default_border pixel 4
   for_window [class=".*"] border pixel 3
-  # set $cl_indi #ff5e89
   set $cl_indi #9d68d9
   set $cl_high #93cddb
   set $cl_fade #597c85
@@ -135,8 +134,8 @@
 #
     # Start a terminal
     bindsym $mod+Return exec $term
-    bindsym $mod+Shift+Return exec $term ranger
     bindsym $mod+Alt+Return exec $term tmux
+    bindsym $mod+Shift+Return exec $term ranger; resize set height 100px;
 
     # Kill focused window
     bindsym $mod+Shift+q kill
@@ -160,7 +159,7 @@
     bindsym $mod+Shift+e exec swaymsg exit
 
     # Launch Power Menu
-    bindsym $mod+q exec /bin/sh -c "/home/$USER/.config/wofi/powermenu/launch.sh"
+    bindsym $mod+x exec /bin/sh -c "/home/$USER/.config/wofi/powermenu/launch.sh"
 
     # Launch Bluetooth Device menu
     bindsym $mod+p exec /bin/sh -c "/home/$USER/.config/wofi/bt_device_toggle/launch.sh"
@@ -258,12 +257,12 @@
 
     # Show the next scratchpad window or hide the focused scratchpad window.
     # If there are multiple scratchpad windows, this command cycles through them.
-    bindsym $mod+minus scratchpad show
+    bindsym $mod+minus scratchpad show, resize set height 450px
 #
 # Resizing containers:
 #
   # Make an item a third height
-  bindsym $mod+t resize set height 30 ppt
+  bindsym $mod+t resize set height 20 ppt
 
 mode "resize" {
     # left will shrink the containers width
