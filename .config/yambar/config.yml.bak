@@ -6,12 +6,14 @@ std_underline: &std_underline { underline: { size: 2, color: ff0000ff } }
 
 # Theme
 fg_color: &fg_color ddd8e3ff
-bg_color: &bg_color 262626ff
+bg_color: &bg_color 523c49ff
+bg_deco: &bg_deco { background: { color: *bg_color } }
 white: &white ffffffff
 
 # Colours
 white_deco: &white_deco { background: { color: ffffffff } }
 fade_white_deco: &fade_white_deco { background: { color: ffffff33 } }
+off_white_deco: &off_white_deco { background: { color: eae4edff } }
 
 # States
 good_deco: &good_deco { background: { color: 00b061ff } }
@@ -149,11 +151,11 @@ bar:
                 - string:
                     {
                       text: "{app-id}",
-                      foreground: *white,
-                      deco: *fade_white_deco,
+                      foreground: *bg_color,
                       margin: *deco_margin,
+                      deco: *off_white_deco,
                     }
-                - string: { text: " {title}", max: 30, right-margin: 10 }
+                - string: { text: ": {title}", max: 50 }
 
   center:
     - clock:

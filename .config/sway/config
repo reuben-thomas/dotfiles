@@ -31,7 +31,10 @@
 ### App Setting
 #
     # Dynamic Tiling
-    # exec_always autotiling
+    # exec_always /bin/sh -c 'killall autotiling; autotiling &'
+
+    # Transparency
+    # exec /usr/share/sway/scripts/illanactive-windows-transparency.py --opacity 0.85
 
     # Chrome / Firefox Picture-in-Picture
     for_window [title="Picture-in-picture$"] floating enable, sticky enable, resize set 420 240, move position 1470 915
@@ -42,34 +45,40 @@
     for_window [title="Settings"] floating enable, floating_minimum_size 960 x 700
     for_window [title="Zoom Meeting(.*)?"] workspace next_on_output --create, move container to workspace current, floating disable, inhibit_idle open
 
+    # Floating Functionality
+    # for_window [app_id="Alacritty" floating] resize set 500 500
+    # for_window [title=".*" floating] resize set 500 500
+
+
 ### Styling
 #
-  smart_borders on
-  hide_edge_borders smart
-  default_border pixel 4
-  for_window [class=".*"] border pixel 3
-  set $cl_indi #9d68d9
-  set $cl_high #93cddb
-  set $cl_fade #597c85
-  set $cl_back #495d66
-  set $cl_fore #484c4f
-  set $cl_urge #e35660
-  #                       border   bg       text     indi     child
-  client.focused          $cl_high $cl_high $cl_fore $cl_indi $cl_high
-  client.focused_inactive $cl_high $cl_fade $cl_high $cl_back $cl_back
-  client.unfocused        $cl_fade $cl_back $cl_high $cl_back $cl_back
-  client.urgent           $cl_urge $cl_urge $cl_fore $cl_urge $cl_urge
+    smart_borders on
+    hide_edge_borders smart
+    default_border pixel 4
+    for_window [class=".*"] border pixel 4
+
+    # Border colouring
+    set $cl_indi #9d91ff
+    set $cl_high #93cddb
+    set $cl_fade #597c85
+    set $cl_back #495d66
+    set $cl_fore #484c4f
+    set $cl_urge #e35660
+    client.focused          $cl_high $cl_high $cl_fore $cl_indi $cl_high
+    client.focused_inactive $cl_high $cl_fade $cl_high $cl_back $cl_back
+    client.unfocused        $cl_fade $cl_back $cl_high $cl_back $cl_back
+    client.urgent           $cl_urge $cl_urge $cl_fore $cl_urge $cl_urge
 
 ### Status Bar:
 #
-  # TODO Configure yambar monitor  
-  exec_always /bin/sh -c 'killall yambar; yambar &'
+    # TODO Configure yambar monitor  
+    exec_always /bin/sh -c 'killall yambar; yambar &'
 
 ### Display Outputs
 #
     # Monitor Config
     set $builtin-monitor eDP-1
-    set $primary-monitor DP-2 DP-5 DP-7 eDP-1
+    set $primary-monitor eDP-1
 
     # Home Dock Setup (Most monitors, least amount of work)
     # output $builtin-monitor pos 0 0
@@ -140,10 +149,14 @@
     # Kill focused window
     bindsym $mod+Shift+q kill
 
+    # Open File Manager
+    bindsym $mod+y exec nautilus;
+    bindsym $mod+Shift+y exec $term ranger; resize set height 100px;
+
     # Start your launcher
     bindsym $mod+d exec $menu --show=drun -a
-    bindsym $mod+Shift+d exec /bin/sh -c "/home/$USER/.config/wofi/window_switcher/launch.sh"
     bindsym $mod+Alt+d exec $menu
+    bindsym $mod+Shift+d exec /bin/sh -c "/home/$USER/.config/wofi/window_switcher/launch.sh"
 
     # Drag windows by holding down $mod and left mouse button.
     # Resize them with right mouse button + $mod.
@@ -168,6 +181,11 @@
     bindcode $mod+35  exec swaymsg gaps inner current minus 10
     bindcode $mod+34 exec swaymsg gaps inner current plus 10
     bindcode $mod+51 exec swaymsg gaps inner current set 0
+
+    # Transparency when I feel like it
+    bindcode $mod+Shift+35  exec swaymsg opacity plus 0.05
+    bindcode $mod+Shift+34 exec swaymsg opacity minus 0.05
+    bindcode $mod+Shift+51 exec swaymsg opacity set 1.0
 #
 # Moving around:
 #
@@ -232,7 +250,7 @@
     bindsym $mod+o split none
 
     # Switch the current container between different layout styles
-    bindsym $mod+w layout tabbed
+    bindsym $mod+w layout toggle split tabbed
     bindsym $mod+e layout toggle split
 
     # Make the current focus fullscreen
@@ -253,11 +271,11 @@
 # Scratchpad:
 #
     # Move the currently focused window to the scratchpad
-    bindsym $mod+Shift+minus move scratchpad
+    bindsym $mod+Shift+minus floating enable, resize set width 900 height 500, move scratchpad
 
     # Show the next scratchpad window or hide the focused scratchpad window.
     # If there are multiple scratchpad windows, this command cycles through them.
-    bindsym $mod+minus scratchpad show, resize set height 450px
+    bindsym $mod+minus scratchpad show
 #
 # Resizing containers:
 #

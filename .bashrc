@@ -133,22 +133,38 @@ alias obsidian-sync='/home/reuben/.config/scripts/obsidian-sync.sh'
 alias socvpn-start='sudo openfortivpn webvpn.comp.nus.edu.sg --username=e1123003'
 alias chrome='google-chrome --password-store=gnome-libsecret'
 alias typetest='tt -showwpm -notheme -blockcursor'
+alias battop='/home/reuben/utils/battop-v0.2.4-x86_64-unknown-linux-gnu'
 
 # Obsidian Notes
-alias obs='nvim ~/Documents/Obsidian -c "colorscheme tokyonight"'
-alias note='nvim ~/Documents/Notes -c "colorscheme tokyonight"'
+# alias obs='nvim ~/Documents/Obsidian -c "colorscheme tokyonight"'
+# alias note='nvim ~/Documents/Notes -c "colorscheme tokyonight"'
+alias obs='nvim ~/Documents/Obsidian'
+alias note='nvim ~/Documents/Notes'
+
+# Dev Shortcuts
+alias dev-start='sudo systemctl enable docker && sudo systemctl enable postgresql'
+alias dev-stop='sudo systemctl disable docker && sudo systemctl disable postgresql'
+alias activate='source ~/.venv/base/bin/activate'
 
 # System Shortcuts
 alias powerstatus='upower -i /org/freedesktop/UPower/devices/battery_BAT0'
 alias pcipm-enable='echo auto | sudo tee /sys/bus/pci/devices/*/power/control'
-alias activate='source ~/.venv/base/bin/activate'
 alias buds='sudo service bluetooth restart; bluetoothctl connect DC:69:E2:BA:90:08'
+alias boot-windows='sudo ./home/reuben/.config/scripts/boot-windows.sh'
 
 # Created by `pipx` on 2023-12-13 10:18:49
 export PATH="$PATH:/home/reuben/.local/bin"
 . "$HOME/.cargo/env"
 
 export PATH="$PATH:/home/reuben/.config/scripts"
+
+# pyenv
+export PYENV_ROOT="$HOME/.pyenv"
+export PATH="$PYENV_ROOT/bin:$PATH"
+
+if command -v pyenv 1>/dev/null 2>&1; then
+	eval "$(pyenv init -)"
+fi
 
 # bun
 export BUN_INSTALL="$HOME/.bun"

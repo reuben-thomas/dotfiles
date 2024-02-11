@@ -1,5 +1,8 @@
 #!/bin/bash
 
+vim_light_theme="onedark"
+vim_dark_theme='tokyonight'
+
 # If no argument provided, just toggle
 if [ "$#" -ne 1 ]; then
 	CURRENT_THEME=$(gsettings get org.gnome.desktop.interface color-scheme)
@@ -18,11 +21,11 @@ set_light_theme() {
 
 	# Neovim Setting
 	for server in $(nvr --serverlist); do
-		nvr --servername "$server" -cc 'colorscheme polar | set background=light'
+		nvr --servername "$server" -cc "colorscheme ${vim_light_theme} | set background=light"
 	done
 	sed -i 's/vim.go.background = "dark"/vim.go.background = "light"/' \
 		/home/$USER/.config/nvim/lua/config/options.lua
-	sed -i 's/colorscheme = "tokyonight"/colorscheme = "polar"/' \
+	sed -i 's/colorscheme = "tokyonight"/colorscheme = "onedark"/' \
 		/home/$USER/.config/nvim/lua/plugins/colorscheme.lua
 
 	# Notification
@@ -37,11 +40,11 @@ set_dark_theme() {
 
 	# Neovim Setting
 	for server in $(nvr --serverlist); do
-		nvr --servername "$server" -cc 'colorscheme tokyonight | set background=dark'
+		nvr --servername "$server" -cc "colorscheme ${vim_dark_theme} | set background=dark"
 	done
 	sed -i 's/vim.go.background = "light"/vim.go.background = "dark"/' \
 		/home/$USER/.config/nvim/lua/config/options.lua
-	sed -i 's/colorscheme = "polar"/colorscheme = "tokyonight"/' \
+	sed -i 's/colorscheme = "onedark"/colorscheme = "tokyonight"/' \
 		/home/$USER/.config/nvim/lua/plugins/colorscheme.lua
 
 	# Notification

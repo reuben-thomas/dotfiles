@@ -10,8 +10,7 @@ ShowEmbeddedContentMessages=false
 ShowOSD=false
 
 [Main View]
-ShowLeftPanel=false
-SplitterSizes=226,1690
+SplitterSizes=164,971
 
 [PageView]
 MouseMode=TextSelect

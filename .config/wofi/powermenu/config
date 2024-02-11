@@ -1,6 +1,7 @@
 mode=run
 width=280
-height=165
+height=135
+columns = 2
 yoffset = 10
 insensitive=true
 location=top

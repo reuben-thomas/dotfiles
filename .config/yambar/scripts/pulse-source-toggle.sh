@@ -12,7 +12,7 @@ for i in "${!sources[@]}"; do
 	fi
 done
 
-if [ "$current_source_index" -eq -1 ] || [ "${#source[@]}" -eq 1 ]; then
+if [ "$current_source_index" -eq -1 ] || [ "${#sources[@]}" -eq 1 ]; then
 	notify-send "Audio Interface" "No other input devices found"
 	exit 1
 fi

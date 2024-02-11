@@ -21,6 +21,14 @@ return {
         sidebars = "transparent",
         floats = "transparent",
       },
+      on_highlights = function(hl, colors)
+        hl.LineNr = {
+          fg = "#9b8fa6",
+        }
+        hl.CursorLineNr = {
+          fg = "#ffffff",
+        }
+      end,
     },
   },
   {
