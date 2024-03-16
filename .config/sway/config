@@ -11,7 +11,7 @@
     set $term foot
 
     # Fonts
-    font pango:Hack Nerd Font Mono 12px
+    font pango:Hack Nerd Font Mono 11.5px
 
     # App Launcher
     set $menu wofi
@@ -24,9 +24,12 @@
     exec dbus-update-activation-environment --all
     # exec gnome-keyring-daemon --start --components=secrets
     # exec export $(gnome-keyring-daemon)
+ 
+    # Environment Variables
+    exec dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP=sway
 
     # Wallpaper
-    output * bg /home/reuben/Pictures/Wallpapers/ruffiangt40.jpg fill
+    output * bg /home/reuben/Pictures/Wallpapers/porschediagonal.jpg fill
 
 ### App Setting
 #
@@ -37,7 +40,7 @@
     # exec /usr/share/sway/scripts/illanactive-windows-transparency.py --opacity 0.85
 
     # Chrome / Firefox Picture-in-Picture
-    for_window [title="Picture-in-picture$"] floating enable, sticky enable, resize set 420 240, move position 1470 915
+    for_window [title="Picture-in-picture$"] floating enable, sticky enable, resize set 420 240, move position cursor
 
     # Zoom Ruins my Life
     for_window [title="^zoom$"] border none, floating enable
@@ -49,6 +52,9 @@
     # for_window [app_id="Alacritty" floating] resize set 500 500
     # for_window [title=".*" floating] resize set 500 500
 
+    # Persistent Terminal
+    exec $term --title scratchpadTerm
+    for_window [title="scratchpadTerm"] floating enable, move position center, move scratchpad
 
 ### Styling
 #
@@ -57,17 +63,24 @@
     default_border pixel 4
     for_window [class=".*"] border pixel 4
 
+    # Gaps
+    set $default_gaps 0
+    exec swaymsg gaps inner all set $default_gaps
+    
     # Border colouring
-    set $cl_indi #9d91ff
-    set $cl_high #93cddb
-    set $cl_fade #597c85
-    set $cl_back #495d66
+    set $cl_indi #61daff
+    set $cl_high #4b8de3
+    set $cl_fade #566a82
+    set $cl_back #27303b
     set $cl_fore #484c4f
     set $cl_urge #e35660
-    client.focused          $cl_high $cl_high $cl_fore $cl_indi $cl_high
-    client.focused_inactive $cl_high $cl_fade $cl_high $cl_back $cl_back
-    client.unfocused        $cl_fade $cl_back $cl_high $cl_back $cl_back
-    client.urgent           $cl_urge $cl_urge $cl_fore $cl_urge $cl_urge
+    set $cl_text #ffffff
+
+    #                       # border # bg     #txt     indi     #child border
+    client.focused          $cl_high $cl_high $cl_text $cl_text $cl_high
+    client.focused_inactive $cl_fade $cl_fade $cl_text $cl_back $cl_fade
+    client.unfocused        $cl_fade $cl_back $cl_text $cl_back $cl_back
+    client.urgent           $cl_urge $cl_urge $cl_text $cl_urge $cl_urge
 
 ### Status Bar:
 #
@@ -78,7 +91,7 @@
 #
     # Monitor Config
     set $builtin-monitor eDP-1
-    set $primary-monitor eDP-1
+    set $primary-monitor DP-3 DP-5 eDP-1
 
     # Home Dock Setup (Most monitors, least amount of work)
     # output $builtin-monitor pos 0 0
@@ -102,7 +115,8 @@
     # Toggle built-in display upon closed/open events
     bindswitch lid:on output $builtin-monitor disable
     bindswitch lid:off output $builtin-monitor enable
-    exec_always cat /proc/acpi/button/lid/LID0/state | awk '{print $2}' | grep -q 'closed' && swaymsg output $builtin-monitor disable
+    exec_always cat /proc/acpi/button/lid/LID0/state | awk '{print $2}' | grep -q 'closed' && \
+      swaymsg output $builtin-monitor disable
 
 ### Input configuration
 #
@@ -112,6 +126,7 @@
        natural_scroll enabled
        middle_emulation enabled
    }
+
 #
 # You can get the names of your inputs by running: swaymsg -t get_inputs
 # Read `man 5 sway-input` for more information about this section.
@@ -144,14 +159,14 @@
     # Start a terminal
     bindsym $mod+Return exec $term
     bindsym $mod+Alt+Return exec $term tmux
-    bindsym $mod+Shift+Return exec $term ranger; resize set height 100px;
+    bindsym $mod+Shift+Return exec $term ranger
 
     # Kill focused window
     bindsym $mod+Shift+q kill
 
     # Open File Manager
     bindsym $mod+y exec nautilus;
-    bindsym $mod+Shift+y exec $term ranger; resize set height 100px;
+    bindsym $mod+Shift+y exec $term ranger
 
     # Start your launcher
     bindsym $mod+d exec $menu --show=drun -a
@@ -178,17 +193,29 @@
     bindsym $mod+p exec /bin/sh -c "/home/$USER/.config/wofi/bt_device_toggle/launch.sh"
 
     # Gaps when i feel like it
-    bindcode $mod+35  exec swaymsg gaps inner current minus 10
-    bindcode $mod+34 exec swaymsg gaps inner current plus 10
-    bindcode $mod+51 exec swaymsg gaps inner current set 0
+    bindcode $mod+Shift+35  exec swaymsg gaps inner current minus 10
+    bindcode $mod+Shift+34 exec swaymsg gaps inner current plus 10
+    bindcode $mod+Shift+51 exec swaymsg gaps inner current set $default_gaps
 
     # Transparency when I feel like it
-    bindcode $mod+Shift+35  exec swaymsg opacity plus 0.05
-    bindcode $mod+Shift+34 exec swaymsg opacity minus 0.05
-    bindcode $mod+Shift+51 exec swaymsg opacity set 1.0
+    bindcode $mod+Alt+35  exec swaymsg opacity plus 0.05
+    bindcode $mod+Alt+34 exec swaymsg opacity minus 0.05
+    bindcode $mod+Alt+51 exec swaymsg opacity set 1.0
+
+    # Autotiling when I feel like it
+    bindsym $mod+z exec /bin/sh -c \
+      'killall autotiling; notify-send "Sway" "Autotiling Enabled" -h string:x-canonical-private-synchronous:autotiling-notification; autotiling &'
+    bindsym $mod+Shift+z exec /bin/sh -c \
+      'killall autotiling; notify-send "Sway" "Autotiling Disabled" -h string:x-canonical-private-synchronous:autotiling-notification;'
+
+
 #
 # Moving around:
 #
+    # Move Position
+    bindsym $mod+m move position center
+    bindsym $mod+Shift+m move position cursor
+
     # Move your focus around
     bindsym $mod+$left focus left
     bindsym $mod+$down focus down
@@ -211,8 +238,12 @@
     bindsym $mod+Shift+Up move up
     bindsym $mod+Shift+Right move right
 #
-# Workspaces:
+# Workspaces
 #
+    # Persistent home
+    set $ws_home music
+    bindsym $mod+grave workspace $ws_home
+    bindsym $mod+Shift+grave move container to workspace $ws_home, workspace $ws_home
     # Switch to workspace
     bindsym $mod+1 workspace number 1
     bindsym $mod+2 workspace number 2
@@ -235,8 +266,11 @@
     bindsym $mod+Shift+8 move container to workspace number 8, workspace number 8 
     bindsym $mod+Shift+9 move container to workspace number 9, workspace number 9
     bindsym $mod+Shift+0 move container to workspace number 10, workspace number 10
-    # Note: workspaces can have any name you want, not just numbers.
-    # We just use 1-10 as the default.
+    # Workspace Switching
+    bindsym $mod+Alt+1 workspace prev
+    bindsym $mod+Alt+2 workspace next
+    bindcode $mod+34 workspace prev
+    bindcode $mod+35 workspace next
 #
 # Layout stuff:
 #
@@ -258,6 +292,7 @@
 # Toggle the current focus between tiling and floating mode
 
     bindsym $mod+Shift+space floating toggle
+    bindsym $mod+Alt+space floating toggle, move position cursor
 
     # Swap focus between the tiling area and the floating area
     bindsym $mod+space focus mode_toggle
@@ -271,41 +306,42 @@
 # Scratchpad:
 #
     # Move the currently focused window to the scratchpad
-    bindsym $mod+Shift+minus floating enable, resize set width 900 height 500, move scratchpad
+    bindsym $mod+Shift+semicolon floating enable, resize set width 900 height 500, move scratchpad
 
     # Show the next scratchpad window or hide the focused scratchpad window.
     # If there are multiple scratchpad windows, this command cycles through them.
-    bindsym $mod+minus scratchpad show
+    bindsym $mod+semicolon scratchpad show, move position center
 #
 # Resizing containers:
 #
-  # Make an item a third height
-  bindsym $mod+t resize set height 20 ppt
+    # Height Presets
+    bindsym $mod+t resize set height 20 ppt
+    bindsym $mod+Alt+$left resize shrink width 10
+    bindsym $mod+Alt+$up resize grow height 10
+    bindsym $mod+Alt+$down resize shrink height 10
+    bindsym $mod+Alt+$right resize grow width 10
+    bindsym $mod+Alt+u resize set height 50
+    bindsym $mod+Alt+i resize set width 50
 
-mode "resize" {
-    # left will shrink the containers width
-    # right will grow the containers width
-    # up will shrink the containers height
-    # down will grow the containers height
-    bindsym $left resize shrink width 10px
-    bindsym $down resize shrink height 10px
-    bindsym $up resize grow height 10px
-    bindsym $right resize grow width 10px
-    bindsym Shift+$left resize shrink width 60px
-    bindsym Shift+$down resize shrink height 60px
-    bindsym Shift+$up resize grow height 60px
-    bindsym SHift+$right resize grow width 60px
+    mode "resize" {
+        bindsym $left resize shrink width 10px
+        bindsym $down resize shrink height 10px
+        bindsym $up resize grow height 10px
+        bindsym $right resize grow width 10px
+        bindsym Shift+$left resize shrink width 60px
+        bindsym Shift+$down resize shrink height 60px
+        bindsym Shift+$up resize grow height 60px
+        bindsym SHift+$right resize grow width 60px
 
-    # Ditto, with arrow keys
-    bindsym Left resize shrink width 10px
-    bindsym Down resize grow height 10px
-    bindsym Up resize shrink height 10px
-    bindsym Right resize grow width 10px
+        bindsym Left resize shrink width 10px
+        bindsym Down resize grow height 10px
+        bindsym Up resize shrink height 10px
+        bindsym Right resize grow width 10px
 
-    # Return to default mode
-    bindsym Return mode "default"
-    bindsym Escape mode "default"
-}
-bindsym $mod+r mode "resize"
+        # Return to default mode
+        bindsym Return mode "default"
+        bindsym Escape mode "default"
+    }
+    bindsym $mod+r mode "resize"
 
 include /etc/sway/config.d/*

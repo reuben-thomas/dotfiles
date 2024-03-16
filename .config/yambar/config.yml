@@ -5,13 +5,13 @@ icon_font_brands: &icon_font_brands Hack Nerd Font Mono 6 Brands:pixelsize=16
 std_underline: &std_underline { underline: { size: 2, color: ff0000ff } }
 
 # Theme
-fg_color: &fg_color ddd8e3ff
-bg_color: &bg_color 262626ff
-white: &white ffffffff
+fg_color: &fg_color e8e8e8ff
+bg_color: &bg_color 242424ff
 
 # Colours
 white_deco: &white_deco { background: { color: ffffffff } }
 fade_white_deco: &fade_white_deco { background: { color: ffffff33 } }
+white: &white ffffffff
 
 # States
 good_deco: &good_deco { background: { color: 00b061ff } }
@@ -20,6 +20,7 @@ error_deco: &error_deco { background: { color: ff003cff } }
 
 # Margin
 deco_margin: &deco_margin 10
+icon_margin: &icon_margin 10
 
 bar:
   height: 20
@@ -35,6 +36,7 @@ bar:
 
   left:
     - i3:
+        sort: ascending
         anchors: # Not used (directly) by f00bar; used here to avoid duplication
           - string:
               &i3_common {
@@ -110,16 +112,16 @@ bar:
                 state == unfocused: { string: { <<: *music } }
                 state == invisible: { string: { <<: [*music, *invisible] } }
                 state == urgent: { string: { <<: [*music, *urgent] } }
-    - label:
-        content:
-          - string:
-              on-click: /bin/sh -c "/home/$USER/.config/scripts/theme-toggle.sh dark"
-              text: "○ "
-              font: *icon_font
-          - string:
-              on-click: /bin/sh -c "/home/$USER/.config/scripts/theme-toggle.sh light"
-              text: " ●"
-              font: *icon_font
+    # - label:
+    #     content:
+    #       - string:
+    #           on-click: /bin/sh -c "/home/$USER/.config/scripts/theme-toggle.sh dark"
+    #           text: "○ "
+    #           font: *iconefont
+    #       - string:
+    #           on-click: /bin/sh -c "/home/$USER/.config/scripts/theme-toggle.sh light"
+    #           text: " ●"
+    #           font: *icon_font
     - label:
         content:
           - string:
@@ -142,18 +144,18 @@ bar:
           - string: { text: "]" }
     - foreign-toplevel:
         content:
-          map:
-            conditions:
-              ~activated: { empty: {} }
-              activated:
-                - string:
-                    {
-                      text: "{app-id}",
-                      foreground: *white,
-                      deco: *fade_white_deco,
-                      margin: *deco_margin,
-                    }
-                - string: { text: " {title}", max: 30, right-margin: 10 }
+          - map:
+              conditions:
+                ~activated: { empty: {} }
+                activated:
+                  - string:
+                      {
+                        text: "{app-id}",
+                        foreground: *white,
+                        deco: *fade_white_deco,
+                        margin: *deco_margin,
+                      }
+                  # - string: { text: " {title}", max: 25, right-margin: 10 }
 
   center:
     - clock:
@@ -163,7 +165,6 @@ bar:
           - string:
               {
                 text: "{time} - {date}",
-                font: Hack Nerd Font Mono:pixelsize=13,
                 foreground: *white,
                 deco: *fade_white_deco,
                 margin: 25,
@@ -190,26 +191,26 @@ bar:
                             deco: *error_deco,
                             on-click: /bin/sh -c "amixer set Capture toggle",
                           }
-                      # - string:
-                      #     {
-                      #       text: "[{source_port}",
-                      #       max: 10,
-                      #       on-click: /bin/sh -c "/home/$USER/.config/yambar/scripts/pulse-source-toggle.sh",
-                      #     }
-                      # - string: { text: "]" }
+                      - string:
+                          {
+                            text: "[{source_port}",
+                            max: 10,
+                            on-click: /bin/sh -c "/home/$USER/.config/yambar/scripts/pulse-source-toggle.sh",
+                          }
+                      - string: { text: "]" }
                     ~source_muted:
                       - string:
                           {
                             text: "MIC {source_percent}% ",
                             on-click: /bin/sh -c "amixer set Capture toggle",
                           }
-                      # - string:
-                      #     {
-                      #       text: "[{source_port}",
-                      #       max: 10,
-                      #       on-click: /bin/sh -c "/home/$USER/.config/yambar/scripts/pulse-source-toggle.sh",
-                      #     }
-                      # - string: { text: "]" }
+                      - string:
+                          {
+                            text: "[{source_port}",
+                            max: 10,
+                            on-click: /bin/sh -c "/home/$USER/.config/yambar/scripts/pulse-source-toggle.sh",
+                          }
+                      - string: { text: "]" }
     - pulse:
         content:
           map:
@@ -221,7 +222,7 @@ bar:
                     sink_muted:
                       - string:
                           {
-                            text: "SPK MUT",
+                            text: "VOL MUT",
                             margin: *deco_margin,
                             deco: *warn_deco,
                             on-click: /bin/sh -c "amixer set Master toggle",
@@ -236,7 +237,7 @@ bar:
                     ~sink_muted:
                       - string:
                           {
-                            text: "SPK {sink_percent}%",
+                            text: "VOL {sink_percent}%",
                             on-click: /bin/sh -c "amixer set Master toggle",
                           }
                       - string:
@@ -346,13 +347,12 @@ bar:
                     }
     - label:
         content:
-          string:
-            on-click: /bin/sh -c "swaymsg reload"
-            text: 󰜉
-            font: *icon_font
-    - label:
-        content:
-          string:
-            on-click: /bin/sh -c "/home/$USER/.config/wofi/powermenu/launch.sh"
-            text: 
-            font: *icon_font
+          - string:
+              on-click: /bin/sh -c "swaymsg reload"
+              text: 󰜉
+              font: *icon_font
+          - string:
+              on-click: /bin/sh -c "/home/$USER/.config/wofi/powermenu/launch.sh"
+              margin: *icon_margin
+              text: 
+              font: *icon_font

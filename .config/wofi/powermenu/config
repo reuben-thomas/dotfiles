@@ -1,13 +1,13 @@
 mode=run
-width=280
-height=135
-columns = 2
-yoffset = 10
+
+width=370
+height=270
+location=center
+
 insensitive=true
-location=top
-hide-scroll=true
-allow_images=true
+parse_search=false
+
+allow_images=false
 hide_scroll=true
-dynamic_lines=true
-term=foot
+
 allow_markup=true

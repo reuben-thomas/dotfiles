@@ -13,8 +13,16 @@ vim.keymap.set("n", "<C-j>", "<Cmd>TmuxNavigateDown<CR>", { silent = true })
 vim.keymap.set("n", "<C-k>", "<Cmd>TmuxNavigateUp<CR>", { silent = true })
 vim.keymap.set("n", "<C-l>", "<Cmd>TmuxNavigateRight<CR>", { silent = true })
 
+-- Copilot
+vim.keymap.set(
+  "n",
+  "<leader>t",
+  ':lua require("copilot.suggestion").toggle_auto_trigger()<CR>',
+  { noremap = true, silent = true }
+)
+
 -- Color Picker
-vim.cmd([[hi FloatBorder guibg=NONE]]) -- if you don't want weird border background colors around the popup.
+-- vim.cmd([[hi FloatBorder guibg=NONE]]) -- if you don't want weird border background colors around the popup.
 
 -- Completion Toggle
 local cmp_enabled = false
