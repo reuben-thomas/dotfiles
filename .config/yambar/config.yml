@@ -193,21 +193,21 @@ bar:
                           }
                       - string:
                           {
-                            text: "[{source_port}",
-                            max: 10,
+                            text: " [{source_port}",
+                            max: 11,
                             on-click: /bin/sh -c "/home/$USER/.config/yambar/scripts/pulse-source-toggle.sh",
                           }
                       - string: { text: "]" }
                     ~source_muted:
                       - string:
                           {
-                            text: "MIC {source_percent}% ",
+                            text: "MIC {source_percent}%",
                             on-click: /bin/sh -c "amixer set Capture toggle",
                           }
                       - string:
                           {
-                            text: "[{source_port}",
-                            max: 10,
+                            text: " [{source_port}",
+                            max: 11,
                             on-click: /bin/sh -c "/home/$USER/.config/yambar/scripts/pulse-source-toggle.sh",
                           }
                       - string: { text: "]" }

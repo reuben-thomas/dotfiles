@@ -134,6 +134,7 @@ alias socvpn-start='sudo openfortivpn webvpn.comp.nus.edu.sg --username=e1123003
 alias chrome='google-chrome --password-store=gnome-libsecret'
 alias typetest='tt -showwpm -notheme -blockcursor'
 alias battop='/home/reuben/utils/battop-v0.2.4-x86_64-unknown-linux-gnu'
+alias zoxadd='/home/reuben/.config/scripts/zoxide-add.sh'
 
 # Obsidian Notes
 # alias obs='nvim ~/Documents/Obsidian -c "colorscheme tokyonight"'
@@ -145,12 +146,14 @@ alias note='nvim ~/Documents/Notes'
 alias dev-start='sudo systemctl enable docker && sudo systemctl enable postgresql'
 alias dev-stop='sudo systemctl disable docker && sudo systemctl disable postgresql'
 alias activate='source ~/.venv/base/bin/activate'
+alias vcpkg='function _vcpkg_alias(){ /home/reuben/utils/vcpkg/vcpkg "$@"; }; _vcpkg_alias'
 
 # System Shortcuts
 alias powerstatus='upower -i /org/freedesktop/UPower/devices/battery_BAT0'
 alias pcipm-enable='echo auto | sudo tee /sys/bus/pci/devices/*/power/control'
 alias buds='sudo service bluetooth restart; bluetoothctl connect DC:69:E2:BA:90:08'
 alias boot-windows='sudo ./home/reuben/.config/scripts/boot-windows.sh'
+alias lume='ddcutil setvcp 10 $1'
 
 # Created by `pipx` on 2023-12-13 10:18:49
 export PATH="$PATH:/home/reuben/.local/bin"
@@ -166,6 +169,12 @@ if command -v pyenv 1>/dev/null 2>&1; then
 	eval "$(pyenv init -)"
 fi
 
+# zoxide
+eval "$(zoxide init bash)"
+
 # bun
 export BUN_INSTALL="$HOME/.bun"
 export PATH=$BUN_INSTALL/bin:$PATH
+
+# vcpkg
+source /home/reuben/utils/vcpkg/scripts/vcpkg_completion.bash

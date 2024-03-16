@@ -42,6 +42,12 @@
     # Chrome / Firefox Picture-in-Picture
     for_window [title="Picture-in-picture$"] floating enable, sticky enable, resize set 420 240, move position cursor
 
+    # Okular Notes
+    for_window [title="New Text Note — Okular"] floating enable, move position cursor
+  
+    # GNUPlot Windows
+    for_window [app_id="gnuplot_qt"] floating enable, move position center
+
     # Zoom Ruins my Life
     for_window [title="^zoom$"] border none, floating enable
     for_window [title="^(Zoom|About)$"] border pixel, floating enable
@@ -68,7 +74,7 @@
     exec swaymsg gaps inner all set $default_gaps
     
     # Border colouring
-    set $cl_indi #61daff
+    set $cl_gray #8b97ad
     set $cl_high #4b8de3
     set $cl_fade #566a82
     set $cl_back #27303b
@@ -78,7 +84,7 @@
 
     #                       # border # bg     #txt     indi     #child border
     client.focused          $cl_high $cl_high $cl_text $cl_text $cl_high
-    client.focused_inactive $cl_fade $cl_fade $cl_text $cl_back $cl_fade
+    client.focused_inactive $cl_fade $cl_fade $cl_text $cl_gray $cl_fade
     client.unfocused        $cl_fade $cl_back $cl_text $cl_back $cl_back
     client.urgent           $cl_urge $cl_urge $cl_text $cl_urge $cl_urge
 
@@ -126,8 +132,6 @@
        natural_scroll enabled
        middle_emulation enabled
    }
-
-#
 # You can get the names of your inputs by running: swaymsg -t get_inputs
 # Read `man 5 sway-input` for more information about this section.
 
@@ -163,6 +167,9 @@
 
     # Kill focused window
     bindsym $mod+Shift+q kill
+
+    # Open Calculator
+    bindsym $mod+c exec gnome-calculator;
 
     # Open File Manager
     bindsym $mod+y exec nautilus;
@@ -208,7 +215,6 @@
     bindsym $mod+Shift+z exec /bin/sh -c \
       'killall autotiling; notify-send "Sway" "Autotiling Disabled" -h string:x-canonical-private-synchronous:autotiling-notification;'
 
-
 #
 # Moving around:
 #
@@ -242,8 +248,10 @@
 #
     # Persistent home
     set $ws_home music
-    bindsym $mod+grave workspace $ws_home
-    bindsym $mod+Shift+grave move container to workspace $ws_home, workspace $ws_home
+    bindcode $mod+9 workspace $ws_home
+    bindcode $mod+49 workspace $ws_home
+    bindcode $mod+Shift+9 move container to workspace $ws_home, workspace $ws_home
+    bindcode $mod+Shift+49 move container to workspace $ws_home, workspace $ws_home
     # Switch to workspace
     bindsym $mod+1 workspace number 1
     bindsym $mod+2 workspace number 2

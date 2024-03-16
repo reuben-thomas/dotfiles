@@ -7,6 +7,11 @@ vim.api.nowrap = true
 vim.g.copilot_enabled = false
 vim.opt.relativenumber = false
 vim.go.background = "dark"
+vim.opt.title = true
+
+vim.opt.titlelen = 50
+vim.opt.titlestring = "nvim %<%F%=%l/%L-%P"
+
 -- Other
 -- vim.opt.tabstop = 4
 -- vim.opt.softtabstop = 4

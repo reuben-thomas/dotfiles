@@ -10,6 +10,8 @@
 !.config/okularpartrc
 !.config/pulse
 !.config/ranger
+.config/ranger/plugins/*
+
 !.config/sway
 !.config/tmux
 !.config/waybar
