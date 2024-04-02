@@ -1,6 +1,6 @@
 # Fonts & Styling
 default_font: &default_font Hack Nerd Font Mono:pixelsize=12
-icon_font: &icon_font Hack Nerd Font Mono 6 Free:style=solid:pixelsize=14
+icon_font: &icon_font Hack Nerd Font 6 Free:style=solid:pixelsize=14
 icon_font_brands: &icon_font_brands Hack Nerd Font Mono 6 Brands:pixelsize=16
 std_underline: &std_underline { underline: { size: 2, color: ff0000ff } }
 
@@ -133,7 +133,7 @@ bar:
               {
                 text: "⬓ ",
                 font: *icon_font,
-                on-click: /bin/sh -c "sway output eDP-1 toggle &",
+                on-click: /bin/sh -c "sway output eDP-1 toggle; killall yambar; yambar &",
               }
           - string:
               {

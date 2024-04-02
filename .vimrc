@@ -5,7 +5,7 @@ nnoremap p :let @"=substitute(system("wl-paste --no-newline"), '<C-v><C-m>', '',
 set title
 
 " Visual
-colorscheme default
+colorscheme torte
 syntax on
 set number
 set ruler

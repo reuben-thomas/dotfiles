@@ -1,9 +1,15 @@
+#!/bin/bash
+
 killall yambar
 
-if type "xrandr"; then
-	for m in $(xrandr --query | grep " connected" | cut -d" " -f1); do
+# Check if wlr-randr is available
+if type "wlr-randr" >/dev/null; then
+	# Use wlr-randr to get connected displays
+	for m in $(wlr-randr | grep 'Enabled: yes' -B1 | grep -oP '^\S+'); do
+		# Extract the monitor name and launch yambar for it
 		MONITOR=$m yambar &
 	done
 else
-	notify-send "Hello"
+	# Fallback notification if wlr-randr is not available
+	notify-send "wlr-randr not found"
 fi

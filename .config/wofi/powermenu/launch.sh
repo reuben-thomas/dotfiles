@@ -2,7 +2,7 @@
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" &>/dev/null && pwd)"
 
-op=$(echo -e " Lock\n⭘ Suspend\n Windows\n󰜉 Reload\n Restart\n󰐥 Poweroff" |
+op=$(echo -e " Lock\n⭘ Suspend\n Windows\n UEFI\n󰜉 Reload\n Restart\n󰐥 Poweroff" |
 	wofi -i --dmenu \
 		-c $SCRIPT_DIR/config \
 		-s $SCRIPT_DIR/style.css |
@@ -25,7 +25,16 @@ restart)
 windows)
 	notify-send "System" "Restarting into  Windows 11" \
 		-i $SCRIPT_DIR\gear.png \
-		-h string:x-canonical-private-synchronous:powermenu-notif
+		-h string:x-canonical-private-synchronous:powermenu-notif &
+	PWD=$(zenity --password --title="Authentication Required")
+	echo $PASSWORD | sudo -S grub-reboot 2
+	;;
+uefi)
+	notify-send "System" "Entering UEFI Setup" \
+		-i $SCRIPT_DIR\gear.png \
+		-h string:x-canonical-private-synchronous:powermenu-notif &
+	PWD=$(zenity --password --title="Authentication Required")
+	echo $PASSWORD | sudo -S grub-reboot 3
 	;;
 reload)
 	notify-send "System" "Reloading Sway" \

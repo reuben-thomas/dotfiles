@@ -6,7 +6,7 @@ vim.opt.conceallevel = 1
 vim.api.nowrap = true
 vim.g.copilot_enabled = false
 vim.opt.relativenumber = false
-vim.go.background = "dark"
+vim.go.background = "light"
 vim.opt.title = true
 
 vim.opt.titlelen = 50

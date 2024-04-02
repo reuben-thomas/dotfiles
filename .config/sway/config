@@ -11,7 +11,7 @@
     set $term foot
 
     # Fonts
-    font pango:Hack Nerd Font Mono 11.5px
+    font pango:Hack Nerd Font 11.5px
 
     # App Launcher
     set $menu wofi
@@ -29,10 +29,15 @@
     exec dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP=sway
 
     # Wallpaper
-    output * bg /home/reuben/Pictures/Wallpapers/porschediagonal.jpg fill
+    output * bg /home/reuben/Pictures/Wallpapers/w14.png fill
 
 ### App Setting
 #
+    # Icons
+    for_window [app_id="zathura"] title_format 󰈙 %title
+    for_window [app_id="okular"] title_format 󰈙 %title
+    for_window [app_id="foot"] title_format   %title
+
     # Dynamic Tiling
     # exec_always /bin/sh -c 'killall autotiling; autotiling &'
 
@@ -47,6 +52,12 @@
   
     # GNUPlot Windows
     for_window [app_id="gnuplot_qt"] floating enable, move position center
+
+    # Zenity / pkexec
+    for_window [app_id="zenity"] floating enable, move position center
+
+    # Zathura
+    for_window [app_id="zathura"] tabbed enable
 
     # Zoom Ruins my Life
     for_window [title="^zoom$"] border none, floating enable
@@ -71,7 +82,7 @@
 
     # Gaps
     set $default_gaps 0
-    exec swaymsg gaps inner all set $default_gaps
+    exec_always swaymsg gaps inner all set $default_gaps
     
     # Border colouring
     set $cl_gray #8b97ad
@@ -119,8 +130,8 @@
     workspace 10 output $primary-monitor
 
     # Toggle built-in display upon closed/open events
-    bindswitch lid:on output $builtin-monitor disable
-    bindswitch lid:off output $builtin-monitor enable
+    bindswitch lid:on output $builtin-monitor disable, killall yambar
+    bindswitch lid:off output $builtin-monitor enable, killall yambar, yambar &
     exec_always cat /proc/acpi/button/lid/LID0/state | awk '{print $2}' | grep -q 'closed' && \
       swaymsg output $builtin-monitor disable
 
@@ -292,6 +303,7 @@
     bindsym $mod+o split none
 
     # Switch the current container between different layout styles
+    bindsym $mod+Shift+t splitv,layout tabbed
     bindsym $mod+w layout toggle split tabbed
     bindsym $mod+e layout toggle split
 

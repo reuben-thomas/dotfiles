@@ -16,12 +16,12 @@ border-color=#9d68d9
 [urgency=high]
 anchor=top-center
 background-color=#792424cc
-border-color=#bf616a
-default-timeout=10000
+border-color=#f05e48cc
 
 [app-name=Spotify]
 anchor=top-left
-border-color=#ffffffcc
+border-color=#57b570cc
+background-color=#1c452fcc
 
 [app-name=user-script]
 anchor=top-center
@@ -29,3 +29,6 @@ anchor=top-center
 [summary="Denise ❤️"]
 background-color=#de5489ff
 border-color=#ffd4e5ff
+
+[mode=do-not-disturb]
+invisible=1

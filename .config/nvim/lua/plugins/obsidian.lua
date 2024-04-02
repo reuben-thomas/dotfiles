@@ -16,7 +16,7 @@ return {
       },
       {
         name = "note",
-        path = "~/Documents/Notes",
+        path = "~/Documents/Note",
       },
     },
     completion = {

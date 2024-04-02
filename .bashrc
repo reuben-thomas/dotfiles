@@ -135,12 +135,14 @@ alias chrome='google-chrome --password-store=gnome-libsecret'
 alias typetest='tt -showwpm -notheme -blockcursor'
 alias battop='/home/reuben/utils/battop-v0.2.4-x86_64-unknown-linux-gnu'
 alias zoxadd='/home/reuben/.config/scripts/zoxide-add.sh'
+alias rg='ranger'
+alias e='exit'
 
 # Obsidian Notes
 # alias obs='nvim ~/Documents/Obsidian -c "colorscheme tokyonight"'
 # alias note='nvim ~/Documents/Notes -c "colorscheme tokyonight"'
-alias obs='nvim ~/Documents/Obsidian'
-alias note='nvim ~/Documents/Notes'
+alias obs='cd ~/Documents/Obsidian; nvim .'
+alias note='cd ~/Documents/Note/Note.md; nvim .'
 
 # Dev Shortcuts
 alias dev-start='sudo systemctl enable docker && sudo systemctl enable postgresql'
@@ -152,8 +154,10 @@ alias vcpkg='function _vcpkg_alias(){ /home/reuben/utils/vcpkg/vcpkg "$@"; }; _v
 alias powerstatus='upower -i /org/freedesktop/UPower/devices/battery_BAT0'
 alias pcipm-enable='echo auto | sudo tee /sys/bus/pci/devices/*/power/control'
 alias buds='sudo service bluetooth restart; bluetoothctl connect DC:69:E2:BA:90:08'
-alias boot-windows='sudo ./home/reuben/.config/scripts/boot-windows.sh'
+alias nest='sudo service bluetooth restart; bluetoothctl connect CC:F4:11:DA:58:B3'
 alias lume='ddcutil setvcp 10 $1'
+alias boot-windows='sudo grub-reboot 2; systemctl reboot'
+alias boot-uefi='sudo grub-reboot 3; systemctl reboot'
 
 # Created by `pipx` on 2023-12-13 10:18:49
 export PATH="$PATH:/home/reuben/.local/bin"
