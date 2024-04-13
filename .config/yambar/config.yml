@@ -7,6 +7,7 @@ std_underline: &std_underline { underline: { size: 2, color: ff0000ff } }
 # Theme
 fg_color: &fg_color e8e8e8ff
 bg_color: &bg_color 242424ff
+lime: &lime b7ff59ff
 
 # Colours
 white_deco: &white_deco { background: { color: ffffffff } }
@@ -17,6 +18,7 @@ white: &white ffffffff
 good_deco: &good_deco { background: { color: 00b061ff } }
 warn_deco: &warn_deco { background: { color: e66f00ff } }
 error_deco: &error_deco { background: { color: ff003cff } }
+weird_deco: &weird_deco { background: { color: 4fc2bcff } }
 
 # Margin
 deco_margin: &deco_margin 10
@@ -29,7 +31,7 @@ bar:
   margin: 7
 
   # Default font
-  font: Hack Nerd Font Mono:pixelsize=12
+  font: Hack Nerd Font:pixelsize=12
 
   foreground: *fg_color
   background: *bg_color
@@ -127,7 +129,10 @@ bar:
           - string:
               {
                 text: "DEV [",
-                on-click: /bin/sh -c "/home/$USER/.config/wofi/bt_device_toggle/launch.sh",
+                on-click:
+                  {
+                    left: /bin/sh -c "/home/$USER/.config/wofi/bt_device_toggle/launch.sh",
+                  },
               }
           - string:
               {
@@ -142,6 +147,7 @@ bar:
                 on-click: /bin/sh -c "wdisplays",
               }
           - string: { text: "]" }
+
     - foreign-toplevel:
         content:
           - map:
@@ -156,7 +162,23 @@ bar:
                         margin: *deco_margin,
                       }
                   # - string: { text: " {title}", max: 25, right-margin: 10 }
-
+    - script:
+        path: /home/reuben/.config/yambar/scripts/days-until.sh
+        poll-interval: 1800
+        args:
+          - "2024-04-29"
+        content:
+          - string:
+              {
+                text: "  FINALS {days} DAYS {hours} HOURS",
+                foreground: *lime,
+                margin: 0,
+              }
+  #
+  #
+  #
+  #
+  #
   center:
     - clock:
         time-format: "%H:%M %p"
@@ -165,16 +187,24 @@ bar:
           - string:
               {
                 text: "{time} - {date}",
-                foreground: *white,
+                foreground: ffffffff,
                 deco: *fade_white_deco,
                 margin: 25,
               }
-
+  #
+  #
+  #
+  #
+  #
   right:
     - backlight:
         name: intel_backlight
         content:
-          - string: { text: " LUM {percent}% " }
+          string:
+            text: " LUM {percent}% "
+            on-click:
+              left: ddcutil setvcp 10 - 10 --noverify --async
+              right: ddcutil setvcp 10 + 10 --noverify --async
     - pulse:
         content:
           map:
@@ -270,7 +300,11 @@ bar:
                       on-click: /bin/sh -c "foot nmtui",
                     }
               state == up:
-                - string: { text: "NET {signal} [" }
+                - string:
+                    {
+                      text: "NET {signal} [",
+                      on-click: /bin/sh -c "foot nmtui",
+                    }
                 - string: { text: "{ssid}", max: 15 }
                 - string: { text: "]" }
     - battery:
@@ -315,7 +349,7 @@ bar:
                     {
                       text: "EXT {capacity}% [{estimate}]",
                       margin: *deco_margin,
-                      deco: *warn_deco,
+                      deco: *weird_deco,
                       on-click: /bin/sh -c "/home/$USER/.config/yambar/scripts/powerprofile-toggle.sh",
                     }
               state == charging:

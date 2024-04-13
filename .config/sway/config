@@ -34,9 +34,23 @@
 ### App Setting
 #
     # Icons
-    for_window [app_id="zathura"] title_format 󰈙 %title
-    for_window [app_id="okular"] title_format 󰈙 %title
-    for_window [app_id="foot"] title_format   %title
+    for_window [app_id="zathura"] title_format '󰈙 ' %title
+    for_window [app_id="okular"] title_format '󰈙 ' %title
+    for_window [app_id="google-chrome"] title_format ' ' %title
+    for_window [app_id="firefox"] title_format ' ' %title
+    for_window [app_id="libreoffice-writer"] title_format ' ' %title
+    for_window [app_id="libreoffice-impress"] title_format '󱎐 ' %title
+    for_window [app_id="libreoffice-calc"] title_format '󱎏 ' %title
+    for_window [class="jetbrains-idea"] title_format ' ' %title
+    for_window [class="Slack"] title_format '󰒱 ' %title
+    for_window [title="Spotify Premium"] title_format ' ' %title
+
+    for_window [title="^.*Obsidian - Obsidian v1.*$"] title_format '󰎚 ' %title
+    for_window [title=".*Visual Studio Code$"] title_format '󰨞 ' %title
+    for_window [title="^.*foot.*$"] title_format ' '  %title
+    for_window [title="^.*bash.*$"] title_format ' '  %title
+    for_window [title="^.*nvim.*$"] title_format ' ' %title
+    for_window [title="^.*R Graphics.*$"] title_format ' ' %title
 
     # Dynamic Tiling
     # exec_always /bin/sh -c 'killall autotiling; autotiling &'
@@ -52,6 +66,9 @@
   
     # GNUPlot Windows
     for_window [app_id="gnuplot_qt"] floating enable, move position center
+
+    # I hate R
+    for_window [title="^.*R Graphics.*$"] floating enable
 
     # Zenity / pkexec
     for_window [app_id="zenity"] floating enable, move position center
@@ -70,7 +87,7 @@
     # for_window [title=".*" floating] resize set 500 500
 
     # Persistent Terminal
-    exec $term --title scratchpadTerm
+    exec $term --title scratchpadTerm -e ranger
     for_window [title="scratchpadTerm"] floating enable, move position center, move scratchpad
 
 ### Styling
@@ -162,8 +179,8 @@
     bindsym XF86MonBrightnessDown exec brightnessctl set 5%- &
 
     # External Display Brightness
-    bindsym $mod+Alt+Down exec ddcutil setvcp 10 - 10 --noverify --async &
-    bindsym $mod+Alt+Up exec ddcutil setvcp 10 + 10 --noverify --async &
+    bindsym $mod+Alt+Down exec ddcutil setvcp 10 - 10 --noverify --async
+    bindsym $mod+Alt+Up exec ddcutil setvcp 10 + 10 --noverify --async
 
     # Toggle Theme
     bindsym $mod+n exec /bin/sh -c "/home/$USER/.config/scripts/theme-toggle.sh dark"
@@ -257,6 +274,10 @@
 #
 # Workspaces
 #
+    # Rename workspace
+    bindcode $mod+Alt+9 exec swaymsg rename workspace to "$(wofi ==height 100 --show dmenu)"
+    bindcode $mod+Alt+49 exec swaymsg rename workspace to "$(wofi --height 100 --show dmenu)"
+
     # Persistent home
     set $ws_home music
     bindcode $mod+9 workspace $ws_home
@@ -285,9 +306,17 @@
     bindsym $mod+Shift+8 move container to workspace number 8, workspace number 8 
     bindsym $mod+Shift+9 move container to workspace number 9, workspace number 9
     bindsym $mod+Shift+0 move container to workspace number 10, workspace number 10
+    # Rename workspace
+    bindsym $mod+Alt+1 rename workspace to 1
+    bindsym $mod+Alt+2 rename workspace to 2
+    bindsym $mod+Alt+3 rename workspace to 3
+    bindsym $mod+Alt+4 rename workspace to 4
+    bindsym $mod+Alt+5 rename workspace to 5
+    bindsym $mod+Alt+6 rename workspace to 6
+    bindsym $mod+Alt+7 rename workspace to 7
+    bindsym $mod+Alt+8 rename workspace to 8
+    bindsym $mod+Alt+9 rename workspace to 9
     # Workspace Switching
-    bindsym $mod+Alt+1 workspace prev
-    bindsym $mod+Alt+2 workspace next
     bindcode $mod+34 workspace prev
     bindcode $mod+35 workspace next
 #
@@ -303,7 +332,7 @@
     bindsym $mod+o split none
 
     # Switch the current container between different layout styles
-    bindsym $mod+Shift+t splitv,layout tabbed
+    bindsym $mod+t splitv,layout tabbed
     bindsym $mod+w layout toggle split tabbed
     bindsym $mod+e layout toggle split
 
@@ -331,11 +360,14 @@
     # Show the next scratchpad window or hide the focused scratchpad window.
     # If there are multiple scratchpad windows, this command cycles through them.
     bindsym $mod+semicolon scratchpad show, move position center
+
+    # Restore default scratchpad
+    bindsym $mod+Alt+semicolon exec $term --title scratchpadTerm -e ranger
 #
 # Resizing containers:
 #
     # Height Presets
-    bindsym $mod+t resize set height 20 ppt
+    bindsym $mod+Alt+t resize set height 20 ppt
     bindsym $mod+Alt+$left resize shrink width 10
     bindsym $mod+Alt+$up resize grow height 10
     bindsym $mod+Alt+$down resize shrink height 10
