@@ -29,7 +29,7 @@
     exec dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP=sway
 
     # Wallpaper
-    output * bg /home/reuben/Pictures/Wallpapers/w14.png fill
+    output * bg /home/reuben/Pictures/Wallpapers/porschediagonal.jpg fill
 
 ### App Setting
 #
@@ -118,14 +118,13 @@
 
 ### Status Bar:
 #
-    # TODO Configure yambar monitor  
-    exec_always /bin/sh -c 'killall yambar; yambar &'
+    exec_always /bin/sh -c "/home/$USER/.config/yambar/scripts/launch-yambar.sh"
 
 ### Display Outputs
 #
     # Monitor Config
     set $builtin-monitor eDP-1
-    set $primary-monitor DP-3 DP-5 eDP-1
+    set $primary-monitor DP-5 DP-7 eDP-1
 
     # Home Dock Setup (Most monitors, least amount of work)
     # output $builtin-monitor pos 0 0
@@ -147,8 +146,8 @@
     workspace 10 output $primary-monitor
 
     # Toggle built-in display upon closed/open events
-    bindswitch lid:on output $builtin-monitor disable, killall yambar
-    bindswitch lid:off output $builtin-monitor enable, killall yambar, yambar &
+    bindswitch lid:on output $builtin-monitor disable, /bin/sh -c "/home/$USER/.config/yambar/scripts/launch-yambar.sh"
+    bindswitch lid:off output $builtin-monitor enable, /bin/sh -c "/home/$USER/.config/yambar/scripts/launch-yambar.sh"
     exec_always cat /proc/acpi/button/lid/LID0/state | awk '{print $2}' | grep -q 'closed' && \
       swaymsg output $builtin-monitor disable
 
@@ -157,6 +156,7 @@
    input "1267:12572:VEN_04F3:00_04F3:311C_Touchpad" {
        dwt enabled
        tap enabled
+       accel_profile "flat"
        natural_scroll enabled
        middle_emulation enabled
    }
@@ -275,7 +275,7 @@
 # Workspaces
 #
     # Rename workspace
-    bindcode $mod+Alt+9 exec swaymsg rename workspace to "$(wofi ==height 100 --show dmenu)"
+    bindcode $mod+Alt+9 exec swaymsg rename workspace to "$(wofi --height 100 --show dmenu)"
     bindcode $mod+Alt+49 exec swaymsg rename workspace to "$(wofi --height 100 --show dmenu)"
 
     # Persistent home

@@ -1,8 +1,6 @@
 # Fonts & Styling
-default_font: &default_font Hack Nerd Font Mono:pixelsize=12
+default_font: &default_font Hack Nerd Font:pixelsize=12
 icon_font: &icon_font Hack Nerd Font 6 Free:style=solid:pixelsize=14
-icon_font_brands: &icon_font_brands Hack Nerd Font Mono 6 Brands:pixelsize=16
-std_underline: &std_underline { underline: { size: 2, color: ff0000ff } }
 
 # Theme
 fg_color: &fg_color e8e8e8ff
@@ -25,13 +23,14 @@ deco_margin: &deco_margin 10
 icon_margin: &icon_margin 10
 
 bar:
+  monitor: DP-5
   height: 20
   location: top
   spacing: 10
   margin: 7
 
   # Default font
-  font: Hack Nerd Font:pixelsize=12
+  font: *default_font
 
   foreground: *fg_color
   background: *bg_color
@@ -43,14 +42,14 @@ bar:
           - string:
               &i3_common {
                 margin: 7,
-                on-click: "swaymsg --quiet workspace {name}",
+                on-click:
+                  {
+                    left: "swaymsg --quiet workspace {name}",
+                    wheel-up: "swaymsg --quiet workspace next",
+                    wheel-down: "swaymsg --quiet workspace prev",
+                  },
               }
           - string: &default { <<: *i3_common, text: "{name}" }
-          - string: &main { <<: *i3_common, text: , font: *icon_font }
-          - string:
-              &surfing { <<: *i3_common, text: , font: *icon_font_brands }
-          - string: &misc { <<: *i3_common, text: , font: *icon_font }
-          - string: &mail { <<: *i3_common, text: , font: *icon_font }
           - string: &music { <<: *i3_common, text: 󰼛, font: *icon_font }
           - focused: &focused
               foreground: *bg_color
@@ -70,6 +69,7 @@ bar:
                 - empty: { right-margin: 7 }
               conditions:
                 mode == default: { empty: {} }
+        strip-workspace-numbers: false
         content:
           "":
             map:
@@ -78,35 +78,6 @@ bar:
                 state == unfocused: { string: { <<: *default } }
                 state == invisible: { string: { <<: [*default, *invisible] } }
                 state == urgent: { string: { <<: [*default, *urgent] } }
-          main:
-            map:
-              conditions:
-                state == focused: { string: { <<: [*main, *focused] } }
-                state == unfocused: { string: { <<: *main } }
-                state == invisible: { string: { <<: [*main, *invisible] } }
-                state == urgent: { string: { <<: [*main, *urgent] } }
-          surfing:
-            map:
-              conditions:
-                state == focused: { string: { <<: [*surfing, *focused] } }
-                state == unfocused: { string: { <<: *surfing } }
-                state == invisible: { string: { <<: [*surfing, *invisible] } }
-                state == urgent: { string: { <<: [*surfing, *urgent] } }
-          misc:
-            map:
-              conditions:
-                state == focused: { string: { <<: [*misc, *focused] } }
-                state == unfocused: { string: { <<: *misc } }
-                state == invisible: { string: { <<: [*misc, *invisible] } }
-                state == urgent: { string: { <<: [*misc, *urgent] } }
-
-          mail:
-            map:
-              conditions:
-                state == focused: { string: { <<: [*mail, *focused] } }
-                state == unfocused: { string: { <<: *mail } }
-                state == invisible: { string: { <<: [*mail, *invisible] } }
-                state == urgent: { string: { <<: [*mail, *urgent] } }
           music:
             map:
               conditions:
@@ -144,7 +115,7 @@ bar:
               {
                 text: "▭  ▯",
                 font: *icon_font,
-                on-click: /bin/sh -c "wdisplays",
+                on-click: /bin/sh -c "/home/$USER/.config/scripts/dock.sh",
               }
           - string: { text: "]" }
 
@@ -166,11 +137,11 @@ bar:
         path: /home/reuben/.config/yambar/scripts/days-until.sh
         poll-interval: 1800
         args:
-          - "2024-04-29"
+          - "2024-08-02"
         content:
           - string:
               {
-                text: "  FINALS {days} DAYS {hours} HOURS",
+                text: "  {days} DAYS {hours} HOURS",
                 foreground: *lime,
                 margin: 0,
               }
@@ -205,6 +176,8 @@ bar:
             on-click:
               left: ddcutil setvcp 10 - 10 --noverify --async
               right: ddcutil setvcp 10 + 10 --noverify --async
+              wheel-up: brightnessctl set +5% &
+              wheel-down: brightnessctl set 5%- &
     - pulse:
         content:
           map:
@@ -255,7 +228,12 @@ bar:
                             text: "VOL MUT",
                             margin: *deco_margin,
                             deco: *warn_deco,
-                            on-click: /bin/sh -c "amixer set Master toggle",
+                            on-click:
+                              {
+                                left: /bin/sh -c "amixer set Master toggle",
+                                wheel-up: /bin/sh -c "pactl set-sink-volume @DEFAULT_SINK@ +5%",
+                                wheel-down: /bin/sh -c "pactl set-sink-volume	@DEFAULT_SINK@ -5%",
+                              },
                           }
                       - string:
                           {
@@ -268,7 +246,12 @@ bar:
                       - string:
                           {
                             text: "VOL {sink_percent}%",
-                            on-click: /bin/sh -c "amixer set Master toggle",
+                            on-click:
+                              {
+                                left: /bin/sh -c "amixer set Master toggle",
+                                wheel-up: /bin/sh -c "pactl set-sink-volume @DEFAULT_SINK@ +5%",
+                                wheel-down: /bin/sh -c "pactl set-sink-volume	@DEFAULT_SINK@ -5%",
+                              },
                           }
                       - string:
                           {

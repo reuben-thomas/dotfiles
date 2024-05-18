@@ -1,0 +1,109 @@
+# Fonts & Styling
+default_font: &default_font Hack Nerd Font:pixelsize=12
+icon_font: &icon_font Hack Nerd Font 6 Free:style=solid:pixelsize=14
+
+# Theme
+fg_color: &fg_color e8e8e8ff
+bg_color: &bg_color 242424ff
+
+# Colours
+white_deco: &white_deco { background: { color: ffffffff } }
+fade_white_deco: &fade_white_deco { background: { color: ffffff33 } }
+white: &white ffffffff
+
+# States
+error_deco: &error_deco { background: { color: ff003cff } }
+
+# Margin
+deco_margin: &deco_margin 10
+
+bar:
+  height: 20
+  location: top
+  monitor: DP-7
+  spacing: 10
+  margin: 7
+
+  # Default font
+  font: *default_font
+
+  foreground: *fg_color
+  background: *bg_color
+
+  left:
+    - i3:
+        sort: ascending
+        anchors: # Not used (directly) by f00bar; used here to avoid duplication
+          - string:
+              &i3_common {
+                margin: 7,
+                on-click:
+                  {
+                    left: "swaymsg --quiet workspace {name}",
+                    wheel-up: "swaymsg --quiet workspace next",
+                    wheel-down: "swaymsg --quiet workspace prev",
+                  },
+              }
+          - string: &default { <<: *i3_common, text: "{name}" }
+          - string: &music { <<: *i3_common, text: 󰼛, font: *icon_font }
+          - focused: &focused
+              foreground: *bg_color
+              deco: { stack: [*white_deco] }
+          - invisible: &invisible
+              foreground: *fg_color
+              deco: *fade_white_deco
+          - urgent: &urgent
+              foreground: *fg_color
+              deco: { stack: [*error_deco] }
+          - map: &i3_mode
+              default:
+                - string:
+                    margin: 5
+                    text: "{mode}"
+                    deco: { background: { color: cc421dff } }
+                - empty: { right-margin: 7 }
+              conditions:
+                mode == default: { empty: {} }
+        strip-workspace-numbers: false
+        content:
+          "":
+            map:
+              conditions:
+                state == focused: { string: { <<: [*default, *focused] } }
+                state == unfocused: { string: { <<: *default } }
+                state == invisible: { string: { <<: [*default, *invisible] } }
+                state == urgent: { string: { <<: [*default, *urgent] } }
+          music:
+            map:
+              conditions:
+                state == focused: { string: { <<: [*music, *focused] } }
+                state == unfocused: { string: { <<: *music } }
+                state == invisible: { string: { <<: [*music, *invisible] } }
+                state == urgent: { string: { <<: [*music, *urgent] } }
+
+    - foreign-toplevel:
+        content:
+          - map:
+              conditions:
+                ~activated: { empty: {} }
+                activated:
+                  - string:
+                      {
+                        text: "{app-id}",
+                        foreground: *white,
+                        deco: *fade_white_deco,
+                        margin: *deco_margin,
+                      }
+
+  right:
+    - clock:
+        time-format: "%H:%M %p"
+        date-format: "%^a %d.%m.%Y"
+        content:
+          - string:
+              {
+                text: "{time} - {date}",
+                foreground: ffffffff,
+                deco: *fade_white_deco,
+                margin: 10,
+              }

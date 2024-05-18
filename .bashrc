@@ -134,15 +134,22 @@ alias socvpn-start='sudo openfortivpn webvpn.comp.nus.edu.sg --username=e1123003
 alias chrome='google-chrome --password-store=gnome-libsecret'
 alias typetest='tt -showwpm -notheme -blockcursor'
 alias battop='/home/reuben/utils/battop-v0.2.4-x86_64-unknown-linux-gnu'
+alias powerstats='flatpak run org.gnome.PowerStats&exit'
+alias logisim='/home/reuben/cs/CS2100/logisim/launch.sh'
+
+# Pure Laziness
+alias yam='/home/reuben/.config/yambar/scripts/launch-yambar.sh'
 alias zoxadd='/home/reuben/.config/scripts/zoxide-add.sh'
 alias rg='ranger'
 alias e='exit'
+alias t='tmux'
 
 # Obsidian Notes
+alias obs='cd ~/Documents/Obsidian; nvim .'
+alias note='cd ~/Documents/Note; nvim Note.md'
+# For opening with non-system theme
 # alias obs='nvim ~/Documents/Obsidian -c "colorscheme tokyonight"'
 # alias note='nvim ~/Documents/Notes -c "colorscheme tokyonight"'
-alias obs='cd ~/Documents/Obsidian; nvim .'
-alias note='cd ~/Documents/Note/Note.md; nvim .'
 
 # Dev Shortcuts
 alias dev-start='sudo systemctl enable docker && sudo systemctl enable postgresql'
@@ -155,7 +162,7 @@ alias powerstatus='upower -i /org/freedesktop/UPower/devices/battery_BAT0'
 alias pcipm-enable='echo auto | sudo tee /sys/bus/pci/devices/*/power/control'
 alias buds='sudo service bluetooth restart; bluetoothctl connect DC:69:E2:BA:90:08'
 alias nest='sudo service bluetooth restart; bluetoothctl connect CC:F4:11:DA:58:B3'
-alias lume='ddcutil setvcp 10 $1'
+alias lume='/home/reuben/.config/scripts/lume.sh $1'
 alias boot-windows='sudo grub-reboot 2; systemctl reboot'
 alias boot-uefi='sudo grub-reboot 3; systemctl reboot'
 
