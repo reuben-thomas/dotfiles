@@ -162,7 +162,7 @@ alias powerstatus='upower -i /org/freedesktop/UPower/devices/battery_BAT0'
 alias pcipm-enable='echo auto | sudo tee /sys/bus/pci/devices/*/power/control'
 alias buds='sudo service bluetooth restart; bluetoothctl connect DC:69:E2:BA:90:08'
 alias nest='sudo service bluetooth restart; bluetoothctl connect CC:F4:11:DA:58:B3'
-alias lume='/home/reuben/.config/scripts/lume.sh $1'
+alias lume='python3 /home/reuben/.config/scripts/lume.py $1'
 alias boot-windows='sudo grub-reboot 2; systemctl reboot'
 alias boot-uefi='sudo grub-reboot 3; systemctl reboot'
 

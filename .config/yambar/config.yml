@@ -174,10 +174,10 @@ bar:
           string:
             text: " LUM {percent}% "
             on-click:
-              left: ddcutil setvcp 10 - 10 --noverify --async
-              right: ddcutil setvcp 10 + 10 --noverify --async
-              wheel-up: brightnessctl set +5% &
               wheel-down: brightnessctl set 5%- &
+              wheel-up: brightnessctl set +5% &
+              left: /bin/sh -c "python3 /home/reuben/.config/yambar/scripts/brightness.py -"
+              right: /bin/sh -c "python3 /home/reuben/.config/yambar/scripts/brightness.py +"
     - pulse:
         content:
           map:
