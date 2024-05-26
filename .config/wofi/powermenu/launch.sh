@@ -8,49 +8,57 @@ op=$(echo -e " Lock\n⭘ Suspend\n Windows\n UEFI\n󰜉 Reload\n Res
 		-s $SCRIPT_DIR/style.css |
 	awk '{print tolower($2)}')
 
+fatal() {
+	echo "FATAL ERROR: $@"
+	notify-send "System" "$@" \
+		-h string:x-canonical-private-synchronous:powermenu-notif &
+	exit 1
+}
+
 case $op in
 poweroff)
 	notify-send "System" "Shutting Down" \
-		-i $SCRIPT_DIR\gear.png \
 		-h string:x-canonical-private-synchronous:powermenu-notif &
-	ddcutil setvcp D6 05
+	# Poweroff all external monitors
+	display_count=$(ddcutil detect | grep -c '^Display [0-9]*')
+	for ((display = 1; display <= $display_count; display++)); do
+		ddcutil setvcp D6 05 --display "$display" --noverify --async
+	done
 	systemctl poweroff
 	;&
 restart)
 	notify-send "System" "Restarting" \
-		-i $SCRIPT_DIR\gear.png \
 		-h string:x-canonical-private-synchronous:powermenu-notif &
 	systemctl reboot
 	;&
 windows)
 	notify-send "System" "Restarting into  Windows 11" \
-		-i $SCRIPT_DIR\gear.png \
 		-h string:x-canonical-private-synchronous:powermenu-notif &
-	PWD=$(zenity --password --title="Authentication Required")
-	echo $PASSWORD | sudo -S grub-reboot 2
+	trap 'sudo -k' EXIT
+	zenity --password | sudo -Sv || fatal "Authentication Failed"
+	sudo grub-reboot 2
+	systemctl reboot
 	;;
 uefi)
 	notify-send "System" "Entering UEFI Setup" \
-		-i $SCRIPT_DIR\gear.png \
 		-h string:x-canonical-private-synchronous:powermenu-notif &
-	PWD=$(zenity --password --title="Authentication Required")
-	echo $PASSWORD | sudo -S grub-reboot 3
+	trap 'sudo -k' EXIT
+	zenity --password | sudo -Sv || fatal "Authentication Failed"
+	sudo grub-reboot 3
+	systemctl reboot
 	;;
 reload)
 	notify-send "System" "Reloading Sway" \
-		-i $SCRIPT_DIR\gear.png \
 		-h string:x-canonical-private-synchronous:powermenu-notif &
 	swaymsg reload
 	;;
 suspend)
 	notify-send "System" "Exiting Sway" \
-		-i $SCRIPT_DIR\gear.png \
 		-h string:x-canonical-private-synchronous:powermenu-notif &
 	swaymsg exit
 	;;
 lock)
 	notify-send "System" "Swaylock" \
-		-i $SCRIPT_DIR\gear.png \
 		-h string:x-canonical-private-synchronous:powermenu-notif &
 	swaylock -c 000000ff \
 		--text-color 00000000 \
@@ -60,6 +68,6 @@ lock)
 		--ring-wrong-color 9c283cff \
 		--ring-ver-color 3827cfff \
 		--ring-clear-color ffffffff \
-		-i /home/$USER/Pictures/Wallpapers/w14.png
+		-i /home/$USER/Pictures/Wallpapers/porschediagonal.jpg
 	;;
 esac

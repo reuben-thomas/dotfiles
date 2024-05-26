@@ -60,6 +60,7 @@
 
     # Chrome / Firefox Picture-in-Picture
     for_window [title="Picture-in-picture$"] floating enable, sticky enable, resize set 420 240, move position cursor
+    for_window [title="Picture-in-Picture$"] floating enable, sticky enable, resize set 420 240, move position cursor
 
     # Okular Notes
     for_window [title="New Text Note — Okular"] floating enable, move position cursor
@@ -72,6 +73,9 @@
 
     # Zenity / pkexec
     for_window [app_id="zenity"] floating enable, move position center
+
+    # Kooha
+    for_window [app_id="io.github.seadve.Kooha"] floating enable, move position center
 
     # Zathura
     for_window [app_id="zathura"] tabbed enable
@@ -169,8 +173,8 @@
 #
     # Volume
     exec pactl set-sink-volume @DEFAULT_SINK@ 0 150%
-    bindsym XF86AudioRaiseVolume exec pactl set-sink-mute @DEFAULT_SINK@ 0 && pactl set-sink-volume @DEFAULT_SINK@ +5%
-    bindsym	XF86AudioLowerVolume exec pactl set-sink-mute @DEFAULT_SINK@ 0 && pactl set-sink-volume	@DEFAULT_SINK@ -5%
+    bindsym XF86AudioRaiseVolume exec pactl set-sink-mute @DEFAULT_SINK@ 0 && pactl set-sink-volume @DEFAULT_SINK@ +5% && pactl set-sink-volume @DEFAULT_SINK@ $((($(pactl get-sink-volume @DEFAULT_SINK@ | awk '/Volume: front/{print $5}' | tr -d '%') + 2) / 5 * 5))%
+    bindsym XF86AudioLowerVolume exec pactl set-sink-mute @DEFAULT_SINK@ 0 && pactl set-sink-volume @DEFAULT_SINK@ -5% && pactl set-sink-volume @DEFAULT_SINK@ $((($(pactl get-sink-volume @DEFAULT_SINK@ | awk '/Volume: front/{print $5}' | tr -d '%') + 2) / 5 * 5))%
     bindsym	XF86AudioMute exec pactl set-sink-mute @DEFAULT_SINK@ toggle
 
     # Built-in Brightness

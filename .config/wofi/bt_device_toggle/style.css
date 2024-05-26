@@ -1,63 +1,6 @@
-@define-color bg #2e3440;
-@define-color selected #44475a;
-@define-color accent #4287f5;
-@define-color txt #44475a;
+@define-color bg rgba(25, 25, 45, 0.9);
+@define-color selected rgba(70, 70, 90, 0.9);
+@define-color accent rgba(20, 130, 255, 1.0);
+@define-color txt rgba(230, 230, 240, 1.0);
 
-* {
-  font-family: Hack Nerd Font Mono;
-  font-size: 13px;
-  color: #e5e9f0;
-}
-
-window {
-  background-color: @bg;
-  border: 4px solid @accent;
-  border-radius: 0px;
-}
-
-#outer-box {
-  margin-bottom: 12px;
-}
-
-#input {
-  border: none;
-  background-color: @bg;
-  margin: 7px;
-  box-shadow: none; /* Remove blue "border" */
-}
-
-#inner-box {
-  background-color: @bg;
-  margin: 7px;
-  margin-top: 0;
-}
-
-#entry {
-  padding-left: 10px;
-  margin-left: -0px;
-  margin-right: -0px;
-  border: none;
-  outline: none;
-}
-
-#img {
-  padding-right: 10px;
-}
-
-#entry:selected {
-  background-color: @selected;
-  border-radius: 0px;
-}
-
-#text {
-  margin: 2px;
-}
-
-#scroll {
-  margin: 5px;
-  color: transparent;
-}
-
-.right {
-  color: transparent;
-}
+@import "/home/reuben/.config/wofi/common.css";
