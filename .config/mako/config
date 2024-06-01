@@ -1,4 +1,4 @@
-font=Hack Nerd Font Mono 8
+font=JetBrains Mono 8
 background-color=#00002acc
 text-color=#ffffff
 width=300
@@ -27,8 +27,8 @@ background-color=#1c452fcc
 anchor=top-center
 
 [summary="Denise ❤️"]
-background-color=#de5489ff
-border-color=#ffd4e5ff
+background-color=#de5489cc
+border-color=#ffd4e5cc
 
 [mode=do-not-disturb]
 invisible=1

@@ -1,9 +1,14 @@
 #!/bin/bash
 
-# Monitor Layout
+# Layout Without Scale
 sway output eDP-1 disable
-sway output "'Dell Inc. DELL S3422DWG 48LXSH3'" pos 0 480
-sway output "'Goldstar Company Ltd LG FULL HD '" pos 3440 0 transform 90
+sway output "'Dell Inc. DELL S3422DWG 48LXSH3'" pos 0 480 scale 1
+sway output "'Goldstar Company Ltd LG FULL HD '" pos 3440 0 scale 1 transform 90
+
+# Layout With Scale
+# sway output eDP-1 disable
+# sway output "'Dell Inc. DELL S3422DWG 48LXSH3'" pos 0 530
+# sway output "'Goldstar Company Ltd LG FULL HD '" pos 3440 0 scale 0.85 transform 90
 
 # Assign Workspaces
 sway workspace music output "'Goldstar Company Ltd LG FULL HD '"

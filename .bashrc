@@ -138,6 +138,8 @@ alias powerstats='flatpak run org.gnome.PowerStats&exit'
 alias logisim='/home/reuben/cs/CS2100/logisim/launch.sh'
 
 # Pure Laziness
+alias work='/home/reuben/.config/scripts/work.sh'
+alias dock='/home/reuben/.config/scripts/dock.sh'
 alias yam='/home/reuben/.config/yambar/scripts/launch-yambar.sh'
 alias zoxadd='/home/reuben/.config/scripts/zoxide-add.sh'
 alias rg='ranger'

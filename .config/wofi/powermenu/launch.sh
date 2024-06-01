@@ -35,7 +35,8 @@ windows)
 	notify-send "System" "Restarting into  Windows 11" \
 		-h string:x-canonical-private-synchronous:powermenu-notif &
 	trap 'sudo -k' EXIT
-	zenity --password | sudo -Sv || fatal "Authentication Failed"
+	zenity --password |
+		sudo -Sv || fatal "Authentication Failed"
 	sudo grub-reboot 2
 	systemctl reboot
 	;;
@@ -43,7 +44,8 @@ uefi)
 	notify-send "System" "Entering UEFI Setup" \
 		-h string:x-canonical-private-synchronous:powermenu-notif &
 	trap 'sudo -k' EXIT
-	zenity --password | sudo -Sv || fatal "Authentication Failed"
+	zenity --password |
+		sudo -Sv || fatal "Authentication Failed"
 	sudo grub-reboot 3
 	systemctl reboot
 	;;

@@ -130,13 +130,6 @@
     set $builtin-monitor eDP-1
     set $primary-monitor DP-5 DP-7 eDP-1
 
-    # Home Dock Setup (Most monitors, least amount of work)
-    # output $builtin-monitor pos 0 0
-    # output $builtin-monitor pos 740 1680
-    # output DP-5 pos 0 240
-    # output DP-7 transform 90
-    # output DP-7 pos 3400 0
-
     # Workspace Allocation
     workspace 1 output $primary-monitor
     workspace 2 output $primary-monitor
@@ -160,7 +153,8 @@
    input "1267:12572:VEN_04F3:00_04F3:311C_Touchpad" {
        dwt enabled
        tap enabled
-       accel_profile "flat"
+       accel_profile "adaptive"
+       scroll_factor 0.5
        natural_scroll enabled
        middle_emulation enabled
    }
