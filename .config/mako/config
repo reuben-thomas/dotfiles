@@ -30,5 +30,5 @@ anchor=top-center
 background-color=#de5489cc
 border-color=#ffd4e5cc
 
-[mode=do-not-disturb]
+[mode=dnd]
 invisible=1

@@ -98,8 +98,8 @@
 #
     smart_borders on
     hide_edge_borders smart
-    default_border pixel 4
-    for_window [class=".*"] border pixel 4
+    default_border pixel 3
+    for_window [class=".*"] border pixel 3
 
     # Gaps
     set $default_gaps 0
@@ -183,6 +183,11 @@
     # Toggle Theme
     bindsym $mod+n exec /bin/sh -c "/home/$USER/.config/scripts/theme-toggle.sh dark"
     bindsym $mod+Shift+n exec /bin/sh -c "/home/$USER/.config/scripts/theme-toggle.sh light"
+
+    # Toggle DND
+    bindsym $mod+Alt+n exec /bin/sh -c "/home/$USER/.config/scripts/dnd-toggle.sh"
+
+
 #
 # Basics:
 #

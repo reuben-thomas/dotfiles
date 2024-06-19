@@ -129,6 +129,7 @@ fi
 # fi
 
 # App Shortcuts
+alias code='code --enable-features=UseOzonePlatform,WaylandWindowDecorations,WebRTCPipeWireCapturer --ozone-platform-hint=auto > /dev/null 2>&1'
 alias obsidian-sync='/home/reuben/.config/scripts/obsidian-sync.sh'
 alias socvpn-start='sudo openfortivpn webvpn.comp.nus.edu.sg --username=e1123003'
 alias chrome='google-chrome --password-store=gnome-libsecret'
