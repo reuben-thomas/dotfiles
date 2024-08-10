@@ -1,0 +1,30 @@
+{"signed_in":false,"milliseconds_since_first_event":0,"type":"App","operation":"open"}
+{"signed_in":false,"milliseconds_since_first_event":40,"type":"Setting","setting":"theme","value":"One Light"}
+{"signed_in":false,"milliseconds_since_first_event":40,"type":"Setting","setting":"keymap","value":"VSCode"}
+{"signed_in":false,"milliseconds_since_first_event":0,"type":"Extension","extension_id":"git-firefly","version":"0.0.3"}
+{"signed_in":false,"milliseconds_since_first_event":0,"type":"Extension","extension_id":"html","version":"0.1.1"}
+{"signed_in":false,"milliseconds_since_first_event":0,"type":"Extension","extension_id":"macos-classic","version":"0.0.8"}
+{"signed_in":false,"milliseconds_since_first_event":235,"type":"Editor","operation":"open","file_extension":"rs","vim_mode":true,"copilot_enabled":true,"copilot_enabled_for_language":true}
+{"signed_in":false,"milliseconds_since_first_event":235,"type":"Editor","operation":"open","file_extension":"rs","vim_mode":true,"copilot_enabled":true,"copilot_enabled_for_language":true}
+{"signed_in":true,"milliseconds_since_first_event":6345,"type":"Action","source":"command palette","action":"theme selector: toggle"}
+{"signed_in":true,"milliseconds_since_first_event":11954,"type":"Setting","setting":"theme","value":"macOS Classic Dark2"}
+{"signed_in":true,"milliseconds_since_first_event":32349,"type":"Editor","operation":"open","file_extension":"rs","vim_mode":true,"copilot_enabled":true,"copilot_enabled_for_language":true}
+{"signed_in":true,"milliseconds_since_first_event":236893,"type":"Editor","operation":"open","file_extension":null,"vim_mode":true,"copilot_enabled":true,"copilot_enabled_for_language":true}
+{"signed_in":true,"milliseconds_since_first_event":236893,"type":"App","operation":"project search: open"}
+{"signed_in":true,"milliseconds_since_first_event":239958,"type":"Memory","memory_in_bytes":223719424,"virtual_memory_in_bytes":76311023616}
+{"signed_in":true,"milliseconds_since_first_event":239958,"type":"Cpu","usage_as_percentage":3.3429735,"core_count":20}
+{"signed_in":true,"milliseconds_since_first_event":250776,"type":"Editor","operation":"open","file_extension":"rs","vim_mode":true,"copilot_enabled":true,"copilot_enabled_for_language":true}
+{"signed_in":true,"milliseconds_since_first_event":0,"type":"Memory","memory_in_bytes":226353152,"virtual_memory_in_bytes":76311023616}
+{"signed_in":true,"milliseconds_since_first_event":0,"type":"Cpu","usage_as_percentage":1.6799893,"core_count":20}
+{"signed_in":true,"milliseconds_since_first_event":240654,"type":"Memory","memory_in_bytes":111042560,"virtual_memory_in_bytes":76311023616}
+{"signed_in":true,"milliseconds_since_first_event":240655,"type":"Cpu","usage_as_percentage":0.06680655,"core_count":20}
+{"signed_in":true,"milliseconds_since_first_event":0,"type":"Memory","memory_in_bytes":112910336,"virtual_memory_in_bytes":76311023616}
+{"signed_in":true,"milliseconds_since_first_event":0,"type":"Cpu","usage_as_percentage":0.07540531,"core_count":20}
+{"signed_in":true,"milliseconds_since_first_event":198558,"type":"Edit","duration":8048,"environment":"editor"}
+{"signed_in":true,"milliseconds_since_first_event":213600,"type":"Editor","operation":"open","file_extension":"rs","vim_mode":true,"copilot_enabled":true,"copilot_enabled_for_language":true}
+{"signed_in":true,"milliseconds_since_first_event":240000,"type":"Memory","memory_in_bytes":147234816,"virtual_memory_in_bytes":76311023616}
+{"signed_in":true,"milliseconds_since_first_event":240000,"type":"Cpu","usage_as_percentage":1.4367846,"core_count":20}
+{"signed_in":true,"milliseconds_since_first_event":0,"type":"Memory","memory_in_bytes":97689600,"virtual_memory_in_bytes":76311289856}
+{"signed_in":true,"milliseconds_since_first_event":0,"type":"Cpu","usage_as_percentage":1.0149006,"core_count":20}
+{"signed_in":true,"milliseconds_since_first_event":1845876,"type":"Memory","memory_in_bytes":98889728,"virtual_memory_in_bytes":76311289856}
+{"signed_in":true,"milliseconds_since_first_event":1845876,"type":"Cpu","usage_as_percentage":0.17999238,"core_count":20}

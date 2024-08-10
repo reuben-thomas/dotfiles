@@ -3,8 +3,8 @@
 sway output eDP-1 disable
 primary="'BenQ Corporation BenQ EL2870U A3K00708SL0'"
 secondary="'BenQ Corporation BenQ EL2870U A3K00711SL0'"
-sway output "$primary" pos 1440 600 scale 1.2 res 3840x2160
-sway output "$secondary" pos 0 0 scale 1.2 res 3840x2160 transform 90
+sway output "$primary" pos 1440 600 scale 1.22 res 3840x2160
+sway output "$secondary" pos 0 0 scale 1.22 res 3840x2160 transform 90
 
 # Assign Workspaces
 sway workspace music output "$secondary"

@@ -1,6 +1,0 @@
-@define-color bg rgba(25, 25, 45, 0.9);
-@define-color selected rgba(70, 70, 90, 0.9);
-@define-color accent rgba(210, 31, 84, 1.0);
-@define-color txt rgba(230, 230, 240, 1.0);
-
-@import "/home/reuben/.config/wofi/common.css";

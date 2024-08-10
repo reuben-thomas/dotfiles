@@ -1,0 +1,72 @@
+# List the dotfile directories that should be tracked
+
+vim = [
+    "~/.vim/",
+    "~/.vimrc"
+]
+tmux = [
+    "~/.tmux.conf"
+]
+bash = [
+    "~/.bashrc",
+    "~/.profile",
+]
+nvim = [ 
+    "~/.config/nvim"
+]
+alacritty = [
+    "~/.config/alacritty/alacritty.yml",
+    "~/.config/alacritty/themes",
+]
+foot = [
+    "~/.config/foot"
+]
+kitty = [
+    "~/.config/kitty"
+]
+mako = [
+    "~/.config/mako"
+]
+pulse = [
+    "~/.config/pulse"
+]
+ranger = [
+    "~/.config/ranger/rc.conf",
+    "~/.config/ranger/rifle.conf"
+]
+sway = [
+    "~/.config/sway"
+]
+waybar = [
+    "~/.config/waybar"
+]
+yambar = [
+    "~/.config/yambar"
+]
+okular = [
+    "~/.config/okularpartrc"
+]
+scripts = [
+    "~/.config/scripts"
+]
+sioyek = [
+    "~/.config/sioyek"
+]
+sway-displays = [
+    "~/.config/sway-displays"
+]
+zathura = [
+    "~/.config/zathura/zathurarc"
+]
+zed = [
+    "~/.config/zed"
+]
+code = [
+    "~/.config/code-flags.conf"
+]
+neofetch = [
+    "~/.config/neofetch"
+]
+gotop = [
+    "~/.config/neofetch"
+]

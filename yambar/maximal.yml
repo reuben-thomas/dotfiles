@@ -1,0 +1,396 @@
+# FONTS & MARGIN
+default_font: &default_font JetBrains Mono:pixelsize=24
+info_font: &info_font JetBrains Mono:pixelsize=24:slant=italic
+icon_font: &icon_font JetBrains Mono 6 Free:style=solid:pixelsize=24
+# Margin
+deco_margin: &deco_margin 16
+icon_margin: &icon_margin 16
+#
+#
+#
+# COLOR AND DECORATIONS
+# Basic colours
+fg_color: &fg_color e8e8e8ff
+bg_color: &bg_color 242424ff
+info_color: &info_color acb4bdff
+white: &white ffffffff
+fade_white: &fade_white 7a7a7aff
+# Component accents
+dsp_color: &dsp_color ffee6eff
+lum_color: &lum_color d5ffa1ff
+ctr_color: &ctr_color 90fcbfff
+mic_color: &mic_color a6daffff
+spk_color: &spk_color 94d192ff
+net_color: &net_color c999ffff
+bat_color: &bat_color ff99bbff
+# States
+good:
+  &good {
+    margin: *deco_margin,
+    foreground: 000000ff,
+    deco: { background: { color: 0fd17aff } },
+  }
+warn:
+  &warn {
+    margin: *deco_margin,
+    foreground: *bg_color,
+    deco: { background: { color: ffd554ff } },
+  }
+error:
+  &error {
+    margin: *deco_margin,
+    foreground: ffffffff,
+    deco: { background: { color: ff4545ff } },
+  }
+# I3 indicator decos
+sway_deco: &sway_deco { background: { color: ffe79eff } }
+white_deco: &white_deco { background: { color: *white } }
+fade_white_deco: &fade_white_deco { background: { color: ffffff33 } }
+error_deco: &error_deco { background: { color: de284fff } }
+# Detail Properties
+info: &info { font: *info_font, foreground: *info_color }
+#
+#
+#
+bar:
+  monitor: DP-6
+  height: 36
+  location: top
+  spacing: 24
+  margin: 14
+  font: *default_font
+  foreground: *fg_color
+  background: *bg_color
+
+  left:
+    - i3:
+        sort: ascending
+        anchors: # Not used (directly) by f00bar; used here to avoid duplication
+          - string:
+              &i3_common {
+                margin: 14,
+                on-click:
+                  {
+                    left: "swaymsg --quiet workspace {name}",
+                    wheel-up: "swaymsg --quiet workspace next",
+                    wheel-down: "swaymsg --quiet workspace prev",
+                  },
+              }
+          - string: &default { <<: *i3_common, text: "{name}" }
+          - string: &music { <<: *i3_common, text: 󰼛, font: *icon_font }
+          - focused: &focused
+              foreground: *bg_color
+              deco: { stack: [*white_deco] }
+          - invisible: &invisible
+              foreground: *fg_color
+              deco: *fade_white_deco
+          - urgent: &urgent
+              foreground: *fg_color
+              deco: { stack: [*error_deco] }
+          - map: &i3_mode
+              default:
+                - string:
+                    margin: 5
+                    text: "{mode}"
+                    deco: { background: { color: cc421dff } }
+                - empty: { right-margin: 7 }
+              conditions:
+                mode == default: { empty: {} }
+        strip-workspace-numbers: false
+        content:
+          "":
+            map:
+              conditions:
+                state == focused: { string: { <<: [*default, *focused] } }
+                state == unfocused: { string: { <<: *default } }
+                state == invisible: { string: { <<: [*default, *invisible] } }
+                state == urgent: { string: { <<: [*default, *urgent] } }
+          music:
+            map:
+              conditions:
+                state == focused: { string: { <<: [*music, *focused] } }
+                state == unfocused: { string: { <<: *music } }
+                state == invisible: { string: { <<: [*music, *invisible] } }
+                state == urgent: { string: { <<: [*music, *urgent] } }
+    # - foreign-toplevel:
+    #     content:
+    #       - map:
+    #           conditions:
+    #             ~activated: { empty: {} }
+    #             activated:
+    #               - string:
+    #                   {
+    #                     text: "{app-id}",
+    #                     margin: 8,
+    #                     deco: *sway_deco,
+    #                     foreground: *bg_color,
+    #                   }
+    #     {
+    #       text: " {title}",
+    #       font: *info_font,
+    #       foreground: *info_color,
+    #       max: 15,
+    #       right-margin: 10,
+    #     }
+    - label:
+        content:
+          - string: { text: "DSP", foreground: *dsp_color }
+          - string:
+              {
+                text: " 󰙟",
+                font: *icon_font,
+                on-click: /bin/sh -c "sway output eDP-1 toggle; /home/$USER/.config/yambar/scripts/launch-yambar.sh &",
+              }
+          - string: { text: " [", <<: *info }
+          - string:
+              {
+                text: "▭  ▯",
+                on-click: /bin/sh -c "/home/$USER/.config/scripts/dock.sh",
+                font: *icon_font,
+                <<: *info,
+              }
+          - string: { text: "]", <<: *info }
+    - backlight:
+        name: intel_backlight
+        content:
+          - string:
+              {
+                text: "LUM",
+                foreground: *lum_color,
+                on-click:
+                  {
+                    wheel-down: brightnessctl set 5%- &,
+                    wheel-up: brightnessctl set +5% &,
+                    left: /bin/sh -c "python3 /home/reuben/.config/yambar/scripts/brightness.py -",
+                    right: /bin/sh -c "python3 /home/reuben/.config/yambar/scripts/brightness.py +",
+                  },
+              }
+          - string:
+              {
+                text: " {percent}% ",
+                on-click:
+                  {
+                    wheel-down: brightnessctl set 5%- &,
+                    wheel-up: brightnessctl set +5% &,
+                    left: /bin/sh -c "python3 /home/reuben/.config/yambar/scripts/brightness.py -",
+                    right: /bin/sh -c "python3 /home/reuben/.config/yambar/scripts/brightness.py +",
+                  },
+              }
+          - string:
+              {
+                text: " [+ /",
+                on-click: /bin/sh -c "python3 /home/reuben/.config/yambar/scripts/brightness.py +",
+                <<: *info,
+              }
+          - string:
+              {
+                text: " -]",
+                on-click: /bin/sh -c "python3 /home/reuben/.config/yambar/scripts/brightness.py -",
+                <<: *info,
+              }
+    - script:
+        path: /home/reuben/.config/yambar/scripts/days-until.sh
+        poll-interval: 1800
+        args:
+          - "2024-06-25"
+        content:
+          - string: { text: "CTR", foreground: *ctr_color }
+          - string: { text: " {days} DAYS" }
+          - string: { text: " [{hours} HOURS]", <<: *info }
+  #
+  #
+  #
+  #
+  #
+  center:
+    - clock:
+        time-format: "%I:%M %p"
+        date-format: "%^A, %d %^B %Y"
+        content:
+          - string:
+              {
+                text: "  {time}  |  {date}",
+                foreground: *white,
+                margin: 25,
+                deco: { background: { color: *bg_color } },
+              }
+  #
+  #
+  #
+  #
+  #
+  right:
+    - pulse:
+        anchors:
+          - sink_controls:
+              &sink_controls {
+                on-click:
+                  {
+                    left: /bin/sh -c "amixer set Master toggle",
+                    wheel-up: /bin/sh -c "pactl set-sink-volume @DEFAULT_SINK@ +5%",
+                    wheel-down: /bin/sh -c "pactl set-sink-volume	@DEFAULT_SINK@ -5%",
+                  },
+              }
+          - sink_percent:
+              &sink_percent {
+                string: { text: " {sink_percent}%", <<: *sink_controls },
+              }
+          - sink_info:
+              &sink_info {
+                string:
+                  {
+                    text: " [{sink_port}",
+                    max: 10,
+                    on-click: /bin/sh -c "/home/$USER/.config/yambar/scripts/pulse-sink-toggle.sh",
+                    <<: *info,
+                  },
+              }
+          - sink_info_end: &sink_info_end { string: { text: "]", <<: *info } }
+          # - volume_bar:
+          #     &volume_bar {
+          #       progress-bar:
+          #         {
+          #           tag: sink_percent,
+          #           length: 6,
+          #           start: { string: { text: " " } },
+          #           fill: { string: { text: 󰝤, foreground: *spk_color } },
+          #           empty: { string: { text: 󰝤, foreground: *fade_white } },
+          #           end: { string: { text: "  " } },
+          #           indicator: { string: { text: 󰝤 } },
+          #         },
+          #     }
+        content:
+          map:
+            conditions:
+              ~online: { string: { text: "SPK ERR" } }
+              online:
+                map:
+                  conditions:
+                    sink_muted:
+                      - string: { text: "VOL", <<: [*warn, *sink_controls] }
+                      - string: { text: " MUT", <<: *sink_controls }
+                      - <<: *sink_info
+                      - <<: *sink_info_end
+                    ~sink_muted:
+                      - string:
+                          {
+                            text: "VOL",
+                            foreground: *spk_color,
+                            <<: *sink_controls,
+                          }
+                      - <<: *sink_percent
+                      - <<: *sink_info
+                      - <<: *sink_info_end
+    - pulse:
+        anchors:
+          - source_info:
+              &source_info {
+                string:
+                  {
+                    text: " [{source_port}",
+                    max: 11,
+                    on-click: /bin/sh -c "/home/$USER/.config/yambar/scripts/pulse-source-toggle.sh",
+                    <<: *info,
+                  },
+              }
+          - source_info_end:
+              &source_info_end { string: { text: "]", <<: *info } }
+        content:
+          map:
+            conditions:
+              ~online: { string: { text: "MIC ERR" } }
+              online:
+                map:
+                  conditions:
+                    source_muted:
+                      - string:
+                          {
+                            text: "MIC",
+                            on-click: /bin/sh -c "amixer set Capture toggle",
+                            <<: *error,
+                          }
+                      - string: { text: " MUT" }
+                      - <<: *source_info
+                      - <<: *source_info_end
+                    ~source_muted:
+                      - string:
+                          {
+                            text: "MIC",
+                            on-click: /bin/sh -c "amixer set Capture toggle",
+                            foreground: *mic_color,
+                          }
+                      - string: { text: " {source_percent}%" }
+                      - <<: *source_info
+                      - <<: *source_info_end
+    - network:
+        name: wlp0s20f3
+        poll-interval: 60
+        content:
+          map:
+            on-click: /bin/sh -c "foot nmtui"
+            default:
+              - string: { text: "NET", <<: *warn }
+              - string: { text: " OK" }
+              - string: { text: " [offline]", <<: *info }
+            conditions:
+              state == down:
+                - string: { text: "NET", <<: *error }
+                - string: { text: " OFF" }
+                - string: { text: " [offline]", <<: *info }
+              state == up:
+                - string: { text: "NET", foreground: *net_color }
+                - string: { text: " {signal}" }
+                - string: { text: " [{ssid}", max: 15, <<: *info }
+                - string: { text: "]", <<: *info }
+    - battery:
+        name: BAT0
+        poll-interval: 60
+        anchors: # Not used (directly) by f00bar; used here to avoid duplication
+          - string: &estimate { string: { text: " [{estimate}]", <<: *info } }
+        content:
+          map:
+            on-click: /bin/sh -c "/home/$USER/.config/yambar/scripts/powerprofile-toggle.sh",
+            conditions:
+              state == unknown:
+                - string: { text: "BAT {capacity}% [{estimate}]" }
+              state == discharging:
+                map:
+                  conditions:
+                    capacity > 25:
+                      - string: { text: "BAT", foreground: *bat_color }
+                      - string: { text: " {capacity}%" }
+                      - <<: *estimate
+                    capacity <= 25:
+                      - string: { text: "BAT", <<: *warn }
+                      - string: { text: " {capacity}%" }
+                      - <<: *estimate
+                    capacity <= 15:
+                      - string: { text: "BAT", <<: *error }
+                      - string: { text: " {capacity}%" }
+                      - <<: *estimate
+              state == "not charging":
+                - string: { text: "EXT", <<: *warn }
+                - string: { text: " {capacity}%" }
+                - <<: *estimate
+              state == charging:
+                map:
+                  conditions:
+                    capacity > 80:
+                      - string: { text: "CHG", <<: *error }
+                      - string: { text: " {capacity}%" }
+                      - <<: *estimate
+                    capacity <= 80:
+                      - string: { text: "CHG", <<: *good }
+                      - string: { text: " {capacity}%" }
+                      - <<: *estimate
+              state == full:
+                - string: { text: "EXT {capacity}%", <<: *error }
+                - <<: *estimate
+    - label:
+        content:
+          - string:
+              on-click: /bin/sh -c "swaymsg reload"
+              text: ""
+          - string:
+              on-click: /bin/sh -c "/home/$USER/.config/wofi/powermenu/launch.sh"
+              text: "  "
