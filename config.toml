@@ -28,7 +28,7 @@ mako = [
     "~/.config/mako"
 ]
 pulse = [
-    "~/.config/pulse"
+    "~/.config/pulse/daemon.conf"
 ]
 ranger = [
     "~/.config/ranger/rc.conf",
@@ -59,10 +59,14 @@ zathura = [
     "~/.config/zathura/zathurarc"
 ]
 zed = [
-    "~/.config/zed"
+    "~/.config/zed/keymap.json",
+    "~/.config/zed/settings.json"
 ]
 code = [
-    "~/.config/code-flags.conf"
+    "~/.config/code-flags.conf",
+    "~/.config/Code/User/keybindings.json",
+    "~/.config/Code/User/settings.json",
+    "~/.vscode/extensions/extensions.json",
 ]
 neofetch = [
     "~/.config/neofetch"

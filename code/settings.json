@@ -1,0 +1,65 @@
+{
+    "extensions.experimental.affinity": {
+        "asvetliakov.vscode-neovim": 1
+    },
+    "vscode-neovim.neovimExecutablePaths.linux": "/usr/local/bin/nvim",
+    "vscode-neovim.neovimInitVimPaths.linux": "$HOME/.config/nvim/init.lua",
+    "[typescriptreact]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
+    "vim.useSystemClipboard": true,
+    "[typescript]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
+    "explorer.confirmDragAndDrop": false,
+    "vim.vimrc.path": "$HOME/.config/.vscodevimrc",
+    "typescript.updateImportsOnFileMove.enabled": "always",
+    "explorer.confirmDelete": false,
+    "notebook.cellToolbarLocation": {
+        "default": "right",
+        "jupyter-notebook": "left"
+    },
+    "notebook.lineNumbers": "on",
+    "window.zoomLevel": -1,
+    "jupyter.askForKernelRestart": false,
+    "json.schemas": [
+        {
+            "fileMatch": [
+                "/.docx.json"
+            ],
+            "url": "https://raw.githubusercontent.com/Mehdi-Verfaillie/docx/main/src/config/.docx.schema.json"
+        }
+    ],
+    "workbench.colorCustomizations": {},
+    "editor.minimap.enabled": false,
+    "window.autoDetectColorScheme": true,
+    "workbench.colorTheme": "GitHub Light Default",
+    "workbench.preferredLightColorTheme": "GitHub Light Default",
+    "workbench.preferredDarkColorTheme": "GitHub Dark Dimmed",
+    "files.associations": {
+        "*.rmd": "markdown"
+    },
+    "peacock.affectStatusAndTitleBorders": true,
+    "peacock.affectTabActiveBorder": true,
+    "peacock.surpriseMeOnStartup": true,
+    "peacock.affectEditorGroupBorder": true,
+    "peacock.affectDebuggingStatusBar": true,
+    "r.lsp.enabled": false,
+    "git.openRepositoryInParentFolders": "never",
+    "r.rpath.linux": "/usr/bin/R",
+    "r.rterm.linux": "/usr/bin/R",
+    "workbench.editorAssociations": {
+        "git-rebase-todo": "default"
+    },
+    "github.copilot.editor.enableAutoCompletions": true,
+    "debug.allowBreakpointsEverywhere": true,
+    "[yaml]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
+    "window.menuBarVisibility": "toggle",
+    "editor.lineNumbers": "relative",
+    "vim.vimrc.enable": true,
+    "glassit.alpha": 255,
+    "glassit.force_sway": true,
+    "rust-analyzer.testExplorer": true,
+}
