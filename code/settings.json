@@ -62,4 +62,10 @@
     "glassit.alpha": 255,
     "glassit.force_sway": true,
     "rust-analyzer.testExplorer": true,
+    "github.copilot.enable": {
+        "*": true,
+        "plaintext": false,
+        "markdown": false,
+        "scminput": false
+    },
 }

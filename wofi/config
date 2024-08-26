@@ -1,0 +1,13 @@
+mode=run
+
+width=370
+height=270
+location=center
+
+insensitive=true
+parse_search=false
+
+allow_images=false
+hide_scroll=true
+
+allow_markup=true

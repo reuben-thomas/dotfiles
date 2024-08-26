@@ -125,10 +125,6 @@
     client.unfocused        $cl_fade $cl_back $cl_text $cl_back $cl_back
     client.urgent           $cl_urge $cl_urge $cl_text $cl_urge $cl_urge
 
-### Status Bar:
-#
-    exec_always /bin/sh -c "/home/$USER/.config/yambar/scripts/launch-yambar.sh"
-
 ### Display Outputs
 #
     # Monitor Config
@@ -152,6 +148,10 @@
     bindswitch lid:off output $builtin-monitor enable
     exec_always cat /proc/acpi/button/lid/LID0/state | awk '{print $2}' | grep -q 'closed' && \
       swaymsg output $builtin-monitor disable
+
+### Status Bar:
+#
+    exec_always /bin/sh -c "/home/$USER/.config/yambar/scripts/launch-yambar.sh"
 
 ### Input configuration
 #

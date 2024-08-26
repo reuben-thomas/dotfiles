@@ -37,6 +37,9 @@ ranger = [
 sway = [
     "~/.config/sway"
 ]
+wofi = [
+    "~/.config/wofi"
+]
 waybar = [
     "~/.config/waybar"
 ]

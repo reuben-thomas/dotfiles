@@ -53,7 +53,7 @@ info: &info { font: *info_font, foreground: *info_color }
 #
 #
 bar:
-  monitor: DP-3
+  monitor: DP-2
   height: 18
   location: top
   spacing: 12

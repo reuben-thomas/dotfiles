@@ -28,7 +28,11 @@ set_light_theme() {
   sed -i 's/colorscheme = "tokyonight"/colorscheme = "onedark"/' \
     /home/$USER/.config/nvim/lua/plugins/colorscheme.lua
 
-  # Terminal
+  # Pdf Readers
+  sed -i '/^startup_commands toggle_custom_color/d' \
+    /home/$USER/.config/sioyek/prefs_user.config
+  sed -i 's/set recolor true/set recolor false/' \
+    /home/$USER/.config/zathura/zathurarc
 
   # Notification
   echo "Light Theme Set"
@@ -48,6 +52,12 @@ set_dark_theme() {
     /home/$USER/.config/nvim/lua/config/options.lua
   sed -i 's/colorscheme = "onedark"/colorscheme = "tokyonight"/' \
     /home/$USER/.config/nvim/lua/plugins/colorscheme.lua
+
+  # Pdf Readers
+  echo "startup_commands toggle_custom_color" >> \
+    /home/$USER/.config/sioyek/prefs_user.config
+  sed -i 's/set recolor false/set recolor true/' \
+    /home/$USER/.config/zathura/zathurarc
 
   # Notification
   echo "Dark Theme Set"

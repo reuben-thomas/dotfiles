@@ -144,7 +144,6 @@ RecolorForeground=252,255,225
 EnableCompositing=false
 
 [Document]
-ChangeColors=true
 PaperColor=245,255,158
 
 [General]
@@ -211,6 +210,7 @@ shadeSortColumn=true
 contrast=4
 
 [Main View]
+ShowLeftPanel=false
 SplitterSizes=230,1168
 
 [PageView]
@@ -220,6 +220,7 @@ UseCustomBackgroundColor=true
 ViewColumns=8
 
 [Reviews]
+QuickAnnotationDefaultAction=1
 QuickAnnotationTools=<tool type="highlight" name="Red Highlighter" id="1"><engine type="TextSelector" color="#ffff4949"><annotation type="Highlight" color="#ffff4949" opacity="0.8"/></engine><shortcut>1</shortcut></tool>,<tool type="highlight" name="Yellow Highlighter" id="2"><engine type="TextSelector" color="#ffffd500"><annotation type="Highlight" color="#ffffd500" opacity="0.8"/></engine><shortcut>2</shortcut></tool>,<tool type="highlight" name="Green Highlighter" id="3"><engine type="TextSelector" color="#ff6cd355"><annotation type="Highlight" color="#ff6cd355" opacity="0.8"/></engine><shortcut>3</shortcut></tool>,<tool type="highlight" name="Blue Highlighter" id="4"><engine type="TextSelector" color="#ff62a1ff"><annotation type="Highlight" color="#ff62a1ff" opacity="0.8"/></engine><shortcut>4</shortcut></tool>,<tool type="underline" id="5"><engine type="TextSelector" color="#ff0000"><annotation type="Underline" color="#ffff0000"/></engine><shortcut>5</shortcut></tool>,<tool type="typewriter" name="Insert Text" default="true" id="6"><engine type="PickPoint" block="true"><annotation type="Typewriter" textColor="#000000" color="#00ffffff" width="0"/></engine><shortcut>6</shortcut></tool>,<tool type="note-inline" id="7"><engine type="PickPoint" color="#ffff00" block="true" hoverIcon="tool-note-inline"><annotation type="FreeText" textColor="#ff000000" color="#ffffff00"/></engine><shortcut>7</shortcut></tool>,<tool type="note-linked" id="8"><engine type="PickPoint" color="#ffff00" hoverIcon="tool-note"><annotation type="Text" color="#ffffff00" icon="Note"/></engine><shortcut>8</shortcut></tool>
 
 [WM]
