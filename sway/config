@@ -29,7 +29,7 @@
     exec dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP=sway
 
     # Wallpaper
-    output * bg /home/reuben/Pictures/Wallpapers/ruffiangt40.jpg fill
+    output * bg /home/reuben/Pictures/Wallpapers/0default.jpg stretch
 
 ### App Setting
 #
@@ -37,6 +37,7 @@
     for_window [app_id="zathura"] title_format '󰈙 ' %title
     for_window [app_id="okular"] title_format '󰈙 ' %title
     for_window [app_id="google-chrome"] title_format ' ' %title
+    for_window [title=".*Brave$"] title_format ' ' %title
     for_window [app_id="firefox"] title_format ' ' %title
     for_window [app_id="libreoffice-writer"] title_format ' ' %title
     for_window [app_id="libreoffice-impress"] title_format '󱎐 ' %title
@@ -57,10 +58,12 @@
 
     # Transparency
     # exec /usr/share/sway/scripts/illanactive-windows-transparency.py --opacity 0.85
+    set $pip_opacity 1.0
 
-    # Chrome / Firefox Picture-in-Picture
-    for_window [title="Picture-in-picture$"] floating enable, sticky enable, resize set 420 240, move position cursor
-    for_window [title="Picture-in-Picture$"] floating enable, sticky enable, resize set 420 240, move position cursor
+    # Firefox Picture-in-Picture
+    for_window [title="Picture-in-picture$"] floating enable, sticky enable, move position cursor, opacity $pip_opacity
+    # Chrome Picture-in-Picture
+    for_window [title="Picture-in-Picture$"] floating enable, sticky enable, move position cursor, opacity $pip_opacity
 
     # Okular Notes
     for_window [title="New Text Note — Okular"] floating enable, move position cursor
@@ -84,7 +87,7 @@
     for_window [app_id="zathura"] tabbed enable
 
     # Zoom Ruins my Life
-    for_window [title="^zoom$"] border none, floating enable
+    for_window [title="^zoom$"] border none, floating enable, opacity $pip_opacity
     for_window [title="^(Zoom|About)$"] border pixel, floating enable
     for_window [title="Settings"] floating enable, floating_minimum_size 960 x 700
     for_window [title="Zoom Meeting(.*)?"] workspace next_on_output --create, move container to workspace current, floating disable, inhibit_idle open
@@ -159,6 +162,7 @@
        dwt enabled
        tap enabled
        accel_profile "adaptive"
+       pointer_accel 0.3
        scroll_factor 0.5
        natural_scroll enabled
        middle_emulation enabled
@@ -172,14 +176,16 @@
 #
     # Volume
     exec pactl set-sink-volume @DEFAULT_SINK@ 0 150%
-    bindsym XF86AudioRaiseVolume exec pactl set-sink-mute @DEFAULT_SINK@ 0 && pactl set-sink-volume @DEFAULT_SINK@ +5% && pactl set-sink-volume @DEFAULT_SINK@ $((($(pactl get-sink-volume @DEFAULT_SINK@ | awk '/Volume: front/{print $5}' | tr -d '%') + 2) / 5 * 5))%
-    bindsym XF86AudioLowerVolume exec pactl set-sink-mute @DEFAULT_SINK@ 0 && pactl set-sink-volume @DEFAULT_SINK@ -5% && pactl set-sink-volume @DEFAULT_SINK@ $((($(pactl get-sink-volume @DEFAULT_SINK@ | awk '/Volume: front/{print $5}' | tr -d '%') + 2) / 5 * 5))%
+    # bindsym XF86AudioRaiseVolume exec pactl set-sink-mute @DEFAULT_SINK@ 0 && pactl set-sink-volume @DEFAULT_SINK@ +5% && pactl set-sink-volume @DEFAULT_SINK@ $((($(pactl get-sink-volume @DEFAULT_SINK@ | awk '/Volume: front/{print $5}' | tr -d '%') + 2) / 5 * 5))%
+    # bindsym XF86AudioLowerVolume exec pactl set-sink-mute @DEFAULT_SINK@ 0 && pactl set-sink-volume @DEFAULT_SINK@ -5% && pactl set-sink-volume @DEFAULT_SINK@ $((($(pactl get-sink-volume @DEFAULT_SINK@ | awk '/Volume: front/{print $5}' | tr -d '%') + 2) / 5 * 5))%
+    bindsym XF86AudioRaiseVolume exec pactl set-sink-mute @DEFAULT_SINK@ 0 && pactl set-sink-volume @DEFAULT_SINK@ +5%
+    bindsym XF86AudioLowerVolume exec pactl set-sink-mute @DEFAULT_SINK@ 0 && pactl set-sink-volume @DEFAULT_SINK@ -5%     
     bindsym	XF86AudioMute exec pactl set-sink-mute @DEFAULT_SINK@ toggle
 
     # Built-in Brightness
-    exec brightnessctl set 55%
-    bindsym XF86MonBrightnessUp exec brightnessctl set +5% &
-    bindsym XF86MonBrightnessDown exec brightnessctl set 5%- &
+    # exec brightnessctl set 55%
+    bindsym XF86MonBrightnessUp exec brightnessctl set +5%
+    bindsym XF86MonBrightnessDown exec brightnessctl set 5%-
 
     # External Display Brightness
     bindsym $mod+Alt+Down exec ddcutil setvcp 10 - 10 --noverify --async
@@ -349,7 +355,7 @@
 # Toggle the current focus between tiling and floating mode
 
     bindsym $mod+Shift+space floating toggle
-    bindsym $mod+Alt+space floating toggle, move position cursor
+    bindsym $mod+Alt+space floating toggle, sticky toggle, move position cursor
 
     # Swap focus between the tiling area and the floating area
     bindsym $mod+space focus mode_toggle

@@ -1,6 +1,8 @@
 #!/bin/bash
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" &>/dev/null && pwd)"
+pactl set-sink-volume bluez_output.CC_F4_11_DA_58_B3.1 0
+pactl set-sink-mute bluez_output.CC_F4_11_DA_58_B3.1 1
 
 op=$(echo -e " Lock\n⭘ Suspend\n Windows\n UEFI\n󰜉 Reload\n Restart\n󰐥 Poweroff" |
   wofi -i --dmenu \
@@ -70,6 +72,8 @@ lock)
     --ring-wrong-color 9c283cff \
     --ring-ver-color 3827cfff \
     --ring-clear-color ffffffff \
-    -i /home/$USER/Pictures/Wallpapers/porschediagonal.jpg
+    -i /home/$USER/Pictures/Wallpapers/0default.jpg
   ;;
 esac
+
+pactl set-sink-mute bluez_output.CC_F4_11_DA_58_B3.1 0

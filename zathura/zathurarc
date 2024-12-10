@@ -48,6 +48,7 @@ set render-loading-bg           rgba(248,248,242,1)   # Foreground
 
 set recolor-lightcolor          rgba(40,42,54,0.8)      # Background
 set recolor-darkcolor           rgba(248,248,242,1.0)   # Foreground
+set recolor-reverse-video "true"
 
 #
 # Startup options
