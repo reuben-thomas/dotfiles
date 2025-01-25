@@ -73,10 +73,10 @@
     "glassit.force_sway": true,
     "rust-analyzer.testExplorer": true,
     "github.copilot.enable": {
-        "*": true,
-        // "plaintext": false,
-        // "markdown": false,
-        // "scminput": false
+        "*": false,
+        "plaintext": false,
+        "markdown": false,
+        "scminput": false
     },
     "editor.wordWrap": "on",
     "latex-workshop.view.pdf.color.dark.backgroundColor": "#2c3742",
@@ -217,5 +217,8 @@
     },
     "github.copilot.chat.inlineChatCompletionTrigger.enabled": true,
     "github.copilot.chat.inlineChatHint.enabled": true,
-    "github.copilot.chat.temporalContext.enabled": true
+    "github.copilot.chat.temporalContext.enabled": true,
+    "[json]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode"
+    }
 }

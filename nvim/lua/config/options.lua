@@ -3,7 +3,7 @@
 -- Add any additional options here
 vim.opt.termguicolors = false
 vim.opt.conceallevel = 1
-vim.api.nowrap = false
+vim.api.wrap = true
 vim.g.copilot_enabled = false
 vim.opt.relativenumber = true
 vim.go.background = "light"

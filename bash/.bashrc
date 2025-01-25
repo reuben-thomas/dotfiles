@@ -119,24 +119,17 @@ if ! shopt -oq posix; then
   fi
 fi
 
-change_scheme() {
-  if [ "$scheme" = "night" ]; then
-    /usr/bin/theme.sh dracula
-  else
-    /usr/bin/theme.sh belafonte-day
-  fi
-}
-trap 'change_scheme' USR1
-
 # App Shortcuts
 alias code='code --enable-features=UseOzonePlatform,WaylandWindowDecorations,WebRTCPipeWireCapturer --ozone-platform-hint=auto > /dev/null 2>&1'
-alias obsidian-sync='/home/reuben/.config/scripts/obsidian-sync.sh'
-alias socvpn-start='sudo openfortivpn webvpn.comp.nus.edu.sg --username=e1123003'
+alias sync='/home/reuben/.config/scripts/sync.sh'
+alias socvpn='sudo openfortivpn webvpn.comp.nus.edu.sg --username=e1123003 --password=$(python3 -c "import keyring; print(keyring.get_password(\"soc\", \"e1123003\"))")'
+alias xlog='ssh reubenth@xlog.comp.nus.edu.sg'
 alias chrome='google-chrome --password-store=gnome-libsecret'
 alias typetest='tt -showwpm -notheme -blockcursor'
 alias battop='/home/reuben/utils/battop-v0.2.4-x86_64-unknown-linux-gnu'
 alias powerstats='flatpak run org.gnome.PowerStats&exit'
 alias logisim='/home/reuben/cs/CS2100/logisim/launch.sh'
+alias usql2102='usql postgres://postgres@localhost/postgres'
 
 # Pure Laziness
 alias work='/home/reuben/.config/scripts/work.sh'
@@ -156,8 +149,17 @@ alias todo='cd ~/Documents/Obsidian; nvim TODO.md'
 # alias note='nvim ~/Documents/Notes -c "colorscheme tokyonight"'
 
 # Dev Shortcuts
-alias dev-start='sudo systemctl enable docker && sudo systemctl enable postgresql'
-alias dev-stop='sudo systemctl disable docker && sudo systemctl disable postgresql'
+dev-service() {
+  local action=$1
+  shift
+  for service in docker apache2 postgresql; do
+    sudo systemctl "$action" "$service"
+  done
+}
+alias dev-start='dev-service enable'
+alias dev-stop='dev-service disable'
+alias dev-enable='dev-service enable'
+alias dev-disable='dev-service disable'
 alias activate='source ~/.venv/base/bin/activate'
 alias vcpkg='function _vcpkg_alias(){ /home/reuben/utils/vcpkg/vcpkg "$@"; }; _vcpkg_alias'
 
@@ -165,10 +167,11 @@ alias vcpkg='function _vcpkg_alias(){ /home/reuben/utils/vcpkg/vcpkg "$@"; }; _v
 alias powerstatus='upower -i /org/freedesktop/UPower/devices/battery_BAT0'
 alias pcipm-enable='echo auto | sudo tee /sys/bus/pci/devices/*/power/control'
 alias buds='sudo service bluetooth restart; bluetoothctl connect DC:69:E2:BA:90:08'
-alias nest='sudo service bluetooth restart; bluetoothctl connect CC:F4:11:DA:58:B3'
 alias lume='python3 /home/reuben/.config/scripts/lume.py $1'
 alias boot-windows='sudo grub-reboot 2; systemctl reboot'
 alias boot-uefi='sudo grub-reboot 3; systemctl reboot'
+alias autosuspend-off='sudo /home/reuben/.config/scripts/autosuspend-off.sh'
+alias autosuspend-status='cat /sys/module/usbcore/parameters/autosuspend'
 
 # Created by `pipx` on 2023-12-13 10:18:49
 export PATH="$PATH:/home/reuben/.local/bin"
@@ -191,8 +194,26 @@ eval "$(zoxide init bash)"
 export BUN_INSTALL="$HOME/.bun"
 export PATH=$BUN_INSTALL/bin:$PATH
 
+# java
+export PATH_TO_FX="$HOME/.local/share/javafx-sdk-17.0.13/lib"
+export JAVA_HOME="/usr/lib/jvm/java-17-openjdk-amd64"
+
+# go
+export PATH=$PATH:/usr/local/go/bin
+export PATH=$PATH:/home/reuben/go/bin
+
 # vcpkg
 source /home/reuben/utils/vcpkg/scripts/vcpkg_completion.bash
+
+# dell command-configure
+export PATH="/opt/dell/dcc:$PATH"
+alias cctk='sudo env PATH=$PATH cctk'
+alias charge-express='sudo env PATH=$PATH cctk --PrimaryBattChargeCfg=Express'
+alias charge-dock='sudo env PATH=$PATH cctk --PrimaryBattChargeCfg=Custom:50-60'
+alias charge-std='sudo env PATH=$PATH cctk --PrimaryBattChargeCfg=Standard'
+alias thermal-performance='sudo env PATH=$PATH cctk --ThermalManagement=UltraPerformance'
+alias thermal-optimized='sudo env PATH=$PATH cctk --ThermalManagement=Optimized'
+alias thermal-cool='sudo env PATH=$PATH cctk --ThermalManagement=Cool'
 
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"                   # This loads nvm
@@ -212,3 +233,5 @@ else
 fi
 unset __conda_setup
 # <<< conda initialize <<<
+
+complete -C /usr/bin/terraform terraform

@@ -11,12 +11,14 @@
   "relative_line_numbers": true,
   "ui_font_family": "JetBrains Mono",
   "ui_font_size": 11,
+  "ui_font_weight": 700,
   "buffer_font_family": "JetBrains Mono",
   "buffer_line_height": "standard",
   "buffer_font_size": 11,
+  "buffer_font_weight": 500,
   "theme": {
     "mode": "system",
-    "light": "Ayu Light",
-    "dark": "One Dark"
+    "light": "Atelier Sulphurpool Light",
+    "dark": "Ayu Dark"
   }
 }

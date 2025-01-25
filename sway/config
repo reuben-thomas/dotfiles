@@ -29,7 +29,7 @@
     exec dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP=sway
 
     # Wallpaper
-    output * bg /home/reuben/Pictures/Wallpapers/0default.jpg stretch
+    output * bg /home/reuben/Pictures/Wallpapers/porschetop.jpg fill
 
 ### App Setting
 #
@@ -75,6 +75,7 @@
     for_window [title="^.*R Graphics.*$"] floating enable
 
     # Spotify
+    for_window [title="Spotify Premium"] opacity 0.8
     for_window [title="Spotify MiniPlayer"] floating enable, sticky enable, resize set 325 360
 
     # Zenity / pkexec
@@ -147,8 +148,8 @@
     workspace 10 output $primary-monitor
 
     # Toggle built-in display upon closed/open events
-    bindswitch lid:on output $builtin-monitor disable
-    bindswitch lid:off output $builtin-monitor enable
+    bindswitch lid:on output $builtin-monitor disable;sleep 0.1; exec /bin/sh -c "/home/$USER/.config/yambar/scripts/launch-yambar.sh"
+    bindswitch lid:off output $builtin-monitor enable;sleep 0.1; exec /bin/sh -c "/home/$USER/.config/yambar/scripts/launch-yambar.sh"
     exec_always cat /proc/acpi/button/lid/LID0/state | awk '{print $2}' | grep -q 'closed' && \
       swaymsg output $builtin-monitor disable
 
@@ -176,8 +177,6 @@
 #
     # Volume
     exec pactl set-sink-volume @DEFAULT_SINK@ 0 150%
-    # bindsym XF86AudioRaiseVolume exec pactl set-sink-mute @DEFAULT_SINK@ 0 && pactl set-sink-volume @DEFAULT_SINK@ +5% && pactl set-sink-volume @DEFAULT_SINK@ $((($(pactl get-sink-volume @DEFAULT_SINK@ | awk '/Volume: front/{print $5}' | tr -d '%') + 2) / 5 * 5))%
-    # bindsym XF86AudioLowerVolume exec pactl set-sink-mute @DEFAULT_SINK@ 0 && pactl set-sink-volume @DEFAULT_SINK@ -5% && pactl set-sink-volume @DEFAULT_SINK@ $((($(pactl get-sink-volume @DEFAULT_SINK@ | awk '/Volume: front/{print $5}' | tr -d '%') + 2) / 5 * 5))%
     bindsym XF86AudioRaiseVolume exec pactl set-sink-mute @DEFAULT_SINK@ 0 && pactl set-sink-volume @DEFAULT_SINK@ +5%
     bindsym XF86AudioLowerVolume exec pactl set-sink-mute @DEFAULT_SINK@ 0 && pactl set-sink-volume @DEFAULT_SINK@ -5%     
     bindsym	XF86AudioMute exec pactl set-sink-mute @DEFAULT_SINK@ toggle
