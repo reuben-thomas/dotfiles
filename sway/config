@@ -28,9 +28,6 @@
     # Environment Variables
     exec dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP=sway
 
-    # Wallpaper
-    output * bg /home/reuben/Pictures/Wallpapers/porschetop.jpg fill
-
 ### App Setting
 #
     # Icons
@@ -65,6 +62,9 @@
     # Chrome Picture-in-Picture
     for_window [title="Picture-in-Picture$"] floating enable, sticky enable, move position cursor, opacity $pip_opacity
 
+    # Bitwarden
+    for_window [app_id="^brave-.*-Default$"] floating enable
+
     # Okular Notes
     for_window [title="New Text Note — Okular"] floating enable, move position cursor
   
@@ -75,7 +75,6 @@
     for_window [title="^.*R Graphics.*$"] floating enable
 
     # Spotify
-    for_window [title="Spotify Premium"] opacity 0.8
     for_window [title="Spotify MiniPlayer"] floating enable, sticky enable, resize set 325 360
 
     # Zenity / pkexec
@@ -131,6 +130,13 @@
 
 ### Display Outputs
 #
+    # Wallpaper
+    output * bg /home/reuben/Pictures/Wallpapers/porschetop.jpg fill
+
+    # Home Monitor
+    output 'Dell Inc. DELL S3422DWG 48LXSH3' mode 3440x1440@144Hz
+    output 'Dell Inc. DELL S2721DS B2G3R43' mode 2560x1440@75Hz
+
     # Monitor Config
     set $builtin-monitor eDP-1
     set $primary-monitor DP-5 DP-7 eDP-1
@@ -148,10 +154,9 @@
     workspace 10 output $primary-monitor
 
     # Toggle built-in display upon closed/open events
-    bindswitch lid:on output $builtin-monitor disable;sleep 0.1; exec /bin/sh -c "/home/$USER/.config/yambar/scripts/launch-yambar.sh"
-    bindswitch lid:off output $builtin-monitor enable;sleep 0.1; exec /bin/sh -c "/home/$USER/.config/yambar/scripts/launch-yambar.sh"
-    exec_always cat /proc/acpi/button/lid/LID0/state | awk '{print $2}' | grep -q 'closed' && \
-      swaymsg output $builtin-monitor disable
+    bindswitch lid:on output $builtin-monitor disable;sleep 0.5
+    bindswitch lid:off output $builtin-monitor enable;sleep 0.5
+    exec_always cat /proc/acpi/button/lid/LID0/state | awk '{print $2}' | grep -q 'closed' && swaymsg output $builtin-monitor disable
 
 ### Status Bar:
 #
@@ -159,15 +164,16 @@
 
 ### Input configuration
 #
-   input "1267:12572:VEN_04F3:00_04F3:311C_Touchpad" {
-       dwt enabled
-       tap enabled
-       accel_profile "adaptive"
-       pointer_accel 0.3
-       scroll_factor 0.5
-       natural_scroll enabled
-       middle_emulation enabled
-   }
+    # Built-in trackpad
+    input "1267:12572:VEN_04F3:00_04F3:311C_Touchpad" {
+        dwt enabled
+        tap enabled
+        accel_profile "adaptive"
+        pointer_accel 0.3
+        scroll_factor 0.5
+        natural_scroll enabled
+        middle_emulation enabled
+    }
 # You can get the names of your inputs by running: swaymsg -t get_inputs
 # Read `man 5 sway-input` for more information about this section.
 
@@ -179,7 +185,12 @@
     exec pactl set-sink-volume @DEFAULT_SINK@ 0 150%
     bindsym XF86AudioRaiseVolume exec pactl set-sink-mute @DEFAULT_SINK@ 0 && pactl set-sink-volume @DEFAULT_SINK@ +5%
     bindsym XF86AudioLowerVolume exec pactl set-sink-mute @DEFAULT_SINK@ 0 && pactl set-sink-volume @DEFAULT_SINK@ -5%     
-    bindsym	XF86AudioMute exec pactl set-sink-mute @DEFAULT_SINK@ toggle
+    bindsym XF86AudioMute exec pactl set-sink-mute @DEFAULT_SINK@ toggle
+
+    # Next and Previous
+    bindcode 172 exec playerctl play-pause
+    bindcode 176 exec playerctl next
+    bindcode 177 exec playerctl previous
 
     # Built-in Brightness
     # exec brightnessctl set 55%
@@ -329,6 +340,15 @@
     bindsym $mod+Alt+7 rename workspace to 7
     bindsym $mod+Alt+8 rename workspace to 8
     bindsym $mod+Alt+9 rename workspace to 9
+    # Move workspace to output
+    bindsym $mod+Control+Shift+$right move workspace to output right
+    bindsym $mod+Control+Shift+$left move workspace to output left
+    bindsym $mod+Control+Shift+$down move workspace to output down
+    bindsym $mod+Control+Shift+$up move workspace to output up
+    bindsym $mod+Control+Shift+Right move workspace to output right
+    bindsym $mod+Control+Shift+Left move workspace to output left
+    bindsym $mod+Control+Shift+Down move workspace to output down
+    bindsym $mod+Control+Shift+Up move workspace to output up
     # Workspace Switching
     bindcode $mod+34 workspace prev
     bindcode $mod+35 workspace next

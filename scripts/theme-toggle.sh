@@ -1,9 +1,18 @@
 #!/bin/bash
 
-vim_light_theme="onedark"
-vim_dark_theme='tokyonight'
+### Config File Paths
+# Neovim
+nvim_options_path="/home/$USER/.config/nvim/lua/config/options.l"
+nvim_colorscheme_path="/home/$USER/.config/nvim/lua/plugins/colorscheme.lua"
+nvim_light_theme="onedark"
+nvim_dark_theme='tokyonight'
+# PDF Readers
+okularpartrc_path="/home/$USER/.config/okularpartrc"
+zathurarc_path="/home/$USER/.config/zathura/zathurarc"
+sioyek_prefs_path="/home/$USER/.config/sioyek/prefs_user.config"
 
-# If no argument provided, just toggle
+### Argument Parse
+# If no argument is passed, toggle the theme
 if [ "$#" -ne 1 ]; then
   CURRENT_THEME=$(gsettings get org.gnome.desktop.interface color-scheme)
   if [ "$CURRENT_THEME" = "'prefer-dark'" ]; then
@@ -21,18 +30,15 @@ set_light_theme() {
 
   # Neovim Setting
   for server in $(nvr --serverlist); do
-    nvr --servername "$server" -cc "colorscheme ${vim_light_theme} | set background=light"
+    nvr --servername "$server" -cc "colorscheme ${nvim_light_theme} | set background=light"
   done
-  sed -i 's/vim.go.background = "dark"/vim.go.background = "light"/' \
-    /home/$USER/.config/nvim/lua/config/options.lua
-  sed -i 's/colorscheme = "tokyonight"/colorscheme = "onedark"/' \
-    /home/$USER/.config/nvim/lua/plugins/colorscheme.lua
+  sed -i 's/vim.go.background = "dark"/vim.go.background = "light"/' "$nvim_options_path"
+  sed -i 's/colorscheme = "tokyonight"/colorscheme = "onedark"/' "$nvim_colorscheme_path"
 
   # Pdf Readers
-  sed -i '/^startup_commands toggle_custom_color/d' \
-    /home/$USER/.config/sioyek/prefs_user.config
-  sed -i 's/set recolor true/set recolor false/' \
-    /home/$USER/.config/zathura/zathurarc
+  sed -i '/^startup_commands toggle_custom_color/d' "$sioyek_prefs_path"
+  sed -i 's/set recolor true/set recolor false/' "$zathurarc_path"
+  sed -i '/ChangeColors=true/d' "$okularpartrc_path"
 
   # Notification
   echo "Light Theme Set"
@@ -46,18 +52,15 @@ set_dark_theme() {
 
   # Neovim Setting
   for server in $(nvr --serverlist); do
-    nvr --servername "$server" -cc "colorscheme ${vim_dark_theme} | set background=dark"
+    nvr --servername "$server" -cc "colorscheme ${nvim_dark_theme} | set background=dark"
   done
-  sed -i 's/vim.go.background = "light"/vim.go.background = "dark"/' \
-    /home/$USER/.config/nvim/lua/config/options.lua
-  sed -i 's/colorscheme = "onedark"/colorscheme = "tokyonight"/' \
-    /home/$USER/.config/nvim/lua/plugins/colorscheme.lua
+  sed -i 's/vim.go.background = "light"/vim.go.background = "dark"/' "$nvim_options_path"
+  sed -i 's/colorscheme = "onedark"/colorscheme = "tokyonight"/' "$nvim_colorscheme_path"
 
   # Pdf Readers
-  echo "startup_commands toggle_custom_color" >> \
-    /home/$USER/.config/sioyek/prefs_user.config
-  sed -i 's/set recolor false/set recolor true/' \
-    /home/$USER/.config/zathura/zathurarc
+  echo "startup_commands toggle_custom_color" >>"$sioyek_prefs_path"
+  sed -i 's/set recolor false/set recolor true/' "$zathurarc_path"
+  sed -i '/\[Document\]/a ChangeColors=true' "$okularpartrc_path"
 
   # Notification
   echo "Dark Theme Set"

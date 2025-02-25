@@ -1,79 +1,31 @@
 # List the dotfile directories that should be tracked
 
-vim = [
-    "~/.vim/",
-    "~/.vimrc"
-]
-tmux = [
-    "~/.tmux.conf"
-]
-bash = [
-    "~/.bashrc",
-    "~/.profile",
-]
-nvim = [ 
-    "~/.config/nvim"
-]
-alacritty = [
-    "~/.config/alacritty/alacritty.yml",
-    "~/.config/alacritty/themes",
-]
-foot = [
-    "~/.config/foot"
-]
-kitty = [
-    "~/.config/kitty"
-]
-mako = [
-    "~/.config/mako"
-]
-pulse = [
-    "~/.config/pulse/daemon.conf"
-]
-ranger = [
-    "~/.config/ranger/rc.conf",
-    "~/.config/ranger/rifle.conf"
-]
-sway = [
-    "~/.config/sway"
-]
-wofi = [
-    "~/.config/wofi"
-]
-waybar = [
-    "~/.config/waybar"
-]
-yambar = [
-    "~/.config/yambar"
-]
-okular = [
-    "~/.config/okularpartrc"
-]
-scripts = [
-    "~/.config/scripts"
-]
-sioyek = [
-    "~/.config/sioyek"
-]
-sway-displays = [
-    "~/.config/sway-displays"
-]
-zathura = [
-    "~/.config/zathura/zathurarc"
-]
-zed = [
-    "~/.config/zed/keymap.json",
-    "~/.config/zed/settings.json"
-]
+vim = ["~/.vim/", "~/.vimrc"]
+tmux = ["~/.tmux.conf"]
+bash = ["~/.bashrc", "~/.profile"]
+nvim = ["~/.config/nvim"]
+alacritty = ["~/.config/alacritty/alacritty.yml", "~/.config/alacritty/themes"]
+foot = ["~/.config/foot"]
+kitty = ["~/.config/kitty"]
+mako = ["~/.config/mako"]
+pulse = ["~/.config/pulse/daemon.conf"]
+ranger = ["~/.config/ranger/rc.conf", "~/.config/ranger/rifle.conf"]
+sway = ["~/.config/sway"]
+wofi = ["~/.config/wofi"]
+waybar = ["~/.config/waybar"]
+yambar = ["~/.config/yambar"]
+okular = ["~/.config/okularpartrc"]
+scripts = ["~/.config/scripts"]
+sioyek = ["~/.config/sioyek"]
+sway-displays = ["~/.config/sway-displays"]
+zathura = ["~/.config/zathura/zathurarc"]
+zed = ["~/.config/zed/keymap.json", "~/.config/zed/settings.json"]
 code = [
-    "~/.config/code-flags.conf",
-    "~/.config/Code/User/keybindings.json",
-    "~/.config/Code/User/settings.json",
-    "~/.vscode/extensions/extensions.json",
+  "~/.config/code-flags.conf",
+  "~/.config/Code/User/keybindings.json",
+  "~/.config/Code/User/settings.json",
+  "~/.vscode/extensions/extensions.json",
 ]
-neofetch = [
-    "~/.config/neofetch"
-]
-gotop = [
-    "~/.config/neofetch"
-]
+neofetch = ["~/.config/neofetch"]
+gotop = ["~/.config/neofetch"]
+intellij-idea-ultimate = ["~/.ideavimrc"]

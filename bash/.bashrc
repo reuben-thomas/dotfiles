@@ -121,6 +121,7 @@ fi
 
 # App Shortcuts
 alias code='code --enable-features=UseOzonePlatform,WaylandWindowDecorations,WebRTCPipeWireCapturer --ozone-platform-hint=auto > /dev/null 2>&1'
+alias idea='intellij-idea-ultimate &'
 alias sync='/home/reuben/.config/scripts/sync.sh'
 alias socvpn='sudo openfortivpn webvpn.comp.nus.edu.sg --username=e1123003 --password=$(python3 -c "import keyring; print(keyring.get_password(\"soc\", \"e1123003\"))")'
 alias xlog='ssh reubenth@xlog.comp.nus.edu.sg'
@@ -152,12 +153,12 @@ alias todo='cd ~/Documents/Obsidian; nvim TODO.md'
 dev-service() {
   local action=$1
   shift
-  for service in docker apache2 postgresql; do
+  for service in docker apache2 postgresql forticlient; do
     sudo systemctl "$action" "$service"
   done
 }
-alias dev-start='dev-service enable'
-alias dev-stop='dev-service disable'
+alias dev-start='dev-service start'
+alias dev-stop='dev-service stop'
 alias dev-enable='dev-service enable'
 alias dev-disable='dev-service disable'
 alias activate='source ~/.venv/base/bin/activate'
@@ -204,6 +205,10 @@ export PATH=$PATH:/home/reuben/go/bin
 
 # vcpkg
 source /home/reuben/utils/vcpkg/scripts/vcpkg_completion.bash
+
+# wayvnc
+export PATH="$HOME/utils/vnc/wayvnc/build:$PATH"
+alias ipad-connect='/home/reuben/.config/wayvnc/ipad-launch.sh'
 
 # dell command-configure
 export PATH="/opt/dell/dcc:$PATH"

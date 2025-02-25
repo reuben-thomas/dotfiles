@@ -56,7 +56,7 @@
     "[yaml]": {
         "editor.defaultFormatter": "esbenp.prettier-vscode"
     },
-    "window.menuBarVisibility": "toggle",
+    "window.menuBarVisibility": "compact",
     "editor.lineNumbers": "relative",
     "vim.vimrc.enable": true,
     "vim.normalModeKeyBindingsNonRecursive": [
@@ -217,8 +217,13 @@
     },
     "github.copilot.chat.inlineChatCompletionTrigger.enabled": true,
     "github.copilot.chat.inlineChatHint.enabled": true,
-    "github.copilot.chat.temporalContext.enabled": true,
     "[json]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
+    "database-client.autoSync": true,
+    "diffEditor.ignoreTrimWhitespace": false,
+    "github.copilot.chat.editor.temporalContext.enabled": true,
+    "[javascript]": {
         "editor.defaultFormatter": "esbenp.prettier-vscode"
     }
 }
