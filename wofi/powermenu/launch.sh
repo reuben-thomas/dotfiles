@@ -6,7 +6,7 @@ pactl set-sink-mute bluez_output.CC_F4_11_DA_58_B3.1 1
 
 op=$(echo -e "󱊢 Battery\n Sync\n Lock\n⭘ Suspend\n Windows\n UEFI\n󰜉 Reload\n Restart\n󰐥 Poweroff" |
   wofi -i --dmenu \
-    -c $SCRIPT_DIR/config \
+    -c $SCRIPT_DIR/../config \
     -s $SCRIPT_DIR/style.css |
   awk '{print tolower($2)}')
 

@@ -189,8 +189,8 @@
 
     # Next and Previous
     bindcode 172 exec playerctl play-pause
-    bindcode 176 exec playerctl next
-    bindcode 177 exec playerctl previous
+    bindcode 171 exec playerctl next
+    bindcode 173 exec playerctl previous
 
     # Built-in Brightness
     # exec brightnessctl set 55%
@@ -230,7 +230,6 @@
     # Start your launcher
     bindsym $mod+d exec $menu --show=drun -a
     bindsym $mod+Alt+d exec $menu
-    bindsym $mod+Shift+d exec /bin/sh -c "/home/$USER/.config/wofi/window_switcher/launch.sh"
 
     # Drag windows by holding down $mod and left mouse button.
     # Resize them with right mouse button + $mod.
@@ -250,6 +249,9 @@
 
     # Launch Bluetooth Device menu
     bindsym $mod+p exec /bin/sh -c "/home/$USER/.config/wofi/bt_device_toggle/launch.sh"
+
+    # Launch Google Search
+    bindsym $mod+f exec /bin/sh -c "/home/$USER/.config/wofi/search/launch.sh"
 
     # Gaps when i feel like it
     bindcode $mod+Shift+35  exec swaymsg gaps inner current minus 10
@@ -370,7 +372,7 @@
     bindsym $mod+e layout toggle split
 
     # Make the current focus fullscreen
-    bindsym $mod+f fullscreen
+    bindsym $mod+Shift+f fullscreen
 # Toggle the current focus between tiling and floating mode
 
     bindsym $mod+Shift+space floating toggle

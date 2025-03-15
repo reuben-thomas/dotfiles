@@ -1,3 +1,7 @@
+@define-color bg rgba(25, 25, 45, 0.9);
+@define-color selected rgba(70, 70, 90, 0.9);
+@define-color txt rgba(230, 230, 240, 1.0);
+
 * {
   font-family: JetBrains Mono;
   font-size: 13px;
@@ -29,6 +33,7 @@ window {
   margin-bottom: 10px;
   padding-top: 5px;
   padding-bottom: 5px;
+  color: @input-focus-txt;
 }
 
 #entry {
@@ -55,4 +60,8 @@ window {
 #scroll {
   margin: 5px;
   color: transparent;
+}
+
+button#delete {
+  display: none;
 }
