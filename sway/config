@@ -230,6 +230,7 @@
     # Start your launcher
     bindsym $mod+d exec $menu --show=drun -a
     bindsym $mod+Alt+d exec $menu
+    bindsym $mod+Shift+d exec /bin/sh -c "/home/$USER/.config/wofi/window_switcher/launch.sh"
 
     # Drag windows by holding down $mod and left mouse button.
     # Resize them with right mouse button + $mod.
@@ -250,8 +251,8 @@
     # Launch Bluetooth Device menu
     bindsym $mod+p exec /bin/sh -c "/home/$USER/.config/wofi/bt_device_toggle/launch.sh"
 
-    # Launch Google Search
-    bindsym $mod+f exec /bin/sh -c "/home/$USER/.config/wofi/search/launch.sh"
+    # Launch Wofi Search
+    bindsym $mod+f exec "/home/$USER/.config/wofi/search/launch.sh"
 
     # Gaps when i feel like it
     bindcode $mod+Shift+35  exec swaymsg gaps inner current minus 10

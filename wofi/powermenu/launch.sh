@@ -1,10 +1,24 @@
 #!/bin/bash
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" &>/dev/null && pwd)"
-pactl set-sink-volume bluez_output.CC_F4_11_DA_58_B3.1 0
-pactl set-sink-mute bluez_output.CC_F4_11_DA_58_B3.1 1
 
-op=$(echo -e "󱊢 Battery\n Sync\n Lock\n⭘ Suspend\n Windows\n UEFI\n󰜉 Reload\n Restart\n󰐥 Poweroff" |
+declare -g original_volume
+
+mute_nest() {
+  original_volume=$(pactl get-sink-volume bluez_output.CC_F4_11_DA_58_B3.1 | awk '{print $NF}' | tr -d '%')
+  pactl set-sink-mute bluez_output.CC_F4_11_DA_58_B3.1 1
+  pactl set-sink-volume bluez_output.CC_F4_11_DA_58_B3.1 0
+}
+
+unmute_nest() {
+  pactl set-sink-mute bluez_output.CC_F4_11_DA_58_B3.1 0
+  if [[ -n "$original_volume" ]]; then
+    pactl set-sink-volume bluez_output.CC_F4_11_DA_58_B3.1 "$original_volume%"
+    unset original_volume
+  fi
+}
+
+op=$(echo -e " PowerStats\n Sync\n Lock\n⭘ Suspend\n Windows\n UEFI\n󰜉 Reload\n Restart\n󰐥 Poweroff" |
   wofi -i --dmenu \
     -c $SCRIPT_DIR/../config \
     -s $SCRIPT_DIR/style.css |
@@ -29,6 +43,7 @@ poweroff)
   systemctl poweroff
   ;&
 restart)
+  mute_nest
   notify-send "System" "Restarting" \
     -h string:x-canonical-private-synchronous:powermenu-notif &
   systemctl reboot
@@ -39,10 +54,12 @@ windows)
   trap 'sudo -k' EXIT
   zenity --password |
     sudo -Sv || fatal "Authentication Failed"
+  mute_nest
   sudo grub-reboot 2
   systemctl reboot
   ;;
 uefi)
+  mute_nest
   notify-send "System" "Entering UEFI Setup" \
     -h string:x-canonical-private-synchronous:powermenu-notif &
   trap 'sudo -k' EXIT
@@ -57,6 +74,7 @@ reload)
   swaymsg reload
   ;;
 suspend)
+  mute_nest
   notify-send "System" "Exiting Sway" \
     -h string:x-canonical-private-synchronous:powermenu-notif &
   swaymsg exit
@@ -69,9 +87,13 @@ lock)
 sync)
   /home/reuben/.config/scripts/sync.sh
   ;;
-battery)
+powerstats)
   flatpak run org.gnome.PowerStats
   ;;
 esac
 
-pactl set-sink-mute bluez_output.CC_F4_11_DA_58_B3.1 0
+if [[ -n "$original_volume"]]; then
+  unmute_nest
+fi
+
+

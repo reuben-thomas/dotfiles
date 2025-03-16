@@ -143,17 +143,13 @@ alias t='tmux'
 
 # Obsidian Notes
 alias obs='cd ~/Documents/Obsidian; nvim .'
-alias note='cd ~/Documents/Note; nvim Note.md'
-alias todo='cd ~/Documents/Obsidian; nvim TODO.md'
-# For opening with non-system theme
-# alias obs='nvim ~/Documents/Obsidian -c "colorscheme tokyonight"'
-# alias note='nvim ~/Documents/Notes -c "colorscheme tokyonight"'
+alias note='cd ~/Documents/Note; nvim .'
 
 # Dev Shortcuts
 dev-service() {
   local action=$1
   shift
-  for service in docker apache2 postgresql forticlient; do
+  for service in docker docker.socket apache2 postgresql forticlient; do
     sudo systemctl "$action" "$service"
   done
 }
@@ -220,6 +216,7 @@ alias thermal-performance='sudo env PATH=$PATH cctk --ThermalManagement=UltraPer
 alias thermal-optimized='sudo env PATH=$PATH cctk --ThermalManagement=Optimized'
 alias thermal-cool='sudo env PATH=$PATH cctk --ThermalManagement=Cool'
 
+# nvm
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"                   # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion" # This loads nvm bash_completion
@@ -239,4 +236,14 @@ fi
 unset __conda_setup
 # <<< conda initialize <<<
 
+# vim mode
+set -o vi
+bind -m vi-command 'Control-l: clear-screen'
+bind -m vi-insert 'Control-l: clear-screen'
+export EDITOR=nvim
+
+# search
+alias s="~/.config/scripts/search.py"
+
+# terraform
 complete -C /usr/bin/terraform terraform

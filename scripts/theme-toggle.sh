@@ -2,7 +2,7 @@
 
 ### Config File Paths
 # Neovim
-nvim_options_path="/home/$USER/.config/nvim/lua/config/options.l"
+nvim_options_path="/home/$USER/.config/nvim/lua/config/options.lua"
 nvim_colorscheme_path="/home/$USER/.config/nvim/lua/plugins/colorscheme.lua"
 nvim_light_theme="onedark"
 nvim_dark_theme='tokyonight'
