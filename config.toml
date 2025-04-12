@@ -27,5 +27,6 @@ code = [
   "~/.vscode/extensions/extensions.json",
 ]
 neofetch = ["~/.config/neofetch"]
-gotop = ["~/.config/neofetch"]
+gotop = ["~/.config/gotop"]
+btop = ["~/.config/btop"]
 intellij-idea-ultimate = ["~/.ideavimrc"]
