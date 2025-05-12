@@ -7,12 +7,11 @@
     "[typescriptreact]": {
         "editor.defaultFormatter": "esbenp.prettier-vscode"
     },
-    "vim.useSystemClipboard": true,
     "[typescript]": {
         "editor.defaultFormatter": "esbenp.prettier-vscode"
     },
     "explorer.confirmDragAndDrop": false,
-    "vim.vimrc.path": "$HOME/.config/.vscodevimrc",
+    "vim.vimrc.path": "/home/reuben/.config/.vscodevimrc",
     "typescript.updateImportsOnFileMove.enabled": "always",
     "explorer.confirmDelete": false,
     "notebook.cellToolbarLocation": {
@@ -69,11 +68,15 @@
             "after": ["g", "k"]
         }
     ],
+    "vim.handleKeys": {
+        "<C-p>": false,
+        "<C-b>": false,
+    },
     "glassit.alpha": 255,
     "glassit.force_sway": true,
     "rust-analyzer.testExplorer": true,
     "github.copilot.enable": {
-        "*": false,
+        "*": true,
         "plaintext": false,
         "markdown": false,
         "scminput": false
@@ -225,5 +228,6 @@
     "github.copilot.chat.editor.temporalContext.enabled": true,
     "[javascript]": {
         "editor.defaultFormatter": "esbenp.prettier-vscode"
-    }
+    },
+    "vim.useSystemClipboard": true
 }

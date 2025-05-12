@@ -1,2 +1,8 @@
 set clipboard+=unnamedplus
 set relativenumber
+set hlsearch
+set incsearch
+set ignorecase
+set smartcase
+set showmatch
+map <leader><space> :let @/=''<cr> " clear search

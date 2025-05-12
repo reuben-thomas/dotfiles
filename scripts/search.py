@@ -22,6 +22,7 @@ BANG_URL_MAP = {
     "!gi": "https://www.google.com/search?tbm=isch&q=%s",
     "!gp": "https://photos.google.com/search/%s",
     "!gsc": "https://scholar.google.com/scholar?hl=en&as_sdt=0%2C5&q=%s&btnG=&oq=hello",
+    "!th": "https://www.merriam-webster.com/thesaurus/%s",
     "!w": "https://en.wikipedia.org/w/index.php?title=Special:Search&search=%s",
 }
 
@@ -32,8 +33,13 @@ def open_in_browser(url: str):
 
 
 def run(query: str):
-    # Bang
     query_split = query.split(" ")
+
+    # Do nothing if empty string
+    if len(query) == 0 or query.isspace():
+        return
+
+    # Bang
     if (
         query.startswith("!")
         and len(query_split) > 1

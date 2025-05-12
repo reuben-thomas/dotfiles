@@ -9,5 +9,5 @@ swaylock -c 000000ff \
   --ring-wrong-color 9c283cff \
   --ring-ver-color 3827cfff \
   --ring-clear-color ffffffff \
-  -i /home/$USER/Pictures/Wallpapers/singer.jpg
+  -i /home/$USER/Pictures/Wallpapers/911airport.jpg
 $HOME/.config/yambar/scripts/launch-yambar.sh

@@ -111,7 +111,10 @@
 
     # Gaps
     set $default_gaps 0
+    # Gaps for current workspaces
     exec_always swaymsg gaps inner all set $default_gaps
+    # Gaps for future workspaces
+    exec_always swaymsg gaps inner $default_gaps
 
     # Border colouring
     set $cl_gray #8b97ad
@@ -131,7 +134,7 @@
 ### Display Outputs
 #
     # Wallpaper
-    output * bg /home/reuben/Pictures/Wallpapers/porschetop.jpg fill
+    output * bg /home/reuben/Pictures/Wallpapers/911airport.jpg fill
 
     # Home Monitor
     output 'Dell Inc. DELL S3422DWG 48LXSH3' mode 3440x1440@144Hz
@@ -236,8 +239,10 @@
     # Resize them with right mouse button + $mod.
     floating_modifier $mod normal
 
-    # Take a screenshot
+    # Take a screenshot / screencast
     bindsym $mod+Shift+s exec sh -c "/home/reuben/.config/scripts/screenshot.sh"
+    # bindsym $mod+Shift+r exec sh -c "/home/reuben/.config/scripts/screencast.sh"
+    # bindsym $mod+Alt+r exec /usr/bin/sh -c "/usr/bin/pkill --signal SIGINT wf-recorder"
 
     # Reload the configuration file
     bindsym $mod+Shift+c reload
@@ -255,9 +260,9 @@
     bindsym $mod+f exec "/home/$USER/.config/wofi/search/launch.sh"
 
     # Gaps when i feel like it
-    bindcode $mod+Shift+35  exec swaymsg gaps inner current minus 10
-    bindcode $mod+Shift+34 exec swaymsg gaps inner current plus 10
-    bindcode $mod+Shift+51 exec swaymsg gaps inner current set $default_gaps
+    bindcode $mod+Shift+35  exec swaymsg gaps inner all minus 10
+    bindcode $mod+Shift+34 exec swaymsg gaps inner all plus 10
+    bindcode $mod+Shift+51 exec swaymsg gaps inner all set $default_gaps
 
     # Transparency when I feel like it
     bindcode $mod+Alt+35  exec swaymsg opacity plus 0.05
@@ -301,9 +306,9 @@
 #
 # Workspaces
 #
-    # Rename workspace
-    bindcode $mod+Alt+9 exec swaymsg rename workspace to "$(wofi --height 100 --show dmenu)"
-    bindcode $mod+Alt+49 exec swaymsg rename workspace to "$(wofi --height 100 --show dmenu)"
+    # Rename Workspace
+    bindsym $mod+r exec /bin/sh -c "/home/$USER/.config/wofi/sway_ws/launch.sh"
+    # bindsym $mod+n exec /bin/sh -c "/home/$USER/.config/scripts/theme-toggle.sh dark"
 
     # Persistent home
     set $ws_home music
@@ -430,6 +435,6 @@
         bindsym Return mode "default"
         bindsym Escape mode "default"
     }
-    bindsym $mod+r mode "resize"
+    bindsym $mod+Alt+r mode "resize"
 
 include /etc/sway/config.d/*

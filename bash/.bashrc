@@ -121,7 +121,6 @@ fi
 
 # App Shortcuts
 alias code='code --enable-features=UseOzonePlatform,WaylandWindowDecorations,WebRTCPipeWireCapturer --ozone-platform-hint=auto > /dev/null 2>&1'
-alias idea='intellij-idea-ultimate &'
 alias sync='/home/reuben/.config/scripts/sync.sh'
 alias socvpn='sudo openfortivpn webvpn.comp.nus.edu.sg --username=e1123003 --password=$(python3 -c "import keyring; print(keyring.get_password(\"soc\", \"e1123003\"))")'
 alias xlog='ssh reubenth@xlog.comp.nus.edu.sg'
@@ -133,11 +132,13 @@ alias logisim='/home/reuben/cs/CS2100/logisim/launch.sh'
 alias usql2102='usql postgres://postgres@localhost/postgres'
 
 # Pure Laziness
+alias rec='/home/reuben/.config/scripts/screencast.sh; cd /home/reuben/Videos/Screencasts/'
 alias work='/home/reuben/.config/scripts/work.sh'
 alias dock='/home/reuben/.config/scripts/dock.sh'
 alias yam='/home/reuben/.config/yambar/scripts/launch-yambar.sh'
 alias zoxadd='/home/reuben/.config/scripts/zoxide-add.sh'
 alias rg='ranger'
+alias p='wl-paste >'
 alias e='exit'
 alias t='tmux'
 
@@ -163,8 +164,10 @@ alias vcpkg='function _vcpkg_alias(){ /home/reuben/utils/vcpkg/vcpkg "$@"; }; _v
 # System Shortcuts
 alias powerstatus='upower -i /org/freedesktop/UPower/devices/battery_BAT0'
 alias pcipm-enable='echo auto | sudo tee /sys/bus/pci/devices/*/power/control'
-alias buds='sudo service bluetooth restart; bluetoothctl connect DC:69:E2:BA:90:08'
-alias lume='python3 /home/reuben/.config/scripts/lume.py $1'
+alias buds='flatpak run me.timschneeberger.GalaxyBudsClient action -e Connect'
+alias lume-all='python3 /home/reuben/.config/scripts/lume.py $1'
+alias lume='ddcutil setvcp 10'
+alias gaps='f() { swaymsg gaps inner all set "$1"; swaymsg gaps inner "$1"; }; f'
 alias boot-windows='sudo grub-reboot 2; systemctl reboot'
 alias boot-uefi='sudo grub-reboot 3; systemctl reboot'
 alias autosuspend-off='sudo /home/reuben/.config/scripts/autosuspend-off.sh'
@@ -196,6 +199,7 @@ export PATH_TO_FX="$HOME/.local/share/javafx-sdk-17.0.13/lib"
 export JAVA_HOME="/usr/lib/jvm/java-17-openjdk-amd64"
 
 # go
+alias go="go1.24.1"
 export PATH=$PATH:/usr/local/go/bin
 export PATH=$PATH:/home/reuben/go/bin
 
@@ -223,18 +227,23 @@ export NVM_DIR="$HOME/.nvm"
 
 # conda
 # !! Contents within this block are managed by 'conda init' !!
-__conda_setup="$('/home/reuben/.anaconda3/bin/conda' 'shell.bash' 'hook' 2>/dev/null)"
-if [ $? -eq 0 ]; then
-  eval "$__conda_setup"
-else
-  if [ -f "/home/reuben/.anaconda3/etc/profile.d/conda.sh" ]; then
-    . "/home/reuben/.anaconda3/etc/profile.d/conda.sh"
-  else
-    export PATH="/home/reuben/.anaconda3/bin:$PATH"
-  fi
-fi
-unset __conda_setup
+# __conda_setup="$('/home/reuben/.anaconda3/bin/conda' 'shell.bash' 'hook' 2>/dev/null)"
+# if [ $? -eq 0 ]; then
+#   eval "$__conda_setup"
+# else
+#   if [ -f "/home/reuben/.anaconda3/etc/profile.d/conda.sh" ]; then
+#     . "/home/reuben/.anaconda3/etc/profile.d/conda.sh"
+#   else
+#     export PATH="/home/reuben/.anaconda3/bin:$PATH"
+#   fi
+# fi
+# unset __conda_setup
 # <<< conda initialize <<<
+
+# gradle
+export GRADLE_HOME="$HOME/.gradle/wrapper/dists/gradle-8.12.1-bin/eumc4uhoysa37zql93vfjkxy0/gradle-8.12.1"
+export PATH="$GRADLE_HOME/bin:$PATH"
+alias gradle="$GRADLE_HOME/bin/gradle"
 
 # vim mode
 set -o vi
@@ -247,3 +256,6 @@ alias s="~/.config/scripts/search.py"
 
 # terraform
 complete -C /usr/bin/terraform terraform
+# Install Ruby Gems to ~/gems
+export GEM_HOME="$HOME/gems"
+export PATH="$HOME/gems/bin:$PATH"
