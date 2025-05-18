@@ -4,6 +4,12 @@ autocmd TextYankPost * if (v:event.operator == 'y' || v:event.operator == 'd') |
 nnoremap p :let @"=substitute(system("wl-paste --no-newline"), '<C-v><C-m>', '', 'g')<cr>p
 set title
 
+"Navigation
+nnoremap j gj
+nnoremap k gk
+nnoremap gj j
+nnoremap gk k
+
 " Visual
 colorscheme lunaperche
 syntax on

@@ -132,6 +132,7 @@ alias logisim='/home/reuben/cs/CS2100/logisim/launch.sh'
 alias usql2102='usql postgres://postgres@localhost/postgres'
 
 # Pure Laziness
+alias noise='play -n synth brownnoise'
 alias rec='/home/reuben/.config/scripts/screencast.sh; cd /home/reuben/Videos/Screencasts/'
 alias work='/home/reuben/.config/scripts/work.sh'
 alias dock='/home/reuben/.config/scripts/dock.sh'
