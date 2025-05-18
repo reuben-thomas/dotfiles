@@ -27,6 +27,7 @@ fi
 set_light_theme() {
   # Global
   gsettings set org.gnome.desktop.interface color-scheme 'prefer-light'
+  gsettings set org.gnome.desktop.interface gtk-theme 'Adwaita'
 
   # Neovim Setting
   for server in $(nvr --serverlist); do
@@ -49,6 +50,7 @@ set_light_theme() {
 set_dark_theme() {
   # Global
   gsettings set org.gnome.desktop.interface color-scheme 'prefer-dark'
+  gsettings set org.gnome.desktop.interface gtk-theme 'Adwaita-dark'
 
   # Neovim Setting
   for server in $(nvr --serverlist); do
