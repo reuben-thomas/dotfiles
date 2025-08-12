@@ -137,8 +137,13 @@
     output * bg /home/reuben/Pictures/Wallpapers/911airport.jpg fill
 
     # Home Monitor
-    output 'Dell Inc. DELL S3422DWG 48LXSH3' mode 3440x1440@144Hz
-    output 'Dell Inc. DELL S2721DS B2G3R43' mode 2560x1440@75Hz
+    output 'Dell Inc. DELL S3422DWG 7007KK3' mode 3440x1440@144Hz
+
+    # Wireless Monitor
+    output HEADLESS-1 {
+      pos 1200,0
+      mode 2048x1536@60Hz
+    }
 
     # Monitor Config
     set $builtin-monitor eDP-1
@@ -224,7 +229,7 @@
     bindsym $mod+Shift+q kill
 
     # Open Calculator
-    bindsym $mod+c exec gnome-calculator;
+    # bindsym $mod+c exec gnome-calculator;
 
     # Open File Manager
     bindsym $mod+y exec nautilus;
@@ -382,7 +387,7 @@
 # Toggle the current focus between tiling and floating mode
 
     bindsym $mod+Shift+space floating toggle
-    bindsym $mod+Alt+space floating toggle, sticky toggle, move position cursor
+    bindsym $mod+Alt+space sticky toggle
 
     # Swap focus between the tiling area and the floating area
     bindsym $mod+space focus mode_toggle

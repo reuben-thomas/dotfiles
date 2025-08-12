@@ -33,7 +33,6 @@
     "editor.minimap.enabled": false,
     "window.autoDetectColorScheme": true,
     "workbench.colorTheme": "GitHub Light Default",
-    "workbench.preferredLightColorTheme": "GitHub Light Default",
     "workbench.preferredDarkColorTheme": "GitHub Dark",
     "files.associations": {
         "*.rmd": "markdown"
@@ -229,5 +228,14 @@
     "[javascript]": {
         "editor.defaultFormatter": "esbenp.prettier-vscode"
     },
-    "vim.useSystemClipboard": true
+    "vim.useSystemClipboard": true,
+    "idf.hasWalkthroughBeenShown": true,
+    "idf.espIdfPath": "/home/reuben/utils/esp/esp-idf",
+    "idf.toolsPath": "/home/reuben/.espressif",
+    "idf.gitPath": "git",
+    "idf.pythonInstallPath": "/home/reuben/.espressif/python_env/idf5.4_py3.9_env/bin/python",
+    "idf.showOnboardingOnInit": false,
+    "workbench.preferredLightColorTheme": "GitHub Light Default",
+    "sqldeveloper.sqlHistory.historyLimit": 500,
+    "github.copilot.nextEditSuggestions.enabled": true
 }

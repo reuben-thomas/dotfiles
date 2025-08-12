@@ -207,6 +207,9 @@ export PATH=$PATH:/home/reuben/go/bin
 # vcpkg
 source /home/reuben/utils/vcpkg/scripts/vcpkg_completion.bash
 
+# esp-idf
+alias idf-activate='. $HOME/utils/esp/esp-idf/export.sh'
+
 # wayvnc
 export PATH="$HOME/utils/vnc/wayvnc/build:$PATH"
 alias ipad-connect='/home/reuben/.config/wayvnc/ipad-launch.sh'

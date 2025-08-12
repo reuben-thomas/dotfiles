@@ -32,9 +32,6 @@ vim.keymap.set(
   { noremap = true, silent = true }
 )
 
--- Color Picker
--- vim.cmd([[hi FloatBorder guibg=NONE]]) -- if you don't want weird border background colors around the popup.
-
 -- Completion Toggle
 local cmp_enabled = false
 vim.api.nvim_create_user_command("Complete", function()
