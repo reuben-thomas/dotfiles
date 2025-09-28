@@ -89,7 +89,6 @@
     # Zoom Ruins my Life
     for_window [title="^zoom$"] border none, floating enable, opacity $pip_opacity
     for_window [title="^(Zoom|About)$"] border pixel, floating enable
-    for_window [title="Settings"] floating enable, floating_minimum_size 960 x 700
     for_window [title="Zoom Meeting(.*)?"] workspace next_on_output --create, move container to workspace current, floating disable, inhibit_idle open
 
     # Floating Functionality
@@ -136,30 +135,23 @@
     # Wallpaper
     output * bg /home/reuben/Pictures/Wallpapers/911airport.jpg fill
 
+    # Built-in Monitor
+    output eDP-1 pos 0 0
+
     # Home Monitor
     output 'Dell Inc. DELL S3422DWG 7007KK3' mode 3440x1440@144Hz
 
     # Wireless Monitor
     output HEADLESS-1 {
-      pos 1200,0
+      # Portrait Below
+      pos 196,1200
       mode 2048x1536@60Hz
     }
 
     # Monitor Config
     set $builtin-monitor eDP-1
-    set $primary-monitor DP-5 DP-7 eDP-1
-
-    # Workspace Allocation
-    workspace 1 output $primary-monitor
-    workspace 2 output $primary-monitor
-    workspace 3 output $primary-monitor
-    workspace 4 output $primary-monitor
-    workspace 5 output $primary-monitor
-    workspace 6 output $primary-monitor
-    workspace 7 output $primary-monitor
-    workspace 8 output $primary-monitor
-    workspace 9 output $primary-monitor
-    workspace 10 output $primary-monitor
+    # set $primary-monitor DP-5 DP-7 eDP-1
+    # workspace music output $builtin-monitor
 
     # Toggle built-in display upon closed/open events
     bindswitch lid:on output $builtin-monitor disable;sleep 0.5
@@ -387,7 +379,7 @@
 # Toggle the current focus between tiling and floating mode
 
     bindsym $mod+Shift+space floating toggle
-    bindsym $mod+Alt+space sticky toggle
+    bindsym $mod+Alt+p sticky toggle, floating toggle
 
     # Swap focus between the tiling area and the floating area
     bindsym $mod+space focus mode_toggle

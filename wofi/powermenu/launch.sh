@@ -18,7 +18,7 @@ unmute_nest() {
   fi
 }
 
-op=$(echo -e " PowerStats\n Sync\n Lock\n⭘ Suspend\n Windows\n UEFI\n󰜉 Reload\n Restart\n󰐥 Poweroff" |
+op=$(echo -e " PowerStats\n Sync\n Lock\n⭘ Suspend\n Windows\n UEFI\n󰜉 Reload\n Restart\n󰐥 Shutdown\n󰶐 Poweroff" |
   wofi -i --dmenu \
     -c $SCRIPT_DIR/../config \
     -s $SCRIPT_DIR/style.css |
@@ -33,13 +33,19 @@ fatal() {
 
 case $op in
 poweroff)
+  notify-send "System" "Powering Off" \
+    -h string:x-canonical-private-synchronous:powermenu-notif &
+  for i in $(seq 1 $END); do echo $i; done
+  display_count=$(ddcutil detect | grep -c '^Display [0-9]*')
+  for ((display = 1; display <= $display_count; display++)); do
+    ddcutil setvcp D6 05 --display "$display" --noverify --async
+  done
+  systemctl poweroff
+  ;&
+shutdown)
   notify-send "System" "Shutting Down" \
     -h string:x-canonical-private-synchronous:powermenu-notif &
   for i in $(seq 1 $END); do echo $i; done
-  # display_count=$(ddcutil detect | grep -c '^Display [0-9]*')
-  # for ((display = 1; display <= $display_count; display++)); do
-  #   ddcutil setvcp D6 05 --display "$display" --noverify --async
-  # done
   systemctl poweroff
   ;&
 restart)
