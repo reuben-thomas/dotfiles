@@ -1,0 +1,25 @@
+!
+! REDDIT
+! 
+! main feed
+www.reddit.com##:matches-path(/^\/(\?.*)?$/) .main-container
+www.reddit.com##:matches-path(/^\/(\?.*)?$/) left-nav-top-section
+www.reddit.com##main:has(> div > shreddit-async-loader:first-child shreddit-sort-dropdown [href*="/best/"])
+! subreddit feed
+!www.reddit.com###main-content
+
+!
+! YOUTUBE
+!
+! feed
+www.youtube.com##ytd-browse.style-scope.ytd-page-manager:nth-of-type(2) > .style-scope.ytd-browse.grid.grid-disabled > div.style-scope.ytd-two-column-browse-results-renderer:nth-of-type(1) > .style-scope.ytd-two-column-browse-results-renderer > div.style-scope.ytd-rich-grid-renderer:nth-of-type(6)
+www.youtube.com##ytd-guide-section-renderer.style-scope.ytd-guide-renderer:nth-of-type(4)
+www.youtube.com##ytd-guide-section-renderer.style-scope.ytd-guide-renderer:nth-of-type(3)
+
+!
+! INSTAGRAM
+!
+! explore
+www.instagram.com##.xvbhtw8.x78zum5.xdt5ytf.x1iyjqo2.xl56j7k
+! explore mobile
+www.instagram.com##.x78zum5.xdt5ytf.x11lt19s.x1n2onr6.xph46j.x7x3xai.xsybdxg.x194l6zq

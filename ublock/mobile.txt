@@ -1,0 +1,21 @@
+!
+! YOUTUBE
+!
+m.youtube.com##div.tab-content[tab-identifier="FEsubscriptions"]
+
+!
+! REDDIT
+!
+reddit.com##shreddit-feed
+reddit.com##aside[aria-label="Related Posts Section"]
+! sidebar or below
+reddit.com##div[id="right-sidebar-container"]
+reddit.com##div[id^="answers-suggested-queries"]
+
+!
+! INSTAGRAM
+!
+! explore
+www.instagram.com## .x78zum5 .xdt5ytf .x11lt19s .x1n2onr6 .xph46j .x7x3xai .xsybdxg.
+x194l62q
+
