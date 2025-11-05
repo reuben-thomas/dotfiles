@@ -96,7 +96,7 @@
     # for_window [title=".*" floating] resize set 500 500
 
     # Persistent Terminal
-    exec $term --title scratchpadTerm -e ranger
+    exec $term --title scratchpadTerm -e yazi
     for_window [title="scratchpadTerm"] floating enable, move position center, move scratchpad
 
 ### Styling
@@ -133,7 +133,9 @@
 ### Display Outputs
 #
     # Wallpaper
+    # output * bg /home/reuben/Pictures/Wallpapers/winxp2.png fill
     output * bg /home/reuben/Pictures/Wallpapers/911airport.jpg fill
+    # output * bg "#000000" solid_color
 
     # Built-in Monitor
     output eDP-1 pos 0 0
@@ -173,6 +175,12 @@
         scroll_factor 0.5
         natural_scroll enabled
         middle_emulation enabled
+    }
+
+    # Keychron M6 8K (Bluetooth)
+    input "13364:53321:Keychron_M6_8K_Mouse" {
+        scroll_factor 0.1
+        pointer_accel -0.7
     }
 # You can get the names of your inputs by running: swaymsg -t get_inputs
 # Read `man 5 sway-input` for more information about this section.
@@ -215,7 +223,7 @@
     # Start a terminal
     bindsym $mod+Return exec $term
     bindsym $mod+Alt+Return exec $term tmux
-    bindsym $mod+Shift+Return exec $term ranger
+    bindsym $mod+Shift+Return exec $term yazi
 
     # Kill focused window
     bindsym $mod+Shift+q kill
@@ -225,7 +233,7 @@
 
     # Open File Manager
     bindsym $mod+y exec nautilus;
-    bindsym $mod+Shift+y exec $term ranger
+    bindsym $mod+Shift+y exec $term yazi
 
     # Start your launcher
     bindsym $mod+d exec $menu --show=drun -a
@@ -400,7 +408,7 @@
     bindsym $mod+semicolon scratchpad show, move position center
 
     # Restore default scratchpad
-    bindsym $mod+Alt+semicolon exec $term --title scratchpadTerm -e ranger
+    bindsym $mod+Alt+semicolon exec $term --title scratchpadTerm -e yazi
 #
 # Resizing containers:
 #

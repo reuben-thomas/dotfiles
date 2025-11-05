@@ -1,0 +1,16 @@
+[opener]
+zathura = [
+	{ run = 'zathura "$@"', orphan = true, for = "unix", desc = "Zathura" },
+]
+okular = [
+	{ run = 'okular "$@"', orphan = true, for = "unix", desc = "Okular" },
+]
+brave = [
+	{ run = 'brave-browser "$@"', orphan = true, for = "unix", desc = "Brave" },
+]
+
+[open]
+rules = [
+  { mime = "application/pdf", use = [ "zathura", "okular", "brave" ] },
+]
+

@@ -83,12 +83,12 @@ esac
 if [ -x /usr/bin/dircolors ]; then
   test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
   alias ls='ls --color=auto'
-  #alias dir='dir --color=auto'
-  #alias vdir='vdir --color=auto'
+  alias dir='dir --color=auto'
+  alias vdir='vdir --color=auto'
 
-  #alias grep='grep --color=auto'
-  #alias fgrep='fgrep --color=auto'
-  #alias egrep='egrep --color=auto'
+  alias grep='grep --color=auto'
+  alias fgrep='fgrep --color=auto'
+  alias egrep='egrep --color=auto'
 fi
 
 # colored GCC warnings and errors
@@ -138,7 +138,7 @@ alias work='/home/reuben/.config/scripts/work.sh'
 alias dock='/home/reuben/.config/scripts/dock.sh'
 alias yam='/home/reuben/.config/yambar/scripts/launch-yambar.sh'
 alias zoxadd='/home/reuben/.config/scripts/zoxide-add.sh'
-alias rg='ranger'
+alias r='ranger'
 alias p='wl-paste >'
 alias e='exit'
 alias t='tmux'
@@ -257,6 +257,15 @@ export EDITOR=nvim
 
 # search
 alias s="~/.config/scripts/search.py"
+
+# yazi
+function y() {
+  local tmp="$(mktemp -t "yazi-cwd.XXXXXX")" cwd
+  yazi "$@" --cwd-file="$tmp"
+  IFS= read -r -d '' cwd <"$tmp"
+  [ -n "$cwd" ] && [ "$cwd" != "$PWD" ] && builtin cd -- "$cwd"
+  rm -f -- "$tmp"
+}
 
 # terraform
 complete -C /usr/bin/terraform terraform

@@ -1,0 +1,16 @@
+
+[mgr]
+prepend_keymap = [
+  # Swap zoxide, fzf defaults
+  { on = [ "z" ], run = "plugin zoxide", desc = "Jump to a directory or reveal a file using zoxide" },
+  { on = [ "Z" ], run = "plugin fzf", desc = "Jump to a directory or reveal a file using fzf" },
+
+  # Drop to shell
+  { on = "!", for = "unix", run = 'shell "$SHELL" --block', desc = "Open $SHELL here" },
+  { on = "!", for = "windows", run = 'shell "powershell.exe" --block', desc = "Open PowerShell here" },
+
+  # Ripdrag
+  { on = [ "<C-n>" ], run = '''
+      shell 'ripdrag "$@" -x 2>/dev/null &' --confirm
+  ''' },
+]
