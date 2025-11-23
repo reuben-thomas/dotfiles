@@ -2,7 +2,10 @@
 
 vim = ["~/.vim/", "~/.vimrc"]
 tmux = ["~/.tmux.conf"]
-bash = ["~/.bashrc", "~/.profile"]
+bash = ["~/.bashrc"]
+profile = ["~/.profile"]
+zsh = ["~/.zshrc"]
+starship = ["~/.config/starship.toml"]
 nvim = ["~/.config/nvim"]
 alacritty = ["~/.config/alacritty/alacritty.yml", "~/.config/alacritty/themes"]
 foot = ["~/.config/foot"]

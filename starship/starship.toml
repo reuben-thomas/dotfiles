@@ -1,0 +1,17 @@
+add_newline = false
+aws.disabled = true
+
+[username]
+style_user = "italic bold green"
+show_always = true
+
+[time]
+disabled = false
+use_12hr = false
+style = "bold green"
+format = '[\[🕙$time\]]($style) '
+
+[directory]
+truncation_length = 255
+truncate_to_repo = false
+use_logical_path = false
