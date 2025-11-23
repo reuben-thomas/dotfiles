@@ -1,17 +1,25 @@
 add_newline = false
 aws.disabled = true
+format = '$time$username$hostname$all$directory$character'
+
+[hostname]
+ssh_only = false
+style = "green"
+format = '[@$ssh_symbol$hostname]($style) '
 
 [username]
 style_user = "italic bold green"
+format = '[$user]($style)'
 show_always = true
 
 [time]
 disabled = false
 use_12hr = false
-style = "bold green"
+style = 'bold green'
 format = '[\[🕙$time\]]($style) '
 
 [directory]
+style = 'bold blue'
 truncation_length = 255
 truncate_to_repo = false
 use_logical_path = false

@@ -15,12 +15,13 @@ else
 fi
 
 plugins=(
-  zsh-autosuggestions
   git
 )
 
 eval "$(starship init zsh)"
 source ~/.oh-my-zsh/custom/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
+source ~/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+source ~/.oh-my-zsh/custom/plugins/zsh-vi-mode/zsh-vi-mode.zsh
 
 # default app overrides
 alias code='code --enable-features=UseOzonePlatform,WaylandWindowDecorations,WebRTCPipeWireCapturer --ozone-platform-hint=auto > /dev/null 2>&1'
