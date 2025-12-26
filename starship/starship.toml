@@ -1,6 +1,5 @@
+format = "$time$username$hostname$git_branch$c$cpp$rust$nodejs$cmake$helm$kubernetes$python\n$directory$character"
 add_newline = false
-aws.disabled = true
-format = '$time$username$hostname$all$directory$character'
 
 [hostname]
 ssh_only = false
