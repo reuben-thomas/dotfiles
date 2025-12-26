@@ -1,29 +1,27 @@
-# FONTS & MARGIN
-default_font: &default_font JetBrains Mono:pixelsize=11
-info_font: &info_font JetBrains Mono:pixelsize=11:slant=italic
+#
+#
+# STYLING
+#
+#
+# Fonts
+default_font: &default_font JetBrains Mono:pixelsize=10
+info_font: &info_font JetBrains Mono:pixelsize=10:slant=italic
 icon_font: &icon_font JetBrains Mono 6 Free:style=solid:pixelsize=12
 # Margin
 deco_margin: &deco_margin 8
-icon_margin: &icon_margin 8
-#
-#
-#
-# COLOR AND DECORATIONS
 # Basic colours
 fg_color: &fg_color e8e8e8ff
 bg_color: &bg_color 242424ff
 info_color: &info_color acb4bdff
 white: &white ffffffff
-fade_white: &fade_white 7a7a7aff
 # Component accents
 dsp_color: &dsp_color ffee6eff
 lum_color: &lum_color d5ffa1ff
-ctr_color: &ctr_color 90fcbfff
 mic_color: &mic_color a6daffff
 spk_color: &spk_color 94d192ff
 net_color: &net_color c999ffff
 bat_color: &bat_color ff99bbff
-# States
+# State Styling
 good:
   &good {
     margin: *deco_margin,
@@ -42,7 +40,7 @@ error:
     foreground: ffffffff,
     deco: { background: { color: ff4545ff } },
   }
-# I3 indicator decos
+# Sway Indicator
 sway_deco: &sway_deco { background: { color: ffe79eff } }
 white_deco: &white_deco { background: { color: *white } }
 fade_white_deco: &fade_white_deco { background: { color: ffffff33 } }
@@ -51,9 +49,11 @@ error_deco: &error_deco { background: { color: de284fff } }
 info: &info { font: *info_font, foreground: *info_color }
 #
 #
+# BAR
+#
 #
 bar:
-  monitor: DP-2
+  monitor: eDP-1
   height: 18
   location: top
   spacing: 12
@@ -61,11 +61,15 @@ bar:
   font: *default_font
   foreground: *fg_color
   background: *bg_color
-
+  #
+  #
+  # LEFT
+  #
+  #
   left:
     - i3:
         sort: ascending
-        anchors: # Not used (directly) by f00bar; used here to avoid duplication
+        anchors:
           - string:
               &i3_common {
                 margin: 7,
@@ -112,26 +116,6 @@ bar:
                 state == unfocused: { string: { <<: *music } }
                 state == invisible: { string: { <<: [*music, *invisible] } }
                 state == urgent: { string: { <<: [*music, *urgent] } }
-    # - foreign-toplevel:
-    #     content:
-    #       - map:
-    #           conditions:
-    #             ~activated: { empty: {} }
-    #             activated:
-    #               - string:
-    #                   {
-    #                     text: "{app-id}",
-    #                     margin: 8,
-    #                     deco: *sway_deco,
-    #                     foreground: *bg_color,
-    #                   }
-    #     {
-    #       text: " {title}",
-    #       font: *info_font,
-    #       foreground: *info_color,
-    #       max: 15,
-    #       right-margin: 10,
-    #     }
     - label:
         content:
           - string: { text: "DSP", foreground: *dsp_color }
@@ -188,24 +172,16 @@ bar:
                 on-click: /bin/sh -c "python3 /home/reuben/.config/yambar/scripts/brightness.py -",
                 <<: *info,
               }
-    - script:
-        path: /home/reuben/.config/yambar/scripts/days-until.sh
-        poll-interval: 1800
-        args:
-          - "2024-06-25"
-        content:
-          - string: { text: "CTR", foreground: *ctr_color }
-          - string: { text: " {days} DAYS" }
-          - string: { text: " [{hours} HOURS]", <<: *info }
   #
   #
-  #
+  # CENTER
   #
   #
   center:
     - clock:
         time-format: "%I:%M %p"
         date-format: "%^A, %d %^B %Y"
+        timezone: "Europe/London"
         content:
           - string:
               {
@@ -216,7 +192,7 @@ bar:
               }
   #
   #
-  #
+  # RIGHT
   #
   #
   right:
@@ -246,19 +222,6 @@ bar:
                   },
               }
           - sink_info_end: &sink_info_end { string: { text: "]", <<: *info } }
-          # - volume_bar:
-          #     &volume_bar {
-          #       progress-bar:
-          #         {
-          #           tag: sink_percent,
-          #           length: 6,
-          #           start: { string: { text: " " } },
-          #           fill: { string: { text: 󰝤, foreground: *spk_color } },
-          #           empty: { string: { text: 󰝤, foreground: *fade_white } },
-          #           end: { string: { text: "  " } },
-          #           indicator: { string: { text: 󰝤 } },
-          #         },
-          #     }
         content:
           map:
             conditions:
@@ -323,29 +286,31 @@ bar:
                       - <<: *source_info
                       - <<: *source_info_end
     - network:
-        name: wlp0s20f3
-        poll-interval: 60
+        # name: wlp0s20f3
         content:
           map:
-            on-click: /bin/sh -c "foot nmtui"
-            default:
-              - string: { text: "NET", <<: *warn }
-              - string: { text: " OK" }
-              - string: { text: " [offline]", <<: *info }
+            default: { empty: {} }
             conditions:
-              state == down:
-                - string: { text: "NET", <<: *error }
-                - string: { text: " OFF" }
-                - string: { text: " [offline]", <<: *info }
-              state == up:
-                - string: { text: "NET", foreground: *net_color }
-                - string: { text: " {signal}" }
-                - string: { text: " [{ssid}", max: 15, <<: *info }
-                - string: { text: "]", <<: *info }
+              name == wlp0s20f3:
+                map:
+                  on-click: /bin/sh -c "foot nmtui"
+                  default:
+                    - string: { text: "NET", <<: *warn }
+                    - string: { text: " OK" }
+                    - string: { text: " [offline]", <<: *info }
+                  conditions:
+                    state == down:
+                      - string: { text: "NET", <<: *error }
+                      - string: { text: " OFF" }
+                      - string: { text: " [offline]", <<: *info }
+                    state == up:
+                      - string: { text: "NET", foreground: *net_color }
+                      - string: { text: " {signal}" }
+                      - string: { text: " [{ssid}", max: 15, <<: *info }
+                      - string: { text: "]", <<: *info }
     - battery:
         name: BAT0
-        poll-interval: 60
-        anchors: # Not used (directly) by f00bar; used here to avoid duplication
+        anchors:
           - string: &estimate { string: { text: " [{estimate}]", <<: *info } }
         content:
           map:
@@ -396,18 +361,3 @@ bar:
               on-click: /bin/sh -c "/home/$USER/.config/wofi/powermenu/launch.sh"
               font: *icon_font
               text: " ⏻  "
-    # - script:
-    #     path: /home/reuben/.config/yambar/scripts/dnd-toggle.sh
-    #     poll-interval: 1800
-    #     args:
-    #       - "2024-06-25"
-    #     content:
-    #       - string: { text: "CTR", foreground: *ctr_color }
-    #       - string: { text: " {days} DAYS" }
-    #       - string: { text: " [{hours} HOURS]", <<: *info }
-    #       - string:
-    #           on-click: /bin/sh -c "swaymsg reload"
-    #           text: ""
-    #       - string:
-    #           on-click: /bin/sh -c "/home/$USER/.config/wofi/powermenu/launch.sh"
-    #           text: "  "
