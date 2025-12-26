@@ -1,0 +1,22 @@
+(defsrc
+  caps lctl ralt
+  a s d f
+  h j k l
+)
+
+(defalias
+  ;; Right alt activates arrow layer while held
+  rar (layer-while-held arrows)
+)
+
+(deflayer base
+  lctl caps @rar
+  a s d f
+  h j k l
+)
+
+(deflayer arrows
+  _ _ _
+  home pgdn pgup end
+  left down up rght
+)
