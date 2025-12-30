@@ -1,12 +1,8 @@
-export ZSH="$HOME/.oh-my-zsh"
-
 ZSH_THEME=""
 HYPHEN_INSENSITIVE="true"
 COMPLETION_WAITING_DOTS="true"
 
 zstyle ':omz:update' mode reminder
-
-source $ZSH/oh-my-zsh.sh
 
 if [[ -n $SSH_CONNECTION ]]; then
   export EDITOR='vim'
@@ -16,12 +12,20 @@ fi
 
 plugins=(
   git
+  # zsh-ai
+  zsh-vi-mode
+  zsh-autosuggestions
+  zsh-syntax-highlighting
 )
 
-eval "$(starship init zsh)"
-source ~/.oh-my-zsh/custom/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
-source ~/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
-source ~/.oh-my-zsh/custom/plugins/zsh-vi-mode/zsh-vi-mode.zsh
+export ZSH="$HOME/.oh-my-zsh"
+source $ZSH/oh-my-zsh.sh
+
+# set theme
+$HOME/.config/foot/set-theme.sh
+TRAPUSR1() {
+  $HOME/.config/foot/set-theme.sh
+}
 
 # default app overrides
 alias code='code --enable-features=UseOzonePlatform,WaylandWindowDecorations,WebRTCPipeWireCapturer --ozone-platform-hint=auto > /dev/null 2>&1'
@@ -30,7 +34,6 @@ alias socvpn='sudo openfortivpn webvpn.comp.nus.edu.sg --username=e1123003 --pas
 alias xlog='ssh reubenth@xlog.comp.nus.edu.sg'
 alias chrome='google-chrome --password-store=gnome-libsecret'
 alias typetest='tt -showwpm -notheme -blockcursor'
-alias battop='/home/reuben/utils/battop-v0.2.4-x86_64-unknown-linux-gnu'
 alias powerstats='flatpak run org.gnome.PowerStats&exit'
 alias logisim='/home/reuben/cs/CS2100/logisim/launch.sh'
 alias usql2102='usql postgres://postgres@localhost/postgres'
@@ -46,9 +49,11 @@ alias p='wl-paste >'
 alias e='exit'
 alias t='tmux'
 
+# starship
+eval "$(starship init zsh)"
+
 # obsidian
 alias obs='cd ~/Documents/Obsidian; nvim .'
-alias note='cd ~/Documents/Note; nvim .'
 
 # dev services
 dev-service() {
@@ -63,6 +68,8 @@ alias dev-stop='dev-service stop'
 alias dev-enable='dev-service enable'
 alias dev-disable='dev-service disable'
 alias activate='source ~/.venv/base/bin/activate'
+
+# vcpkg
 alias vcpkg='function _vcpkg_alias(){ /home/reuben/utils/vcpkg/vcpkg "$@"; }; _vcpkg_alias'
 
 # system
@@ -89,6 +96,13 @@ export PATH="$PYENV_ROOT/bin:$PATH"
 
 if command -v pyenv 1>/dev/null 2>&1; then
   eval "$(pyenv init -)"
+fi
+
+# fnm
+FNM_PATH="/home/reuben/.local/share/fnm"
+if [ -d "$FNM_PATH" ]; then
+  export PATH="$FNM_PATH:$PATH"
+  eval "$(fnm env)"
 fi
 
 # zoxide
@@ -120,7 +134,6 @@ alias thermal-performance='sudo env PATH=$PATH cctk --ThermalManagement=UltraPer
 alias thermal-optimized='sudo env PATH=$PATH cctk --ThermalManagement=Optimized'
 alias thermal-cool='sudo env PATH=$PATH cctk --ThermalManagement=Cool'
 
-
 # gradle
 export GRADLE_HOME="$HOME/.gradle/wrapper/dists/gradle-8.12.1-bin/eumc4uhoysa37zql93vfjkxy0/gradle-8.12.1"
 export PATH="$GRADLE_HOME/bin:$PATH"
@@ -137,6 +150,7 @@ function y() {
 
 # terraform
 complete -C /usr/bin/terraform terraform
-# Install Ruby Gems to ~/gems
+
+# ruby
 export GEM_HOME="$HOME/gems"
 export PATH="$HOME/gems/bin:$PATH"

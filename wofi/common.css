@@ -1,6 +1,4 @@
-@define-color bg rgba(25, 25, 45, 0.9);
-@define-color selected rgba(70, 70, 90, 0.9);
-@define-color txt rgba(230, 230, 240, 1.0);
+@define-color txt rgba(245, 245, 245, 1.0);
 
 * {
   font-family: JetBrains Mono;
