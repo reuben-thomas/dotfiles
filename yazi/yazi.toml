@@ -1,16 +1,38 @@
+[mgr]
+show_hidden = true
+
 [opener]
+#
+# PDF
 zathura = [
 	{ run = 'zathura "$@"', orphan = true, for = "unix", desc = "Zathura" },
 ]
 okular = [
 	{ run = 'okular "$@"', orphan = true, for = "unix", desc = "Okular" },
 ]
+#
+# Browser
 brave = [
 	{ run = 'brave-browser "$@"', orphan = true, for = "unix", desc = "Brave" },
+]
+firefox = [
+	{ run = 'firefox "$@"', orphan = true, for = "unix", desc = "Firefox" },
+]
+#
+# Media
+image_viewer = [
+	{ run = 'loupe "$@"', desc = "Image Viewer", orphan = true, for = "unix" }
+]
+video_viewer = [
+	{ run = 'totem "$@"', desc = "Video Viewer", orphan = true, for = "unix" }
+]
+kdenlive = [
+	{ run = 'kdenlive "$@"', desc = "Kdenlive", orphan = true, for = "unix" }
 ]
 
 [open]
 rules = [
-  { mime = "application/pdf", use = [ "zathura", "okular", "brave" ] },
+  { mime = "application/pdf", use = [ "zathura", "okular", "brave", "firefox" ] },
+	{ mime = "image/*", use = "image_viewer" },
+	{ mime = "video/*", use = ["video_viewer", "kdenlive"] }
 ]
-

@@ -1,12 +1,8 @@
-export ZSH="$HOME/.oh-my-zsh"
-
 ZSH_THEME=""
 HYPHEN_INSENSITIVE="true"
 COMPLETION_WAITING_DOTS="true"
 
 zstyle ':omz:update' mode reminder
-
-source $ZSH/oh-my-zsh.sh
 
 if [[ -n $SSH_CONNECTION ]]; then
   export EDITOR='vim'
@@ -16,45 +12,42 @@ fi
 
 plugins=(
   git
+  ssh-agent
+  zsh-vi-mode
+  zsh-autosuggestions
+  zsh-syntax-highlighting
 )
 
-eval "$(starship init zsh)"
-source ~/.oh-my-zsh/custom/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
-source ~/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
-source ~/.oh-my-zsh/custom/plugins/zsh-vi-mode/zsh-vi-mode.zsh
+export ZSH="$HOME/.oh-my-zsh"
+source $ZSH/oh-my-zsh.sh
 
 # default app overrides
 alias code='code --enable-features=UseOzonePlatform,WaylandWindowDecorations,WebRTCPipeWireCapturer --ozone-platform-hint=auto > /dev/null 2>&1'
-alias sync='/home/reuben/.config/scripts/sync.sh'
 alias socvpn='sudo openfortivpn webvpn.comp.nus.edu.sg --username=e1123003 --password=$(python3 -c "import keyring; print(keyring.get_password(\"soc\", \"e1123003\"))")'
 alias xlog='ssh reubenth@xlog.comp.nus.edu.sg'
 alias chrome='google-chrome --password-store=gnome-libsecret'
 alias typetest='tt -showwpm -notheme -blockcursor'
-alias battop='/home/reuben/utils/battop-v0.2.4-x86_64-unknown-linux-gnu'
-alias powerstats='flatpak run org.gnome.PowerStats&exit'
 alias logisim='/home/reuben/cs/CS2100/logisim/launch.sh'
 alias usql2102='usql postgres://postgres@localhost/postgres'
 
 # laziness
 alias noise='play -n synth brownnoise'
-alias rec='/home/reuben/.config/scripts/screencast.sh; cd /home/reuben/Videos/Screencasts/'
-alias work='/home/reuben/.config/scripts/work.sh'
-alias dock='/home/reuben/.config/scripts/dock.sh'
 alias yam='/home/reuben/.config/yambar/scripts/launch-yambar.sh'
-alias zoxadd='/home/reuben/.config/scripts/zoxide-add.sh'
 alias p='wl-paste >'
 alias e='exit'
 alias t='tmux'
 
+# starship
+eval "$(starship init zsh)"
+
 # obsidian
 alias obs='cd ~/Documents/Obsidian; nvim .'
-alias note='cd ~/Documents/Note; nvim .'
 
 # dev services
 dev-service() {
   local action=$1
   shift
-  for service in docker docker.socket apache2 postgresql forticlient; do
+  for service in docker docker.socket apache2 postgresql forticlient containerd; do
     sudo systemctl "$action" "$service"
   done
 }
@@ -63,19 +56,18 @@ alias dev-stop='dev-service stop'
 alias dev-enable='dev-service enable'
 alias dev-disable='dev-service disable'
 alias activate='source ~/.venv/base/bin/activate'
+
+# vcpkg
 alias vcpkg='function _vcpkg_alias(){ /home/reuben/utils/vcpkg/vcpkg "$@"; }; _vcpkg_alias'
 
 # system
 alias powerstatus='upower -i /org/freedesktop/UPower/devices/battery_BAT0'
 alias pcipm-enable='echo auto | sudo tee /sys/bus/pci/devices/*/power/control'
-alias buds='flatpak run me.timschneeberger.GalaxyBudsClient action -e Connect'
-alias lume-all='python3 /home/reuben/.config/scripts/lume.py $1'
+alias lume-all='python3 $HOME/.config/scripts/lume.py'
 alias lume='ddcutil setvcp 10'
 alias gaps='f() { swaymsg gaps inner all set "$1"; swaymsg gaps inner "$1"; }; f'
 alias boot-windows='sudo grub-reboot 2; systemctl reboot'
 alias boot-uefi='sudo grub-reboot 3; systemctl reboot'
-alias autosuspend-off='sudo /home/reuben/.config/scripts/autosuspend-off.sh'
-alias autosuspend-status='cat /sys/module/usbcore/parameters/autosuspend'
 
 # Created by `pipx` on 2023-12-13 10:18:49
 export PATH="$PATH:/home/reuben/.local/bin"
@@ -91,6 +83,13 @@ if command -v pyenv 1>/dev/null 2>&1; then
   eval "$(pyenv init -)"
 fi
 
+# fnm
+FNM_PATH="/home/reuben/.local/share/fnm"
+if [ -d "$FNM_PATH" ]; then
+  export PATH="$FNM_PATH:$PATH"
+  eval "$(fnm env)"
+fi
+
 # zoxide
 eval "$(zoxide init zsh)"
 
@@ -103,9 +102,8 @@ export PATH_TO_FX="$HOME/.local/share/javafx-sdk-17.0.13/lib"
 export JAVA_HOME="/usr/lib/jvm/java-17-openjdk-amd64"
 
 # go
-alias go="go1.24.1"
 export PATH=$PATH:/usr/local/go/bin
-export PATH=$PATH:/home/reuben/go/bin
+export PATH=$PATH:$HOME/go/bin
 
 # vcpkg
 source /home/reuben/utils/vcpkg/scripts/vcpkg_completion.zsh
@@ -119,7 +117,6 @@ alias charge-std='sudo env PATH=$PATH cctk --PrimaryBattChargeCfg=Standard'
 alias thermal-performance='sudo env PATH=$PATH cctk --ThermalManagement=UltraPerformance'
 alias thermal-optimized='sudo env PATH=$PATH cctk --ThermalManagement=Optimized'
 alias thermal-cool='sudo env PATH=$PATH cctk --ThermalManagement=Cool'
-
 
 # gradle
 export GRADLE_HOME="$HOME/.gradle/wrapper/dists/gradle-8.12.1-bin/eumc4uhoysa37zql93vfjkxy0/gradle-8.12.1"
@@ -137,6 +134,34 @@ function y() {
 
 # terraform
 complete -C /usr/bin/terraform terraform
-# Install Ruby Gems to ~/gems
+
+# ruby
 export GEM_HOME="$HOME/gems"
 export PATH="$HOME/gems/bin:$PATH"
+
+# kubeconfig
+kubeconf() {
+    export KUBECONFIG="$HOME/.kube/$1"
+}
+
+# talosconfig
+talosconf() {
+    export TALOSCONFIG="$HOME/.talos/$1"
+}
+
+# zsh-ai, but lazy
+help() {
+  if [[ -z "$GEMINI_API_KEY" ]]; then
+    export GEMINI_API_KEY=$(secret-tool lookup name zsh_ai_gemini_token)
+    export ZSH_AI_GEMINI_MODEL="gemini-2.5-flash"
+    export ZSH_AI_PROVIDER="gemini"
+
+    source "$ZSH_CUSTOM/plugins/zsh-ai/zsh-ai.plugin.zsh"
+  fi
+
+  zsh-ai "$@"
+}
+
+# sdkman
+export SDKMAN_DIR="$HOME/.sdkman"
+[[ -s "$HOME/.sdkman/bin/sdkman-init.sh" ]] && source "$HOME/.sdkman/bin/sdkman-init.sh"

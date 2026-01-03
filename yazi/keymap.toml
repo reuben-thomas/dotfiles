@@ -1,6 +1,10 @@
 
 [mgr]
 prepend_keymap = [
+  # Vim defaults
+	{ on = "V", run = "visual_mode",         desc = "Enter visual mode (selection mode)" },
+	{ on = "v", run = "visual_mode --unset", desc = "Enter visual mode (unset mode)" },
+
   # Swap zoxide, fzf defaults
   { on = [ "z" ], run = "plugin zoxide", desc = "Jump to a directory or reveal a file using zoxide" },
   { on = [ "Z" ], run = "plugin fzf", desc = "Jump to a directory or reveal a file using fzf" },
@@ -9,8 +13,8 @@ prepend_keymap = [
   { on = "!", for = "unix", run = 'shell "$SHELL" --block', desc = "Open $SHELL here" },
   { on = "!", for = "windows", run = 'shell "powershell.exe" --block', desc = "Open PowerShell here" },
 
-  # Ripdrag
-  { on = [ "<C-n>" ], run = '''
-      shell 'ripdrag "$@" -x 2>/dev/null &' --confirm
-  ''' },
-]
+  # Drag and drop files from and to Yazi
+  { on = "<C-n>", run = '''shell --
+    ripdrag --resizable --all --target --basename ./2026-01-03-224709_screenshot.png | while read filepath; do cp -nR "$filepath" .; done
+  ''', desc = "Drag and drop selected files" },
+  ]

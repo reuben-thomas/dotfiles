@@ -11,13 +11,13 @@
     set $term foot
 
     # Fonts
-    font pango:Hack Nerd Font 11px
+    font pango:JetBrains Mono NF 11px
 
     # App Launcher
     set $menu wofi
 
     # Notifications
-    exec mako
+    exec_always /bin/sh -c "killall mako; mako &"
     include /etc/sway/config-vars.d/*
 
     # Gnome Keyring
@@ -71,11 +71,11 @@
     # GNUPlot Windows
     for_window [app_id="gnuplot_qt"] floating enable, move position center
 
-    # I hate R
-    for_window [title="^.*R Graphics.*$"] floating enable
-
     # Spotify
     for_window [title="Spotify MiniPlayer"] floating enable, sticky enable, resize set 325 360
+
+    # Tidal
+    for_window [title="TIDAL.*"] floating disable
 
     # Zenity / pkexec
     for_window [app_id="zenity"] floating enable, move position center
@@ -91,10 +91,6 @@
     for_window [title="^(Zoom|About)$"] border pixel, floating enable
     for_window [title="Zoom Meeting(.*)?"] workspace next_on_output --create, move container to workspace current, floating disable, inhibit_idle open
 
-    # Floating Functionality
-    # for_window [app_id="Alacritty" floating] resize set 500 500
-    # for_window [title=".*" floating] resize set 500 500
-
     # Persistent Terminal
     exec $term --title scratchpadTerm -e yazi
     for_window [title="scratchpadTerm"] floating enable, move position center, move scratchpad
@@ -104,7 +100,7 @@
     smart_borders on
     hide_edge_borders smart
     default_border pixel 3
-    titlebar_padding 5 2
+    titlebar_padding 10 1
     titlebar_border_thickness 0
     for_window [class=".*"] border pixel 3
 
@@ -133,8 +129,7 @@
 ### Display Outputs
 #
     # Wallpaper
-    # output * bg /home/reuben/Pictures/Wallpapers/winxp2.png fill
-    output * bg /home/reuben/Pictures/Wallpapers/911airport.jpg fill
+    output * bg $HOME/Pictures/Wallpapers/florence_2.JPG fill
     # output * bg "#000000" solid_color
 
     # Built-in Monitor
@@ -162,7 +157,7 @@
 
 ### Status Bar:
 #
-    exec_always /bin/sh -c "/home/$USER/.config/yambar/scripts/launch-yambar.sh"
+    exec_always /bin/sh -c "$HOME/.config/yambar/scripts/launch-yambar.sh"
 
 ### Input configuration
 #
@@ -179,7 +174,6 @@
 
     # Keychron M6 8K (Bluetooth)
     input "13364:53321:Keychron_M6_8K_Mouse" {
-        scroll_factor 0.1
         pointer_accel -0.7
     }
 # You can get the names of your inputs by running: swaymsg -t get_inputs
@@ -210,11 +204,11 @@
     bindsym $mod+Alt+Up exec ddcutil setvcp 10 + 10 --noverify --async
 
     # Toggle Theme
-    bindsym $mod+n exec /bin/sh -c "/home/$USER/.config/scripts/theme-toggle.sh dark"
-    bindsym $mod+Shift+n exec /bin/sh -c "/home/$USER/.config/scripts/theme-toggle.sh light"
+    bindsym $mod+n exec /bin/sh -c "$HOME/.config/scripts/theme-toggle.sh dark"
+    bindsym $mod+Shift+n exec /bin/sh -c "$HOME/.config/scripts/theme-toggle.sh light"
 
     # Toggle DND
-    bindsym $mod+Alt+n exec /bin/sh -c "/home/$USER/.config/scripts/dnd-toggle.sh"
+    bindsym $mod+Alt+n exec /bin/sh -c "$HOME/.config/scripts/dnd-toggle.sh"
 
 
 #
@@ -238,16 +232,16 @@
     # Start your launcher
     bindsym $mod+d exec $menu --show=drun -a
     bindsym $mod+Alt+d exec $menu
-    bindsym $mod+Shift+d exec /bin/sh -c "/home/$USER/.config/wofi/window_switcher/launch.sh"
+    bindsym $mod+Shift+d exec /bin/sh -c "$HOME/.config/wofi/window_switcher/launch.sh"
 
     # Drag windows by holding down $mod and left mouse button.
     # Resize them with right mouse button + $mod.
     floating_modifier $mod normal
 
-    # Take a screenshot / screencast
-    bindsym $mod+Shift+s exec sh -c "/home/reuben/.config/scripts/screenshot.sh"
-    # bindsym $mod+Shift+r exec sh -c "/home/reuben/.config/scripts/screencast.sh"
-    # bindsym $mod+Alt+r exec /usr/bin/sh -c "/usr/bin/pkill --signal SIGINT wf-recorder"
+    # Take a screenshot / screen record
+    bindsym $mod+Shift+s exec sh -c "$HOME/.config/scripts/screenshot.sh"
+    bindsym $mod+Shift+v exec sh -c "$HOME/.config/scripts/screenrecord.sh"
+    bindsym $mod+Shift+r exec sh -c "$HOME/.config/scripts/screenrecord.sh --save-gif"
 
     # Reload the configuration file
     bindsym $mod+Shift+c reload
@@ -256,13 +250,10 @@
     bindsym $mod+Shift+e exec swaymsg exit
 
     # Launch Power Menu
-    bindsym $mod+x exec /bin/sh -c "/home/$USER/.config/wofi/powermenu/launch.sh"
+    bindsym $mod+x exec /bin/sh -c "$HOME/.config/wofi/powermenu/launch.sh"
 
     # Launch Bluetooth Device menu
-    bindsym $mod+p exec /bin/sh -c "/home/$USER/.config/wofi/bt_device_toggle/launch.sh"
-
-    # Launch Wofi Search
-    bindsym $mod+f exec "/home/$USER/.config/wofi/search/launch.sh"
+    bindsym $mod+p exec /bin/sh -c "$HOME/.config/wofi/bluetooth//launch.sh"
 
     # Gaps when i feel like it
     bindcode $mod+Shift+35  exec swaymsg gaps inner all minus 10
@@ -312,8 +303,7 @@
 # Workspaces
 #
     # Rename Workspace
-    bindsym $mod+r exec /bin/sh -c "/home/$USER/.config/wofi/sway_ws/launch.sh"
-    # bindsym $mod+n exec /bin/sh -c "/home/$USER/.config/scripts/theme-toggle.sh dark"
+    bindsym $mod+r exec /bin/sh -c "$HOME/.config/wofi/rename_workspace/launch.sh"
 
     # Persistent home
     set $ws_home music

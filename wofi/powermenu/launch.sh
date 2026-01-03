@@ -2,23 +2,7 @@
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" &>/dev/null && pwd)"
 
-declare -g original_volume
-
-mute_nest() {
-  original_volume=$(pactl get-sink-volume bluez_output.CC_F4_11_DA_58_B3.1 | awk '{print $NF}' | tr -d '%')
-  pactl set-sink-mute bluez_output.CC_F4_11_DA_58_B3.1 1
-  pactl set-sink-volume bluez_output.CC_F4_11_DA_58_B3.1 0
-}
-
-unmute_nest() {
-  pactl set-sink-mute bluez_output.CC_F4_11_DA_58_B3.1 0
-  if [[ -n "$original_volume" ]]; then
-    pactl set-sink-volume bluez_output.CC_F4_11_DA_58_B3.1 "$original_volume%"
-    unset original_volume
-  fi
-}
-
-op=$(echo -e " PowerStats\n Sync\n Lock\n⭘ Suspend\n Windows\n UEFI\n󰜉 Reload\n Restart\n󰐥 Shutdown\n󰶐 Poweroff" |
+op=$(echo -e " PowerStats\n Sync\n Lock\n⭘ Suspend\n UEFI\n󰜉 Reload\n Restart\n󰐥 Shutdown\n󰶐 Poweroff" |
   wofi -i --dmenu \
     -c $SCRIPT_DIR/../config \
     -s $SCRIPT_DIR/style.css |
@@ -49,7 +33,6 @@ shutdown)
   systemctl poweroff
   ;&
 restart)
-  mute_nest
   notify-send "System" "Restarting" \
     -h string:x-canonical-private-synchronous:powermenu-notif &
   systemctl reboot
@@ -57,15 +40,11 @@ restart)
 windows)
   notify-send "System" "Restarting into  Windows 11" \
     -h string:x-canonical-private-synchronous:powermenu-notif &
-  trap 'sudo -k' EXIT
-  zenity --password |
-    sudo -Sv || fatal "Authentication Failed"
-  mute_nest
-  sudo grub-reboot 2
-  systemctl reboot
-  ;;
+  # pkexec sh -c "grub-reboot 1"
+  pkexec sh -c "echo 'im the menu' >> /home/reuben/Downloads/hi.txt"
+  # systemctl reboot
+  ;&
 uefi)
-  mute_nest
   notify-send "System" "Entering UEFI Setup" \
     -h string:x-canonical-private-synchronous:powermenu-notif &
   trap 'sudo -k' EXIT
@@ -80,7 +59,6 @@ reload)
   swaymsg reload
   ;;
 suspend)
-  mute_nest
   notify-send "System" "Exiting Sway" \
     -h string:x-canonical-private-synchronous:powermenu-notif &
   swaymsg exit
@@ -97,9 +75,3 @@ powerstats)
   flatpak run org.gnome.PowerStats
   ;;
 esac
-
-if [[ -n "$original_volume"]]; then
-  unmute_nest
-fi
-
-

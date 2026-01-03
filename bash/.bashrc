@@ -43,7 +43,7 @@ esac
 # uncomment for a colored prompt, if the terminal has the capability; turned
 # off by default to not distract the user: the focus in a terminal window
 # should be on the output of commands, not on the prompt
-force_color_prompt=yes
+#force_color_prompt=yes
 
 if [ -n "$force_color_prompt" ]; then
   if [ -x /usr/bin/tput ] && tput setaf 1 >&/dev/null; then
@@ -55,14 +55,6 @@ if [ -n "$force_color_prompt" ]; then
     color_prompt=
   fi
 fi
-
-# if command -v theme.sh >/dev/null; then
-# 	[ -e ~/.theme_history ] && theme.sh "$(theme.sh -l | tail -n1)"
-# 	bind -x '"\C-o":"theme.sh $(theme.sh -l|tail -n2|head -n1)"'
-# 	alias th='theme.sh -i'
-# 	alias thl='theme.sh --light -i'
-# 	alias thd='theme.sh --dark -i'
-# fi
 
 if [ "$color_prompt" = yes ]; then
   PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '
@@ -92,12 +84,12 @@ if [ -x /usr/bin/dircolors ]; then
 fi
 
 # colored GCC warnings and errors
-#export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01'
+export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01'
 
 # some more ls aliases
-#alias ll='ls -l'
-#alias la='ls -A'
-#alias l='ls -CF'
+alias ll='ls -l'
+alias la='ls -A'
+alias l='ls -CF'
 
 # Alias definitions.
 # You may want to put all your additions into a separate file like
@@ -126,7 +118,6 @@ alias socvpn='sudo openfortivpn webvpn.comp.nus.edu.sg --username=e1123003 --pas
 alias xlog='ssh reubenth@xlog.comp.nus.edu.sg'
 alias chrome='google-chrome --password-store=gnome-libsecret'
 alias typetest='tt -showwpm -notheme -blockcursor'
-alias battop='/home/reuben/utils/battop-v0.2.4-x86_64-unknown-linux-gnu'
 alias powerstats='flatpak run org.gnome.PowerStats&exit'
 alias logisim='/home/reuben/cs/CS2100/logisim/launch.sh'
 alias usql2102='usql postgres://postgres@localhost/postgres'
@@ -160,7 +151,6 @@ alias dev-stop='dev-service stop'
 alias dev-enable='dev-service enable'
 alias dev-disable='dev-service disable'
 alias activate='source ~/.venv/base/bin/activate'
-alias vcpkg='function _vcpkg_alias(){ /home/reuben/utils/vcpkg/vcpkg "$@"; }; _vcpkg_alias'
 
 # System Shortcuts
 alias powerstatus='upower -i /org/freedesktop/UPower/devices/battery_BAT0'
@@ -204,9 +194,6 @@ alias go="go1.24.1"
 export PATH=$PATH:/usr/local/go/bin
 export PATH=$PATH:/home/reuben/go/bin
 
-# vcpkg
-source /home/reuben/utils/vcpkg/scripts/vcpkg_completion.bash
-
 # esp-idf
 alias idf-activate='. $HOME/utils/esp/esp-idf/export.sh'
 
@@ -228,21 +215,6 @@ alias thermal-cool='sudo env PATH=$PATH cctk --ThermalManagement=Cool'
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"                   # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion" # This loads nvm bash_completion
-
-# conda
-# !! Contents within this block are managed by 'conda init' !!
-# __conda_setup="$('/home/reuben/.anaconda3/bin/conda' 'shell.bash' 'hook' 2>/dev/null)"
-# if [ $? -eq 0 ]; then
-#   eval "$__conda_setup"
-# else
-#   if [ -f "/home/reuben/.anaconda3/etc/profile.d/conda.sh" ]; then
-#     . "/home/reuben/.anaconda3/etc/profile.d/conda.sh"
-#   else
-#     export PATH="/home/reuben/.anaconda3/bin:$PATH"
-#   fi
-# fi
-# unset __conda_setup
-# <<< conda initialize <<<
 
 # gradle
 export GRADLE_HOME="$HOME/.gradle/wrapper/dists/gradle-8.12.1-bin/eumc4uhoysa37zql93vfjkxy0/gradle-8.12.1"
@@ -272,3 +244,17 @@ complete -C /usr/bin/terraform terraform
 # Install Ruby Gems to ~/gems
 export GEM_HOME="$HOME/gems"
 export PATH="$HOME/gems/bin:$PATH"
+
+# fnm
+FNM_PATH="/home/reuben/.local/share/fnm"
+if [ -d "$FNM_PATH" ]; then
+  export PATH="$FNM_PATH:$PATH"
+  eval "$(fnm env)"
+fi
+
+# starship
+eval "$(starship init bash)"
+
+#THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
+export SDKMAN_DIR="$HOME/.sdkman"
+[[ -s "$HOME/.sdkman/bin/sdkman-init.sh" ]] && source "$HOME/.sdkman/bin/sdkman-init.sh"

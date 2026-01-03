@@ -11,7 +11,7 @@ LIGHT_COLOR_SCHEME="prefer-light"
 DARK_COLOR_SCHEME="prefer-dark"
 
 # Neovim Settings
-NVIM_CONFIG_DIR="/home/$USER/.config/nvim"
+NVIM_CONFIG_DIR="$HOME/.config/nvim"
 NVIM_OPTIONS_PATH="$NVIM_CONFIG_DIR/lua/config/options.lua"
 NVIM_COLORSCHEME_PATH="$NVIM_CONFIG_DIR/lua/plugins/colorscheme.lua"
 NVIM_LIGHT_THEME="onedark"
@@ -22,12 +22,10 @@ CONFIG_DIR="/home/$USER/.config"
 OKULARPARTRC_PATH="$CONFIG_DIR/okularpartrc"
 ZATHURA_CONFIG_DIR="$CONFIG_DIR/zathura"
 ZATHURARC_PATH="$ZATHURA_CONFIG_DIR/zathurarc"
-SIOYEK_CONFIG_DIR="$CONFIG_DIR/sioyek"
-SIOYEK_PREFS_PATH="$SIOYEK_CONFIG_DIR/prefs_user.config"
 
 # Notification Settings
 NOTIFICATION_TITLE="System Theme"
-NOTIFICATION_SYNC_KEY="yambar-ddcutil-notification"
+NOTIFICATION_SYNC_KEY="theme_changed_key"
 
 ### Argument Parse
 # If no argument is passed, toggle the theme
@@ -47,6 +45,10 @@ set_light_theme() {
   gsettings set org.gnome.desktop.interface color-scheme "$LIGHT_COLOR_SCHEME"
   gsettings set org.gnome.desktop.interface gtk-theme "$LIGHT_GTK_THEME"
 
+  # Terminal
+  echo "light" >"$HOME/.config/foot/current_theme"
+  # pkill -USR1 zsh
+
   # Neovim Setting
   for server in $(nvr --serverlist); do
     nvr --servername "$server" -cc "colorscheme ${NVIM_LIGHT_THEME} | set background=light"
@@ -55,7 +57,6 @@ set_light_theme() {
   sed -i "s/colorscheme = \"$NVIM_DARK_THEME\"/colorscheme = \"$NVIM_LIGHT_THEME\"/" "$NVIM_COLORSCHEME_PATH"
 
   # Pdf Readers
-  sed -i '/^startup_commands toggle_custom_color/d' "$SIOYEK_PREFS_PATH"
   sed -i 's/set recolor true/set recolor false/' "$ZATHURARC_PATH"
   sed -i '/ChangeColors=true/d' "$OKULARPARTRC_PATH"
 
@@ -70,6 +71,10 @@ set_dark_theme() {
   gsettings set org.gnome.desktop.interface color-scheme "$DARK_COLOR_SCHEME"
   gsettings set org.gnome.desktop.interface gtk-theme "$DARK_GTK_THEME"
 
+  # Terminal
+  echo "dark" >"$HOME/.config/foot/current_theme"
+  # pkill -USR1 zsh
+
   # Neovim Setting
   for server in $(nvr --serverlist); do
     nvr --servername "$server" -cc "colorscheme ${NVIM_DARK_THEME} | set background=dark"
@@ -78,7 +83,6 @@ set_dark_theme() {
   sed -i "s/colorscheme = \"$NVIM_LIGHT_THEME\"/colorscheme = \"$NVIM_DARK_THEME\"/" "$NVIM_COLORSCHEME_PATH"
 
   # Pdf Readers
-  echo "startup_commands toggle_custom_color" >>"$SIOYEK_PREFS_PATH"
   sed -i 's/set recolor false/set recolor true/' "$ZATHURARC_PATH"
   sed -i '/\[Document\]/a ChangeColors=true' "$OKULARPARTRC_PATH"
 
