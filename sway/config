@@ -11,7 +11,7 @@
     set $term foot
 
     # Fonts
-    font pango:JetBrains Mono NF 11px
+    font pango:JetBrains Mono NF 10px
 
     # App Launcher
     set $menu wofi
@@ -34,15 +34,15 @@
     for_window [app_id="zathura"] title_format '󰈙 ' %title
     for_window [app_id="okular"] title_format '󰈙 ' %title
     for_window [app_id="google-chrome"] title_format ' ' %title
-    for_window [title=".*Brave$"] title_format ' ' %title
     for_window [app_id="firefox"] title_format ' ' %title
     for_window [app_id="libreoffice-writer"] title_format ' ' %title
     for_window [app_id="libreoffice-impress"] title_format '󱎐 ' %title
     for_window [app_id="libreoffice-calc"] title_format '󱎏 ' %title
     for_window [class="jetbrains-idea"] title_format ' ' %title
     for_window [class="Slack"] title_format '󰒱 ' %title
+    for_window [title=".*Brave$"] title_format ' ' %title
     for_window [title="Spotify Premium"] title_format ' ' %title
-
+    for_window [title="Claude"] title_format '󰅏 ' %title
     for_window [title="^.*Obsidian - Obsidian v1.*$"] title_format '󰎚 ' %title
     for_window [title=".*Visual Studio Code$"] title_format '󰨞 ' %title
     for_window [title="^.*foot.*$"] title_format ' '  %title
@@ -62,13 +62,10 @@
     # Chrome Picture-in-Picture
     for_window [title="Picture-in-Picture$"] floating enable, sticky enable, move position cursor, opacity $pip_opacity
 
-    # Bitwarden
-    for_window [app_id="^brave-.*-Default$"] floating enable
-
     # Okular Notes
     for_window [title="New Text Note — Okular"] floating enable, move position cursor
-  
-    # GNUPlot Windows
+
+    # GNUPlot
     for_window [app_id="gnuplot_qt"] floating enable, move position center
 
     # Spotify
@@ -100,7 +97,7 @@
     smart_borders on
     hide_edge_borders smart
     default_border pixel 3
-    titlebar_padding 10 1
+    titlebar_padding 5 1
     titlebar_border_thickness 0
     for_window [class=".*"] border pixel 3
 
@@ -129,26 +126,33 @@
 ### Display Outputs
 #
     # Wallpaper
-    output * bg $HOME/Pictures/Wallpapers/florence_2.JPG fill
+    output * bg $HOME/Pictures/Wallpapers/default.JPG fill
     # output * bg "#000000" solid_color
-
-    # Built-in Monitor
-    output eDP-1 pos 0 0
-
-    # Home Monitor
-    output 'Dell Inc. DELL S3422DWG 7007KK3' mode 3440x1440@144Hz
 
     # Wireless Monitor
     output HEADLESS-1 {
       # Portrait Below
       pos 196,1200
-      mode 2048x1536@60Hz
+      mode 1920x1200@60Hz
     }
 
-    # Monitor Config
+    # Workspace to Monitor
     set $builtin-monitor eDP-1
-    # set $primary-monitor DP-5 DP-7 eDP-1
-    # workspace music output $builtin-monitor
+    set $primary-monitor DP-9 DP-8 DP-7 DP-6 DP-5 DP-4 DP-3 DP-2 DP-1 DP-0
+    workspace music output $builtin-monitor
+    workspace 1 output $primary-monitor $builtin-monitor
+    workspace 2 output $primary-monitor $builtin-monitor
+    workspace 3 output $primary-monitor $builtin-monitor
+    workspace 4 output $primary-monitor $builtin-monitor
+    workspace 5 output $primary-monitor $builtin-monitor
+    workspace 6 output $primary-monitor $builtin-monitor
+    workspace 7 output $primary-monitor $builtin-monitor
+    workspace 8 output $primary-monitor $builtin-monitor
+    workspace 9 output $primary-monitor $builtin-monitor
+    workspace 10 output $primary-monitor $builtin-monitor
+
+    # Set display configuration if one exists
+    exec_always /bin/sh -c "$HOME/.cargo/bin/sway-displays set"
 
     # Toggle built-in display upon closed/open events
     bindswitch lid:on output $builtin-monitor disable;sleep 0.5
@@ -166,11 +170,15 @@
         dwt enabled
         tap enabled
         accel_profile "adaptive"
-        pointer_accel 0.3
-        scroll_factor 0.5
+        pointer_accel 0.5
         natural_scroll enabled
         middle_emulation enabled
     }
+
+
+    # input "1240:60205:liliums_Lily58_Mouse" {
+    #     scroll_factor 0.05
+    # }
 
     # Keychron M6 8K (Bluetooth)
     input "13364:53321:Keychron_M6_8K_Mouse" {
@@ -226,13 +234,13 @@
     # bindsym $mod+c exec gnome-calculator;
 
     # Open File Manager
-    bindsym $mod+y exec nautilus;
+    bindsym $mod+y exec nautilus
     bindsym $mod+Shift+y exec $term yazi
 
     # Start your launcher
     bindsym $mod+d exec $menu --show=drun -a
-    bindsym $mod+Alt+d exec $menu
-    bindsym $mod+Shift+d exec /bin/sh -c "$HOME/.config/wofi/window_switcher/launch.sh"
+    bindsym $mod+Shift+d exec $menu
+    bindsym $mod+Alt+d exec /bin/sh -c "$HOME/.config/wofi/window_switcher/launch.sh"
 
     # Drag windows by holding down $mod and left mouse button.
     # Resize them with right mouse button + $mod.
@@ -240,6 +248,7 @@
 
     # Take a screenshot / screen record
     bindsym $mod+Shift+s exec sh -c "$HOME/.config/scripts/screenshot.sh"
+    bindsym $mod+Shift+w exec sh -c "python3 $HOME/.config/scripts/screenshot.py"
     bindsym $mod+Shift+v exec sh -c "$HOME/.config/scripts/screenrecord.sh"
     bindsym $mod+Shift+r exec sh -c "$HOME/.config/scripts/screenrecord.sh --save-gif"
 
@@ -355,6 +364,9 @@
     # Workspace Switching
     bindcode $mod+34 workspace prev
     bindcode $mod+35 workspace next
+    # Gestures
+    bindgesture swipe:right workspace prev
+    bindgesture swipe:left workspace next
 #
 # Layout stuff:
 #
@@ -404,10 +416,11 @@
 #
     # Height Presets
     bindsym $mod+Alt+t resize set height 20 ppt
-    bindsym $mod+Alt+$left resize shrink width 10
-    bindsym $mod+Alt+$up resize grow height 10
-    bindsym $mod+Alt+$down resize shrink height 10
-    bindsym $mod+Alt+$right resize grow width 10
+    bindsym $mod+Alt+$left resize shrink width 5
+    bindsym $mod+Alt+$up resize grow height 5
+    bindsym $mod+Alt+$down resize shrink height 5
+    bindsym $mod+Alt+$right resize grow width 5
+    # TODO: Implement a better equalize keybind
     bindsym $mod+Alt+u resize set height 50
     bindsym $mod+Alt+i resize set width 50
 

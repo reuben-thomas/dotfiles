@@ -9,16 +9,9 @@ while IFS=, read -r name width scale; do
 
   if [[ "$name" == "HEADLESS-1" ]]; then
     continue
-  elif [ "$width" -ge 2560 ] && (($(echo "$scale > 1.0" | bc -l))); then
-    echo HI
-    sed -i "s/^  monitor:.*/  monitor: $name/" "/home/reuben/.config/yambar/config.yml"
-    yambar -c "/home/reuben/.config/yambar/maximal.yml" &
-  elif [ "$width" -ge 1900 ]; then
-    sed -i "s/^  monitor:.*/  monitor: $name/" "/home/reuben/.config/yambar/config.yml"
-    yambar -c "/home/reuben/.config/yambar/config.yml" &
   else
-    sed -i "s/^  monitor:.*/  monitor: $name/" "/home/reuben/.config/yambar/minimal.yml"
-    yambar -c "/home/reuben/.config/yambar/minimal.yml" &
+    sed -i "s/^  monitor:.*/  monitor: $name/" "$HOME/.config/yambar/config.yml"
+    yambar -c "$HOME/.config/yambar/config.yml" &
   fi
   sleep 0.25
 

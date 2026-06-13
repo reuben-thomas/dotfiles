@@ -4,7 +4,7 @@ return {
   opts = {
     linters = {
       ["markdownlint-cli2"] = {
-        args = { "--config", "/home/reuben/.config/nvim/lua/misc/.markdownlint-cli2.yaml", "--" },
+        args = { "--config", "$HOME.config/nvim/lua/plugins/config/nvim-lint-md.yaml", "--" },
       },
     },
   },

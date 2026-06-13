@@ -12,7 +12,6 @@ fi
 
 plugins=(
   git
-  ssh-agent
   zsh-vi-mode
   zsh-autosuggestions
   zsh-syntax-highlighting
@@ -23,25 +22,30 @@ source $ZSH/oh-my-zsh.sh
 
 # default app overrides
 alias code='code --enable-features=UseOzonePlatform,WaylandWindowDecorations,WebRTCPipeWireCapturer --ozone-platform-hint=auto > /dev/null 2>&1'
+alias clion='$HOME/.local/clion/bin/clion'
 alias socvpn='sudo openfortivpn webvpn.comp.nus.edu.sg --username=e1123003 --password=$(python3 -c "import keyring; print(keyring.get_password(\"soc\", \"e1123003\"))")'
 alias xlog='ssh reubenth@xlog.comp.nus.edu.sg'
 alias chrome='google-chrome --password-store=gnome-libsecret'
 alias typetest='tt -showwpm -notheme -blockcursor'
-alias logisim='/home/reuben/cs/CS2100/logisim/launch.sh'
+alias logisim='$HOME/cs/CS2100/logisim/launch.sh'
 alias usql2102='usql postgres://postgres@localhost/postgres'
 
 # laziness
 alias noise='play -n synth brownnoise'
-alias yam='/home/reuben/.config/yambar/scripts/launch-yambar.sh'
+alias yam='$HOME/.config/yambar/scripts/launch-yambar.sh'
 alias p='wl-paste >'
 alias e='exit'
 alias t='tmux'
+alias create-desktop-entry="$HOME/.config/scripts/create-desktop-entry.sh"
 
 # starship
 eval "$(starship init zsh)"
 
 # obsidian
 alias obs='cd ~/Documents/Obsidian; nvim .'
+
+# ssh-agnet with gnome-keyring
+export SSH_AUTH_SOCK="/run/user/$(id -u)/keyring/ssh"
 
 # dev services
 dev-service() {
@@ -58,7 +62,7 @@ alias dev-disable='dev-service disable'
 alias activate='source ~/.venv/base/bin/activate'
 
 # vcpkg
-alias vcpkg='function _vcpkg_alias(){ /home/reuben/utils/vcpkg/vcpkg "$@"; }; _vcpkg_alias'
+alias vcpkg='function _vcpkg_alias(){ $HOME/utils/vcpkg/vcpkg "$@"; }; _vcpkg_alias'
 
 # system
 alias powerstatus='upower -i /org/freedesktop/UPower/devices/battery_BAT0'
@@ -70,10 +74,10 @@ alias boot-windows='sudo grub-reboot 2; systemctl reboot'
 alias boot-uefi='sudo grub-reboot 3; systemctl reboot'
 
 # Created by `pipx` on 2023-12-13 10:18:49
-export PATH="$PATH:/home/reuben/.local/bin"
+export PATH="$PATH:$HOME/.local/bin"
 . "$HOME/.cargo/env"
 
-export PATH="$PATH:/home/reuben/.config/scripts"
+export PATH="$PATH:$HOME/.config/scripts"
 
 # pyenv
 export PYENV_ROOT="$HOME/.pyenv"
@@ -84,7 +88,7 @@ if command -v pyenv 1>/dev/null 2>&1; then
 fi
 
 # fnm
-FNM_PATH="/home/reuben/.local/share/fnm"
+FNM_PATH="$HOME/.local/share/fnm"
 if [ -d "$FNM_PATH" ]; then
   export PATH="$FNM_PATH:$PATH"
   eval "$(fnm env)"
@@ -106,7 +110,7 @@ export PATH=$PATH:/usr/local/go/bin
 export PATH=$PATH:$HOME/go/bin
 
 # vcpkg
-source /home/reuben/utils/vcpkg/scripts/vcpkg_completion.zsh
+source $HOME/utils/vcpkg/scripts/vcpkg_completion.zsh
 
 # dell command-configure
 export PATH="/opt/dell/dcc:$PATH"
@@ -165,3 +169,11 @@ help() {
 # sdkman
 export SDKMAN_DIR="$HOME/.sdkman"
 [[ -s "$HOME/.sdkman/bin/sdkman-init.sh" ]] && source "$HOME/.sdkman/bin/sdkman-init.sh"
+
+# TexLive
+export PATH="$PATH:/usr/local/texlive/2025/bin/x86_64-linux"
+
+# bun completions
+[ -s "$HOME/.bun/_bun" ] && source "$HOME/.bun/_bun"
+
+

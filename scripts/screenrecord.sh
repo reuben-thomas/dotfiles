@@ -34,9 +34,10 @@ if [ "$SAVE_GIF" = true ]; then
 
   notify-send "Screencast" "Recording saved as <i>$MP4_FILENAME</i>. Converting to <i>$EXPANDED_GIF</i>" -i "$EXPANDED_MP4"
   ffmpeg -i "$EXPANDED_MP4" -filter_complex "[0:v] fps=15,scale=iw/2:-1:flags=lanczos,split [a][b];[a] palettegen [p];[b][p] paletteuse" "$EXPANDED_GIF"
-  wl-copy <"$EXPANDED_GIF"
+
+  wl-copy --type text/uri-list "file://$(realpath "$EXPANDED_GIF")"
   notify-send "Screencast" "Recording saved as <i>$GIF_FILENAME</i> and copied to clipboard." -i "$EXPANDED_GIF"
 else
-  wl-copy <"$EXPANDED_MP4"
+  wl-copy --type text/uri-list "file://$(realpath "$EXPANDED_GIF")"
   notify-send "Screencast" "Recording saved as <i>$EXPANDED_MP4</i> and copied to clipboard." -i "$EXPANDED_MP4"
 fi

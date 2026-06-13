@@ -1,4 +1,4 @@
-format = "$time$username$hostname$git_branch$c$cpp$rust$nodejs$cmake$helm$kubernetes$python\n$directory$character"
+format = "$time$username$hostname$git_branch$c$cpp$rust$nodejs$cmake$helm$kubernetes$python$cmd_duration\n$directory$character"
 add_newline = false
 
 [hostname]
@@ -10,6 +10,9 @@ format = '[@$ssh_symbol$hostname]($style) '
 style_user = "italic bold green"
 format = '[$user]($style)'
 show_always = true
+
+[kubernetes]
+disabled = false
 
 [time]
 disabled = false

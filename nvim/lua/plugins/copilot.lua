@@ -1,5 +1,6 @@
 return {
   "zbirenbaum/copilot.lua",
+  enabled = true,
   opts = {
     panel = {
       enabled = false,
@@ -25,7 +26,7 @@ return {
       gitrebase = true,
       ["."] = true,
     },
-    copilot_node_command = "node", -- Node.js version must be > 18.x
+    copilot_node_command = "node",
     server_opts_overrides = {},
   },
 }

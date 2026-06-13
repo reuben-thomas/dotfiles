@@ -15,6 +15,6 @@ prepend_keymap = [
 
   # Drag and drop files from and to Yazi
   { on = "<C-n>", run = '''shell --
-    ripdrag --resizable --all --target --basename ./2026-01-03-224709_screenshot.png | while read filepath; do cp -nR "$filepath" .; done
+    $HOME/.cargo/bin/ripdrag --resizable --no-click --and-exit --all --target "$@" | while read filepath; do cp -nR "$filepath" .; done
   ''', desc = "Drag and drop selected files" },
   ]

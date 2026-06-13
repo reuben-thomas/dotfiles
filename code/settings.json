@@ -1,257 +1,81 @@
 {
-    "extensions.experimental.affinity": {
-        "asvetliakov.vscode-neovim": 1
-    },
-    "vscode-neovim.neovimExecutablePaths.linux": "/usr/local/bin/nvim",
-    "vscode-neovim.neovimInitVimPaths.linux": "$HOME/.config/nvim/init.lua",
-    "[typescriptreact]": {
-        "editor.defaultFormatter": "esbenp.prettier-vscode"
-    },
-    "[typescript]": {
-        "editor.defaultFormatter": "esbenp.prettier-vscode"
-    },
-    "explorer.confirmDragAndDrop": false,
-    "vim.vimrc.path": "/home/reuben/.config/.vscodevimrc",
-    "typescript.updateImportsOnFileMove.enabled": "always",
-    "explorer.confirmDelete": false,
-    "notebook.cellToolbarLocation": {
-        "default": "right",
-        "jupyter-notebook": "left"
-    },
-    "notebook.lineNumbers": "on",
-    "window.zoomLevel": -1,
-    "jupyter.askForKernelRestart": false,
-    "json.schemas": [
-        {
-            "fileMatch": [
-                "/.docx.json"
-            ],
-            "url": "https://raw.githubusercontent.com/Mehdi-Verfaillie/docx/main/src/config/.docx.schema.json"
-        }
-    ],
-    "workbench.colorCustomizations": {},
-    "editor.minimap.enabled": false,
-    "window.autoDetectColorScheme": true,
-    "workbench.colorTheme": "GitHub Light Default",
-    "workbench.preferredDarkColorTheme": "GitHub Dark",
-    "files.associations": {
-        "*.rmd": "markdown"
-    },
-    "peacock.affectStatusAndTitleBorders": true,
-    "peacock.affectTabActiveBorder": true,
-    "peacock.surpriseMeOnStartup": true,
-    "peacock.affectEditorGroupBorder": true,
-    "peacock.affectDebuggingStatusBar": true,
-    "r.lsp.enabled": false,
-    "git.openRepositoryInParentFolders": "never",
-    "r.rpath.linux": "/usr/bin/R",
-    "r.rterm.linux": "/usr/bin/R",
-    "workbench.editorAssociations": {
-        "git-rebase-todo": "default"
-    },
-    "github.copilot.editor.enableAutoCompletions": true,
-    "debug.allowBreakpointsEverywhere": true,
-    "[yaml]": {
-        "editor.defaultFormatter": "esbenp.prettier-vscode"
-    },
-    "window.menuBarVisibility": "compact",
+    "vim.useSystemClipboard": true,
     "editor.lineNumbers": "relative",
-    "vim.vimrc.enable": true,
-    "vim.normalModeKeyBindingsNonRecursive": [
-        {
-            "before": ["j"],
-            "after": ["g", "j"]
-        },
-        {
-            "before": ["k"],
-            "after": ["g", "k"]
-        }
-    ],
+    "editor.wordWrap": "off",
+    "makefile.configureOnOpen": true,
+    "search.defaultViewMode": "tree",
+    "vim.highlightedyank.enable": true,
+    "vim.startofline": false,
     "vim.handleKeys": {
         "<C-p>": false,
-        "<C-b>": false,
     },
-    "glassit.alpha": 255,
-    "glassit.force_sway": true,
-    "rust-analyzer.testExplorer": true,
-    "github.copilot.enable": {
-        "*": true,
-        "plaintext": false,
-        "markdown": true,
-        "scminput": false
-    },
-    "editor.wordWrap": "on",
-    "latex-workshop.view.pdf.color.dark.backgroundColor": "#2c3742",
-    "latex-workshop.view.pdf.color.dark.pageColorsForeground": "#ffffff",
-    "latex-workshop.view.pdf.color.dark.pageColorsBackground": "#212e3b",
-    "latex-workshop.latex.tools": [
-        {
-            "name": "latexmk",
-            "command": "latexmk",
-            "args": [
-                "-shell-escape",
-                "-synctex=1",
-                "-interaction=nonstopmode",
-                "-file-line-error",
-                "-pdf",
-                "-outdir=%OUTDIR%",
-                "%DOC%"
-            ],
-            "env": {}
-        },
-        {
-            "name": "lualatexmk",
-            "command": "latexmk",
-            "args": [
-                "-synctex=1",
-                "-interaction=nonstopmode",
-                "-file-line-error",
-                "-lualatex",
-                "-outdir=%OUTDIR%",
-                "%DOC%"
-            ],
-            "env": {}
-        },
-        {
-            "name": "xelatexmk",
-            "command": "latexmk",
-            "args": [
-                "-synctex=1",
-                "-interaction=nonstopmode",
-                "-file-line-error",
-                "-xelatex",
-                "-outdir=%OUTDIR%",
-                "%DOC%"
-            ],
-            "env": {}
-        },
-        {
-            "name": "latexmk_rconly",
-            "command": "latexmk",
-            "args": [
-                "%DOC%"
-            ],
-            "env": {}
-        },
-        {
-            "name": "pdflatex",
-            "command": "pdflatex",
-            "args": [
-                "-synctex=1",
-                "-interaction=nonstopmode",
-                "-file-line-error",
-                "%DOC%"
-            ],
-            "env": {}
-        },
-        {
-            "name": "bibtex",
-            "command": "bibtex",
-            "args": [
-                "%DOCFILE%"
-            ],
-            "env": {}
-        },
-        {
-            "name": "rnw2tex",
-            "command": "Rscript",
-            "args": [
-                "-e",
-                "knitr::opts_knit$set(concordance = TRUE); knitr::knit('%DOCFILE_EXT%')"
-            ],
-            "env": {}
-        },
-        {
-            "name": "jnw2tex",
-            "command": "julia",
-            "args": [
-                "-e",
-                "using Weave; weave(\"%DOC_EXT%\", doctype=\"tex\")"
-            ],
-            "env": {}
-        },
-        {
-            "name": "jnw2texminted",
-            "command": "julia",
-            "args": [
-                "-e",
-                "using Weave; weave(\"%DOC_EXT%\", doctype=\"texminted\")"
-            ],
-            "env": {}
-        },
-        {
-            "name": "pnw2tex",
-            "command": "pweave",
-            "args": [
-                "-f",
-                "tex",
-                "%DOC_EXT%"
-            ],
-            "env": {}
-        },
-        {
-            "name": "pnw2texminted",
-            "command": "pweave",
-            "args": [
-                "-f",
-                "texminted",
-                "%DOC_EXT%"
-            ],
-            "env": {}
-        },
-        {
-            "name": "tectonic",
-            "command": "tectonic",
-            "args": [
-                "--synctex",
-                "--keep-logs",
-                "--print",
-                "%DOC%.tex"
-            ],
-            "env": {}
-        }
+    "roo-cline.allowedCommands": [
+        "npm test",
+        "npm install",
+        "tsc",
+        "git log",
+        "git diff",
+        "git show"
     ],
-    "go.toolsManagement.autoUpdate": true,
-    "latex-workshop.formatting.latex": "latexindent",
-    "latex-workshop.formatting.latexindent.path": "/home/reuben/.local/bin/latexindent",
-    "[python]": {
-        "editor.defaultFormatter": "ms-python.black-formatter"
-    },
-    "github.copilot.chat.inlineChatCompletionTrigger.enabled": true,
-    "github.copilot.chat.inlineChatHint.enabled": true,
-    "[json]": {
-        "editor.defaultFormatter": "esbenp.prettier-vscode"
-    },
-    "database-client.autoSync": true,
-    "diffEditor.ignoreTrimWhitespace": false,
-    "github.copilot.chat.editor.temporalContext.enabled": true,
-    "[javascript]": {
-        "editor.defaultFormatter": "esbenp.prettier-vscode"
-    },
-    "vim.useSystemClipboard": true,
-    "idf.hasWalkthroughBeenShown": true,
-    "idf.espIdfPath": "/home/reuben/utils/esp/esp-idf",
-    "idf.toolsPath": "/home/reuben/.espressif",
-    "idf.gitPath": "git",
-    "idf.pythonInstallPath": "/home/reuben/.espressif/python_env/idf5.4_py3.9_env/bin/python",
-    "idf.showOnboardingOnInit": false,
-    "workbench.preferredLightColorTheme": "GitHub Light Default",
-    "sqldeveloper.sqlHistory.historyLimit": 500,
+    "roo-cline.deniedCommands": [],
     "github.copilot.nextEditSuggestions.enabled": true,
+    "remote.downloadExtensionsLocally": true,
+    "[python]": {
+        "diffEditor.ignoreTrimWhitespace": false,
+        "editor.defaultColorDecorators": "never",
+        "editor.formatOnType": true,
+        "editor.wordBasedSuggestions": "off",
+        "editor.codeActionsOnSave": {
+            "source.organizeImports": "explicit",
+            "source.unusedImports": "explicit",
+            },
+            "editor.defaultFormatter": "charliermarsh.ruff"
+    },
+    "markdown.preview.fontFamily": "'JetBrains Mono'",
+    "window.autoDetectColorScheme": true,
+    "remote.autoForwardPortsSource": "hybrid",
+    "jupyter.askForKernelRestart": false,
+    "redhat.telemetry.enabled": false,
+    "github-enterprise.uri": "https://rbtg.ghe.com/",
     "[dockercompose]": {
         "editor.insertSpaces": true,
         "editor.tabSize": 2,
         "editor.autoIndent": "advanced",
-        "editor.quickSuggestions": {
-            "other": true,
-            "comments": false,
-            "strings": true
-        },
         "editor.defaultFormatter": "redhat.vscode-yaml"
     },
     "[github-actions-workflow]": {
         "editor.defaultFormatter": "redhat.vscode-yaml"
     },
-    "chat.mcp.gallery.enabled": true,
-    "docker.extension.enableComposeLanguageServer": false
+    "workbench.colorTheme": "GitHub Dark",
+    "git.openRepositoryInParentFolders": "always",
+    "python.analysis.typeCheckingMode": "standard",
+    "security.workspace.trust.untrustedFiles": "open",
+    "git.blame.editorDecoration.enabled": true,
+    "git.blame.statusBarItem.enabled": false,
+    "claudeCode.preferredLocation": "panel",
+    "gitlens.ai.model": "vscode",
+    "gitlens.ai.vscode.model": "copilot:gpt-4.1",
+    "github.copilot.enable": {
+        "*": true,
+        "plaintext": false,
+        "markdown": true,
+        "scminput": false,
+        "yaml": true
+    },
+    "[markdown]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
+    "workbench.preferredDarkColorTheme": "GitHub Dark Default",
+    "claudeCode.useTerminal": true,
+    "diffEditor.ignoreTrimWhitespace": false,
+    "editor.fontFamily": "JetBrains Mono",
+    "security.allowedUNCHosts": [
+        "wsl.localhost"
+    ],
+    "claudeCode.selectedModel": "haiku",
+    "[json]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
+    "go.toolsManagement.autoUpdate": true,
+    "chat.viewSessions.orientation": "stacked",
 }

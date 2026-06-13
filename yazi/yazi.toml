@@ -3,6 +3,14 @@ show_hidden = true
 
 [opener]
 #
+# Edit
+nvim = [
+	{ run = "$HOME/.local/bin/nvim %s", block = true, for = "unix", desc = "Neovim" },
+]
+code = [
+  { run = 'code "$@"', orphan = true, desc = "VS Code", for = "unix" },
+]
+#
 # PDF
 zathura = [
 	{ run = 'zathura "$@"', orphan = true, for = "unix", desc = "Zathura" },
@@ -29,10 +37,25 @@ video_viewer = [
 kdenlive = [
 	{ run = 'kdenlive "$@"', desc = "Kdenlive", orphan = true, for = "unix" }
 ]
+#
+# Reveal
+reveal = [
+	{ run = '''exiftool "$1"; echo "Press enter to exit"; read _''', block = true, desc = "Show EXIF", for = "unix" },
+]
 
 [open]
 rules = [
-  { mime = "application/pdf", use = [ "zathura", "okular", "brave", "firefox" ] },
-	{ mime = "image/*", use = "image_viewer" },
-	{ mime = "video/*", use = ["video_viewer", "kdenlive"] }
+  # Code
+	{ mime = "text/html",  use = [ "brave", "nvim", "code", "firefox", "reveal" ] },
+	{ mime = "text/*",  use = [ "nvim", "code", "reveal" ] },
+	{ mime = "application/json", use = [ "nvim", "code", "reveal" ] },
+
+  # Media
+  { mime = "application/pdf", use = [ "zathura", "okular", "brave", "firefox", "reveal" ] },
+	{ mime = "image/*", use = "image_viewer", "reveal" },
+	{ mime = "video/*", use = ["video_viewer", "kdenlive", "reveal"] },
+
+  # Base
+	{ name = "*/", use = [ "nvim", "code", "reveal" ] },
+	{ mime = "*", use = [ "nvim", "code", "reveal" ] }
 ]

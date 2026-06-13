@@ -6,12 +6,11 @@ height=110
 anchor=top-right
 padding=0,7,15
 border-size=3
-border-color=#9d68d9
-border-radius=5
+border-radius=0
 default-timeout=5000
 
 [urgency=normal]
-border-color=#9d68d9
+border-color=#5e9cff
 
 [urgency=high]
 anchor=top-center
@@ -27,7 +26,7 @@ background-color=#1c452fcc
 anchor=top-center
 
 [summary="Denise ❤️"]
-background-color=#de5489cc
+background-color=#de5489d4
 border-color=#ffd4e5cc
 
 [mode=dnd]
