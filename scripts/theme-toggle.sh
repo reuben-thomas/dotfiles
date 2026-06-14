@@ -1,108 +1,36 @@
 #!/bin/bash
 
-# Theme Names
+THEME=$1
 LIGHT_THEME_NAME="light"
 DARK_THEME_NAME="dark"
 
-# Global Theme Settings
-LIGHT_GTK_THEME="Adwaita"
-DARK_GTK_THEME="Adwaita-dark"
-LIGHT_COLOR_SCHEME="prefer-light"
-DARK_COLOR_SCHEME="prefer-dark"
+# Called: <script> <light|dark>
+TOGGLE_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)/theme-toggle"
+APP_SCRIPTS=(
+  "$TOGGLE_DIR/gtk.sh"
+  "$HOME/.config/foot/theme-toggle.sh"
+  "$HOME/.config/nvim/theme-toggle.sh"
+  "$HOME/.config/zathura/theme-toggle.sh"
+  "$TOGGLE_DIR/okular.sh"
+)
 
-# Neovim Settings
-NVIM_CONFIG_DIR="$HOME/.config/nvim"
-NVIM_OPTIONS_PATH="$NVIM_CONFIG_DIR/lua/config/options.lua"
-NVIM_COLORSCHEME_PATH="$NVIM_CONFIG_DIR/lua/plugins/colorscheme.lua"
-NVIM_LIGHT_THEME="onedark"
-NVIM_DARK_THEME="tokyonight"
-
-# PDF Reader Settings
-CONFIG_DIR="/home/$USER/.config"
-OKULARPARTRC_PATH="$CONFIG_DIR/okularpartrc"
-ZATHURA_CONFIG_DIR="$CONFIG_DIR/zathura"
-ZATHURARC_PATH="$ZATHURA_CONFIG_DIR/zathurarc"
-
-# Notification Settings
-NOTIFICATION_TITLE="System Theme"
-NOTIFICATION_SYNC_KEY="theme_changed_key"
-
-### Argument Parse
-# If no argument is passed, toggle the theme
-if [ "$#" -ne 1 ]; then
-  CURRENT_THEME=$(gsettings get org.gnome.desktop.interface color-scheme)
-  if [ "$CURRENT_THEME" = "'$DARK_COLOR_SCHEME'" ]; then
-    THEME=$LIGHT_THEME_NAME
-  else
-    THEME=$DARK_THEME_NAME
-  fi
-else
-  THEME=$1
-fi
-
-set_light_theme() {
-  # Global
-  gsettings set org.gnome.desktop.interface color-scheme "$LIGHT_COLOR_SCHEME"
-  gsettings set org.gnome.desktop.interface gtk-theme "$LIGHT_GTK_THEME"
-
-  # Terminal
-  echo "light" >"$HOME/.config/foot/current_theme"
-  # pkill -USR1 zsh
-
-  # Neovim Setting
-  for server in $(nvr --serverlist); do
-    nvr --servername "$server" -cc "colorscheme ${NVIM_LIGHT_THEME} | set background=light"
-  done
-  sed -i 's/vim.go.background = "dark"/vim.go.background = "light"/' "$NVIM_OPTIONS_PATH"
-  sed -i "s/colorscheme = \"$NVIM_DARK_THEME\"/colorscheme = \"$NVIM_LIGHT_THEME\"/" "$NVIM_COLORSCHEME_PATH"
-
-  # Pdf Readers
-  sed -i 's/set recolor true/set recolor false/' "$ZATHURARC_PATH"
-  sed -i '/ChangeColors=true/d' "$OKULARPARTRC_PATH"
-
-  # Notification
-  echo "Light Theme Set"
-  notify-send "$NOTIFICATION_TITLE" "Light Mode Set" \
-    -h string:x-canonical-private-synchronous:$NOTIFICATION_SYNC_KEY &
-}
-
-set_dark_theme() {
-  # Global
-  gsettings set org.gnome.desktop.interface color-scheme "$DARK_COLOR_SCHEME"
-  gsettings set org.gnome.desktop.interface gtk-theme "$DARK_GTK_THEME"
-
-  # Terminal
-  echo "dark" >"$HOME/.config/foot/current_theme"
-  # pkill -USR1 zsh
-
-  # Neovim Setting
-  for server in $(nvr --serverlist); do
-    nvr --servername "$server" -cc "colorscheme ${NVIM_DARK_THEME} | set background=dark"
-  done
-  sed -i 's/vim.go.background = "light"/vim.go.background = "dark"/' "$NVIM_OPTIONS_PATH"
-  sed -i "s/colorscheme = \"$NVIM_LIGHT_THEME\"/colorscheme = \"$NVIM_DARK_THEME\"/" "$NVIM_COLORSCHEME_PATH"
-
-  # Pdf Readers
-  sed -i 's/set recolor false/set recolor true/' "$ZATHURARC_PATH"
-  sed -i '/\[Document\]/a ChangeColors=true' "$OKULARPARTRC_PATH"
-
-  # Notification
-  echo "Dark Theme Set"
-  notify-send "$NOTIFICATION_TITLE" "Dark Mode Set" \
-    -h string:x-canonical-private-synchronous:$NOTIFICATION_SYNC_KEY &
-}
-
-case $THEME in
-$LIGHT_THEME_NAME)
-  set_light_theme
-  ;;
-$DARK_THEME_NAME)
-  set_dark_theme
-  ;;
-*)
+if [ "$THEME" != "$LIGHT_THEME_NAME" ] && [ "$THEME" != "$DARK_THEME_NAME" ]; then
   echo "Invalid argument. Please use '$LIGHT_THEME_NAME' or '$DARK_THEME_NAME'."
   exit 1
-  ;;
-esac
+fi
+
+# Execute
+for script in "${APP_SCRIPTS[@]}"; do
+  if [ -x "$script" ]; then
+    "$script" "$THEME"
+  else
+    echo "Error: $script" >&2
+  fi
+done
+
+# Notification
+echo "${THEME^} Theme Set"
+notify-send "System Theme" "${THEME^} Mode Set" \
+  -h string:x-canonical-private-synchronous:theme-toggle &
 
 exit 0

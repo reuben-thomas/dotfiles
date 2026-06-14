@@ -176,4 +176,7 @@ export PATH="$PATH:/usr/local/texlive/2025/bin/x86_64-linux"
 # bun completions
 [ -s "$HOME/.bun/_bun" ] && source "$HOME/.bun/_bun"
 
+# foot: apply current theme on startup
+[ "$TERM" = "foot" ] && "$HOME/.config/foot/set-theme.sh"
+
 

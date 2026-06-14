@@ -4,37 +4,37 @@ if [ "$current_theme" = "dark" ]; then
   # DARK
   # based on outrun-dark, from theme.sh
   # https://github.com/lemnos/theme.sh
-  printf "\e]11;#00002a\a" # Background
-  printf "\e]10;#d0d0fa\a" # Foreground
-  printf "\e]12;#d0d0fa\a" # Cursor
+  printf "\e]11;[85]#0d101b\a" # Background
+  printf "\e]10;#ebeef9\a"     # Foreground
+  printf "\e]12;#ebeef9\a"     # Cursor
 
   # Palette 0-7
-  printf "\e]4;0;#00002a\a"
-  printf "\e]4;1;#ff4242\a"
-  printf "\e]4;2;#59f176\a"
-  printf "\e]4;3;#f3e877\a"
-  printf "\e]4;4;#66b0ff\a"
-  printf "\e]4;5;#f10596\a"
-  printf "\e]4;6;#0ef0f0\a"
+  printf "\e]4;0;#1c1c1c\a"
+  printf "\e]4;1;#ff3d5e\a"
+  printf "\e]4;2;#14ff8a\a"
+  printf "\e]4;3;#ffce63\a"
+  printf "\e]4;4;#58b6ca\a"
+  printf "\e]4;5;#6488c4\a"
+  printf "\e]4;6;#8d84c6\a"
   printf "\e]4;7;#d0d0fa\a"
 
   # Palette 8-15
-  printf "\e]4;8;#50507a\a"
-  printf "\e]4;9;#ff4242\a"
-  printf "\e]4;10;#59f176\a"
+  printf "\e]4;8;#838796\a"
+  printf "\e]4;9;#ee829f\a"
+  printf "\e]4;10;#a5ffe1\a"
   printf "\e]4;11;#f3e877\a"
-  printf "\e]4;12;#66b0ff\a"
-  printf "\e]4;13;#f10596\a"
-  printf "\e]4;14;#0ef0f0\a"
-  printf "\e]4;15;#f5f5ff\a"
+  printf "\e]4;12;#8be9fd\a"
+  printf "\e]4;13;#97bbf7\a"
+  printf "\e]4;14;#c0b7f9\a"
+  printf "\e]4;15;#ffffff\a"
 
 elif [ "$current_theme" = "light" ]; then
   # LIGHT
   # based on summerfruit-light, from theme.sh
-  #   # https://github.com/lemnos/theme.sh
-  printf "\e]11;#ffffff\a" # Background
-  printf "\e]10;#101010\a" # Foreground
-  printf "\e]12;#101010\a" # Cursor
+  # https://github.com/lemnos/theme.sh
+  printf "\e]11;[100]#ffffff\a" # Background
+  printf "\e]10;#101010\a"      # Foreground
+  printf "\e]12;#101010\a"      # Cursor
 
   # Palette 0-7
   printf "\e]4;0;#ffffff\a"

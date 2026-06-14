@@ -50,11 +50,7 @@
     for_window [title="^.*nvim.*$"] title_format ' ' %title
     for_window [title="^.*R Graphics.*$"] title_format ' ' %title
 
-    # Dynamic Tiling
-    # exec_always /bin/sh -c 'killall autotiling; autotiling &'
-
     # Transparency
-    # exec /usr/share/sway/scripts/illanactive-windows-transparency.py --opacity 0.85
     set $pip_opacity 1.0
 
     # Firefox Picture-in-Picture

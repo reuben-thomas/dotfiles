@@ -65,7 +65,7 @@
     "[markdown]": {
         "editor.defaultFormatter": "esbenp.prettier-vscode"
     },
-    "workbench.preferredDarkColorTheme": "GitHub Dark Default",
+    "workbench.preferredDarkColorTheme": "Atom One Dark",
     "claudeCode.useTerminal": true,
     "diffEditor.ignoreTrimWhitespace": false,
     "editor.fontFamily": "JetBrains Mono",
