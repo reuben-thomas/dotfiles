@@ -1,7 +1,6 @@
 --
 -- vim common
 --
-vim.opt.termguicolors = false
 vim.opt.conceallevel = 1
 vim.api.wrap = true
 vim.g.copilot_enabled = false

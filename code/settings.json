@@ -65,7 +65,6 @@
     "[markdown]": {
         "editor.defaultFormatter": "esbenp.prettier-vscode"
     },
-    "workbench.preferredDarkColorTheme": "Atom One Dark",
     "claudeCode.useTerminal": true,
     "diffEditor.ignoreTrimWhitespace": false,
     "editor.fontFamily": "JetBrains Mono",
@@ -78,4 +77,13 @@
     },
     "go.toolsManagement.autoUpdate": true,
     "chat.viewSessions.orientation": "stacked",
+    "yaml.disableSchemaDetection": [
+        "**/.github/workflows/*.yml",
+        "**/.github/workflows/*.yaml",
+        "**/.gitea/workflows/*.yml",
+        "**/.gitea/workflows/*.yaml",
+        "**/.forgejo/workflows/*.yml",
+        "**/.forgejo/workflows/*.yaml"
+    ],
+    "workbench.preferredDarkColorTheme": "GitHub Dark",
 }

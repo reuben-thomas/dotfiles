@@ -40,6 +40,9 @@ case "$TERM" in
 xterm-color | *-256color) color_prompt=yes ;;
 esac
 
+# foot: apply current theme on startup
+# [ "$TERM" = "foot" ] && "$HOME/.config/foot/set-theme.sh"
+
 # uncomment for a colored prompt, if the terminal has the capability; turned
 # off by default to not distract the user: the focus in a terminal window
 # should be on the output of commands, not on the prompt
@@ -155,12 +158,11 @@ alias activate='source ~/.venv/base/bin/activate'
 # System Shortcuts
 alias powerstatus='upower -i /org/freedesktop/UPower/devices/battery_BAT0'
 alias pcipm-enable='echo auto | sudo tee /sys/bus/pci/devices/*/power/control'
-alias buds='flatpak run me.timschneeberger.GalaxyBudsClient action -e Connect'
 alias lume-all='python3 /home/reuben/.config/scripts/lume.py $1'
 alias lume='ddcutil setvcp 10'
 alias gaps='f() { swaymsg gaps inner all set "$1"; swaymsg gaps inner "$1"; }; f'
-alias boot-windows='sudo grub-reboot 2; systemctl reboot'
-alias boot-uefi='sudo grub-reboot 3; systemctl reboot'
+alias boot-windows='sudo grub-reboot 2 && systemctl reboot'
+alias boot-uefi='sudo grub-reboot 3 && systemctl reboot'
 alias autosuspend-off='sudo /home/reuben/.config/scripts/autosuspend-off.sh'
 alias autosuspend-status='cat /sys/module/usbcore/parameters/autosuspend'
 
@@ -177,9 +179,6 @@ export PATH="$PYENV_ROOT/bin:$PATH"
 if command -v pyenv 1>/dev/null 2>&1; then
   eval "$(pyenv init -)"
 fi
-
-# zoxide
-eval "$(zoxide init bash)"
 
 # bun
 export BUN_INSTALL="$HOME/.bun"
@@ -258,3 +257,9 @@ eval "$(starship init bash)"
 #THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
 export SDKMAN_DIR="$HOME/.sdkman"
 [[ -s "$HOME/.sdkman/bin/sdkman-init.sh" ]] && source "$HOME/.sdkman/bin/sdkman-init.sh"
+
+# zoxide
+eval "$(zoxide init bash)"
+
+# ble.sh
+source -- ~/.local/share/blesh/ble.sh

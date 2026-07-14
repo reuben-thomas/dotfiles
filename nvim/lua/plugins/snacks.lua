@@ -5,6 +5,18 @@ return {
     picker = {
       hidden = true,
       ignored = true,
+      sources = {
+        explorer = {
+          win = {
+            list = {
+              keys = {
+                ["<c-j>"] = false,
+                ["<c-k>"] = false,
+              },
+            },
+          },
+        },
+      },
     },
   },
 }
