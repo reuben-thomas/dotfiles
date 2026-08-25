@@ -1,21 +1,38 @@
 return {
-  { "rmehri01/onenord.nvim" },
-  { "habamax/vim-polar" },
+  {
+    "rmehri01/onenord.nvim",
+    lazy = true,
+    opts = {
+      custom_highlights = {
+        -- Override default "Visual" (#EAEBED) which is difficult to distinguish from the background.
+        light = {
+          Visual = { bg = "#C2D5E8" },
+          VisualNOS = { bg = "#C2D5E8" },
+        },
+      },
+    },
+  },
+  { "habamax/vim-polar", lazy = true },
   {
     "navarasu/onedark.nvim",
+    lazy = true,
     config = function()
       require("onedark").setup({
-        style = "cool",
+        style = "deep",
+        transparent = true,
+        lualine = {
+          transparent = true,
+        },
       })
     end,
   },
   {
     "folke/tokyonight.nvim",
     opts = {
-      transparent = true,
+      transparent = false,
       styles = {
-        sidebars = "transparent",
-        floats = "transparent",
+        sidebars = "dark",
+        floats = "dark",
       },
       on_highlights = function(hl, c)
         local blend = require("tokyonight.util").blend_bg
@@ -29,7 +46,7 @@ return {
   {
     "LazyVim/LazyVim",
     opts = {
-      colorscheme = "tokyonight",
+      colorscheme = "onedark",
     },
   },
 }
