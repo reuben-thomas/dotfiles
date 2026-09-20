@@ -82,7 +82,6 @@ bar:
                   },
               }
           - string: &default { <<: *i3_common, text: "{name}" }
-          - string: &music { <<: *i3_common, text: 󰼛, font: *icon_font }
           - focused: &focused
               foreground: 000000ff
               deco: { stack: [*white_deco] }
@@ -110,13 +109,6 @@ bar:
                 state == unfocused: { string: { <<: [*default, *unfocused] } }
                 state == invisible: { string: { <<: *default } }
                 state == urgent: { string: { <<: [*default, *urgent] } }
-          music:
-            map:
-              conditions:
-                state == focused: { string: { <<: [*music, *focused] } }
-                state == unfocused: { string: { <<: [*music, *unfocused] } }
-                state == invisible: { string: { <<: *music } }
-                state == urgent: { string: { <<: [*music, *urgent] } }
     - label:
         content:
           - string: { text: "DSP", foreground: *dsp_color }

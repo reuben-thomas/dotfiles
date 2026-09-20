@@ -28,4 +28,9 @@ export SSH_AUTH_SOCK="/run/user/$(id -u)/keyring/ssh"
 if [ -d "$HOME/.local/bin" ]; then
   PATH="$HOME/.local/bin:$PATH"
 fi
+
+# cargo
 . "$HOME/.cargo/env"
+
+# go
+export PATH=$PATH:/usr/local/go/bin

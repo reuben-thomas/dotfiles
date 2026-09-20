@@ -86,4 +86,49 @@
         "**/.forgejo/workflows/*.yaml"
     ],
     "workbench.preferredDarkColorTheme": "GitHub Dark",
+    "explorer.confirmDelete": false,
+    "workbench.preferredLightColorTheme": "Visual Studio 2019 Light",    
+    "latex-workshop.latex.tools": [
+      {
+        "name": "tectonic",
+        "command": "tectonic",
+        "args": [
+          "-X",
+          "compile",
+          "%DOC%.tex",
+          "--synctex",
+          "--keep-logs",
+          "-Z",
+          "shell-escape-cwd=%DIR",
+          "--outdir=%OUTDIR%"
+        ]
+      }
+    ],
+    "latex-workshop.latex.recipes": [
+      {
+        "name": "tectonic",
+        "tools": ["tectonic"]
+      }
+    ],
+    "latex-workshop.latex.recipe.default": "first",
+    "latex-workshop.latex.autoBuild.run": "onFileChange",
+    "latex-workshop.latex.clean.subfolder.enabled": false,
+    "latex-workshop.latex.clean.fileTypes": [
+      "*.aux",
+      "*.log",
+      "*.synctex.gz"
+    ],
+
+    "latex-workshop.formatting.latex": "tex-fmt",
+    "latex-workshop.formatting.tex-fmt.path": "tex-fmt",
+    "latex-workshop.formatting.tex-fmt.args": [
+      "--stdin",
+      "%DOCFILE%"
+    ],
+    "latex-workshop.latex.autoClean.run": "onBuilt",
+    "editor.formatOnSave": true,
+    "[latex]": {
+      "editor.defaultFormatter": "James-Yu.latex-workshop"
+    }
+
 }

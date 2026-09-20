@@ -24,7 +24,6 @@ swaylock -c 000000ff \
   --line-ver-color 00000000 \
   --line-wrong-color 00000000 \
   --line-clear-color 00000000 \
-  --separator-color 00000000 \
-  -i $HOME/Pictures/Wallpapers/florence_2.JPG
+  --separator-color 00000000
 
 swaymsg reload

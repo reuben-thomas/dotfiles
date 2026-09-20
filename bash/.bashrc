@@ -117,15 +117,13 @@ fi
 # App Shortcuts
 alias code='code --enable-features=UseOzonePlatform,WaylandWindowDecorations,WebRTCPipeWireCapturer --ozone-platform-hint=auto > /dev/null 2>&1'
 alias sync='/home/reuben/.config/scripts/sync.sh'
-alias socvpn='sudo openfortivpn webvpn.comp.nus.edu.sg --username=e1123003 --password=$(python3 -c "import keyring; print(keyring.get_password(\"soc\", \"e1123003\"))")'
-alias xlog='ssh reubenth@xlog.comp.nus.edu.sg'
+alias nusvpn='openconnect-lite --server 8d0c.vpn.sse.cisco.com/NUSStudent'
 alias chrome='google-chrome --password-store=gnome-libsecret'
 alias typetest='tt -showwpm -notheme -blockcursor'
 alias powerstats='flatpak run org.gnome.PowerStats&exit'
-alias logisim='/home/reuben/cs/CS2100/logisim/launch.sh'
-alias usql2102='usql postgres://postgres@localhost/postgres'
 
 # Pure Laziness
+alias commit='git add -A && git commit -m "Updates" && git push'
 alias noise='play -n synth brownnoise'
 alias rec='/home/reuben/.config/scripts/screencast.sh; cd /home/reuben/Videos/Screencasts/'
 alias work='/home/reuben/.config/scripts/work.sh'
@@ -145,7 +143,7 @@ alias note='cd ~/Documents/Note; nvim .'
 dev-service() {
   local action=$1
   shift
-  for service in docker docker.socket apache2 postgresql forticlient; do
+  for service in docker docker.socket; do
     sudo systemctl "$action" "$service"
   done
 }
@@ -187,11 +185,6 @@ export PATH=$BUN_INSTALL/bin:$PATH
 # java
 export PATH_TO_FX="$HOME/.local/share/javafx-sdk-17.0.13/lib"
 export JAVA_HOME="/usr/lib/jvm/java-17-openjdk-amd64"
-
-# go
-alias go="go1.24.1"
-export PATH=$PATH:/usr/local/go/bin
-export PATH=$PATH:/home/reuben/go/bin
 
 # esp-idf
 alias idf-activate='. $HOME/utils/esp/esp-idf/export.sh'
@@ -238,6 +231,35 @@ function y() {
   rm -f -- "$tmp"
 }
 
+# utility for setting config files
+_confset() {
+  local varname="$1" dir="$2" name="$3"
+
+  if [[ -z "$name" ]]; then
+    echo "usage: ${FUNCNAME[1]} <config-name>" >&2
+    return 1
+  fi
+
+  local path="$dir/$name"
+
+  if [[ ! -f "$path" ]]; then
+    echo "${FUNCNAME[1]}: $path not found" >&2
+    return 1
+  fi
+
+  export "$varname=$path"
+  echo "$varname set to $path"
+}
+
+# perf
+alias allow-perf='sudo sysctl -w kernel.perf_event_paranoid=1'
+
+# talos
+talosconf() { _confset TALOSCONFIG "$HOME/.talos" "$1"; }
+
+# kubernetes
+kubeconf() { _confset KUBECONFIG "$HOME/.kube" "$1"; }
+
 # terraform
 complete -C /usr/bin/terraform terraform
 # Install Ruby Gems to ~/gems
@@ -251,15 +273,30 @@ if [ -d "$FNM_PATH" ]; then
   eval "$(fnm env)"
 fi
 
-# starship
-eval "$(starship init bash)"
-
-#THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
+# java
 export SDKMAN_DIR="$HOME/.sdkman"
 [[ -s "$HOME/.sdkman/bin/sdkman-init.sh" ]] && source "$HOME/.sdkman/bin/sdkman-init.sh"
 
-# zoxide
-eval "$(zoxide init bash)"
+# go
+export PATH=$PATH:/usr/local/go/bin
+export PATH="$PATH:$(go env GOPATH)/bin"
+
+# latex
+tex-comp() {
+  tectonic \
+    --keep-logs \
+    --synctex \
+    -Z shell-escape \
+    -Z continue-on-errors \
+    --bundle https://data1.fullyjustified.net/tlextras-2022.0r0.tar \
+    "$1"
+}
+
+# starship
+eval "$(starship init bash)"
 
 # ble.sh
 source -- ~/.local/share/blesh/ble.sh
+
+# zoxide
+eval "$(zoxide init bash)"

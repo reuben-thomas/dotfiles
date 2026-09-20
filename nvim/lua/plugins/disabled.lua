@@ -7,7 +7,6 @@ return {
   { "b0o/SchemaStore.nvim", enabled = false },
   { "folke/persistence.nvim", enabled = false },
   { "nvim-mini/mini.animate", enabled = false },
-  { "Olical/conjure", enabled = false },
   { "PaterJason/cmp-conjure", enabled = false },
   {
     "saghen/blink.cmp",

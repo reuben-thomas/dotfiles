@@ -22,8 +22,6 @@
 
     # Gnome Keyring
     exec dbus-update-activation-environment --all
-    # exec gnome-keyring-daemon --start --components=secrets
-    # exec export $(gnome-keyring-daemon)
  
     # Environment Variables
     exec dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP=sway
@@ -122,7 +120,7 @@
 ### Display Outputs
 #
     # Wallpaper
-    output * bg $HOME/Pictures/Wallpapers/default.JPG fill
+    output * bg $HOME/Pictures/Wallpapers/singers.avif fill
     # output * bg "#000000" solid_color
 
     # Wireless Monitor
@@ -135,7 +133,7 @@
     # Workspace to Monitor
     set $builtin-monitor eDP-1
     set $primary-monitor DP-9 DP-8 DP-7 DP-6 DP-5 DP-4 DP-3 DP-2 DP-1 DP-0
-    workspace music output $builtin-monitor
+    workspace 0 output $builtin-monitor
     workspace 1 output $primary-monitor $builtin-monitor
     workspace 2 output $primary-monitor $builtin-monitor
     workspace 3 output $primary-monitor $builtin-monitor
@@ -163,10 +161,9 @@
 #
     # Built-in trackpad
     input "1267:12572:VEN_04F3:00_04F3:311C_Touchpad" {
-        dwt enabled
         tap enabled
         accel_profile "adaptive"
-        pointer_accel 0.5
+        pointer_accel 0.7
         natural_scroll enabled
         middle_emulation enabled
     }
@@ -175,6 +172,12 @@
     # input "1240:60205:liliums_Lily58_Mouse" {
     #     scroll_factor 0.05
     # }
+    #
+
+    # Logitech MX Anywhere 2S (Bluetooth)
+    input "1133:45082:MX_Anywhere_2S_Mouse" {
+        pointer_accel 0.1
+    }
 
     # Keychron M6 8K (Bluetooth)
     input "13364:53321:Keychron_M6_8K_Mouse" {
@@ -270,12 +273,6 @@
     bindcode $mod+Alt+34 exec swaymsg opacity minus 0.05
     bindcode $mod+Alt+51 exec swaymsg opacity set 1.0
 
-    # Autotiling when I feel like it
-    bindsym $mod+z exec /bin/sh -c \
-      'killall autotiling; notify-send "Sway" "Autotiling Enabled" -h string:x-canonical-private-synchronous:autotiling-notification; autotiling &'
-    bindsym $mod+Shift+z exec /bin/sh -c \
-      'killall autotiling; notify-send "Sway" "Autotiling Disabled" -h string:x-canonical-private-synchronous:autotiling-notification;'
-
 #
 # Moving around:
 #
@@ -311,7 +308,7 @@
     bindsym $mod+r exec /bin/sh -c "$HOME/.config/wofi/rename_workspace/launch.sh"
 
     # Persistent home
-    set $ws_home music
+    set $ws_home 0
     bindcode $mod+9 workspace $ws_home
     bindcode $mod+49 workspace $ws_home
     bindcode $mod+Shift+9 move container to workspace $ws_home, workspace $ws_home

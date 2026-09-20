@@ -4,7 +4,7 @@ return {
     lazy = true,
     opts = {
       custom_highlights = {
-        -- Override default "Visual" (#EAEBED) which is difficult to distinguish from the background.
+        WinSeparator = { fg = "#3879C5" },
         light = {
           Visual = { bg = "#C2D5E8" },
           VisualNOS = { bg = "#C2D5E8" },
@@ -22,6 +22,9 @@ return {
         transparent = true,
         lualine = {
           transparent = true,
+        },
+        highlights = {
+          WinSeparator = { fg = "$blue" },
         },
       })
     end,
@@ -46,7 +49,7 @@ return {
   {
     "LazyVim/LazyVim",
     opts = {
-      colorscheme = "onedark",
+      colorscheme = "onenord",
     },
   },
 }

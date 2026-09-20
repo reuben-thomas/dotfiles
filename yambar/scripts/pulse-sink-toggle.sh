@@ -24,12 +24,14 @@ fi
 # Calculate the index of the next sink
 next_sink_index=$(((current_sink_index + 1) % ${#sinks[@]}))
 
-# Set the default sink to the next one
-pactl set-default-sink "${sinks[$next_sink_index]}"
-
 # Move all audio streams to the new sink
 pactl list short sink-inputs | cut -f1 | while read -r stream; do
   pactl move-sink-input "$stream" "${sinks[$next_sink_index]}"
 done
+
+sleep 0.5
+
+# Set the default sink to the next one
+pactl set-default-sink "${sinks[$next_sink_index]}"
 
 echo "Switched to sink: ${sinks[$next_sink_index]}"
