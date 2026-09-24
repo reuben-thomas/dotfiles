@@ -7,7 +7,6 @@ vim.g.copilot_enabled = false
 vim.opt.relativenumber = true
 vim.go.background = "dark"
 vim.opt.title = true
-
 --
 -- title
 --

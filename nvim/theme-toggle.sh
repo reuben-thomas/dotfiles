@@ -7,6 +7,9 @@ NVIM_OPTIONS_PATH="$NVIM_CONFIG_DIR/lua/config/options.lua"
 NVIM_COLORSCHEME_PATH="$NVIM_CONFIG_DIR/lua/plugins/colorscheme.lua"
 NVIM_LIGHT_THEME="onenord"
 NVIM_DARK_THEME="onedark"
+# onedark latches style='light' the moment it (re)loads while background=light,
+# and never recovers on its own, so the dark switch has to re-assert the style
+# from colorscheme.lua rather than just running :colorscheme.
 NVIM_DARK_STYLE="$(grep -oP 'style = "\K[^"]+' "$NVIM_COLORSCHEME_PATH" | head -1)"
 
 case "$THEME" in

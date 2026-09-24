@@ -5,14 +5,16 @@ return {
     picker = {
       hidden = true,
       ignored = true,
+      layout = { fullscreen = true },
       sources = {
         explorer = {
+          layout = { fullscreen = false },
           win = {
             list = {
               keys = {
+                -- Conflicts with vim-tmux-navigator
                 ["<c-j>"] = false,
                 ["<c-k>"] = false,
-                -- Resizing conflict
                 ["<a-h>"] = false,
                 ["<a-j>"] = false,
                 ["<a-k>"] = false,
@@ -21,6 +23,7 @@ return {
             },
           },
         },
+        select = { layout = { fullscreen = false } },
       },
     },
   },

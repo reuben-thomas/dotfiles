@@ -4,7 +4,6 @@ return {
   { "tpope/vim-dadbod", enabled = false },
   { "kristijanhusak/vim-dadbod-ui", enabled = false },
   { "kristijanhusak/vim-dadbod-completion", enabled = false },
-  { "b0o/SchemaStore.nvim", enabled = false },
   { "folke/persistence.nvim", enabled = false },
   { "nvim-mini/mini.animate", enabled = false },
   { "PaterJason/cmp-conjure", enabled = false },

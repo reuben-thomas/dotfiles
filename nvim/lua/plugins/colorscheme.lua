@@ -5,6 +5,7 @@ return {
     opts = {
       custom_highlights = {
         WinSeparator = { fg = "#3879C5" },
+        -- Override default "Visual" (#EAEBED) which is difficult to distinguish from the background.
         light = {
           Visual = { bg = "#C2D5E8" },
           VisualNOS = { bg = "#C2D5E8" },
@@ -49,7 +50,7 @@ return {
   {
     "LazyVim/LazyVim",
     opts = {
-      colorscheme = "onenord",
+      colorscheme = "onedark",
     },
   },
 }

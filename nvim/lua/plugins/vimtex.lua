@@ -15,7 +15,6 @@ return {
       },
     }
 
-    -- tectonic has no continuous mode, so compile on save instead
     vim.api.nvim_create_autocmd("BufWritePost", {
       pattern = { "*.tex" },
       callback = function()

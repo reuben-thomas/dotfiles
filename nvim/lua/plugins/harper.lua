@@ -2,7 +2,6 @@ return {
   {
     "neovim/nvim-lspconfig",
     opts = {
-      -- disable by default
       servers = {
         harper_ls = { enabled = false },
       },
