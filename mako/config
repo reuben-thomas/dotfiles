@@ -13,9 +13,10 @@ default-timeout=5000
 border-color=#5e9cff
 
 [urgency=high]
-anchor=top-center
 background-color=#792424cc
 border-color=#f05e48cc
+default-timeout=0
+ignore-timeout=1
 
 [app-name=Spotify]
 anchor=top-left
@@ -23,7 +24,6 @@ border-color=#57b570cc
 background-color=#1c452fcc
 
 [app-name=user-script]
-anchor=top-center
 
 [summary="Denise ❤️"]
 background-color=#de5489d4

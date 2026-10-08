@@ -1,11 +1,14 @@
 return {
+  { import = "lazyvim.plugins.extras.ai.claudecode", enabled = false },
   { "m00qek/baleia.nvim", enabled = false },
   { "coder/claudecode.nvim", enabled = false },
   { "tpope/vim-dadbod", enabled = false },
   { "kristijanhusak/vim-dadbod-ui", enabled = false },
   { "kristijanhusak/vim-dadbod-completion", enabled = false },
   { "folke/persistence.nvim", enabled = false },
+  { "nvim-mini/mini.ai", enabled = false },
   { "nvim-mini/mini.animate", enabled = false },
+  { "nvim-mini/mini.diff", enabled = false },
   { "PaterJason/cmp-conjure", enabled = false },
   {
     "saghen/blink.cmp",

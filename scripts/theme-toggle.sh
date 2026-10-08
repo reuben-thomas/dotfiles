@@ -8,10 +8,11 @@ DARK_THEME_NAME="dark"
 TOGGLE_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)/theme-toggle"
 APP_SCRIPTS=(
   "$TOGGLE_DIR/gtk.sh"
-  "$HOME/.config/foot/theme-toggle.sh"
+  "$TOGGLE_DIR/okular.sh"
+  "$TOGGLE_DIR/fzf.sh"
   "$HOME/.config/nvim/theme-toggle.sh"
   "$HOME/.config/zathura/theme-toggle.sh"
-  "$TOGGLE_DIR/okular.sh"
+  "$HOME/.config/foot/theme-toggle.sh"
 )
 
 if [ "$THEME" != "$LIGHT_THEME_NAME" ] && [ "$THEME" != "$DARK_THEME_NAME" ]; then

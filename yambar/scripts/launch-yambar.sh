@@ -12,7 +12,7 @@ while IFS=, read -r name width scale; do
   echo $name
   echo $scale
 
-  if [[ "$name" == "HEADLESS-1" ]]; then
+  if [[ "$name" == HEADLESS-* ]]; then
     continue
   else
     tmpconfig="$tmpdir/config-$name.yml"

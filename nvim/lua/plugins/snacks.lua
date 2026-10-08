@@ -3,11 +3,12 @@ return {
   opts = {
     dashboard = { enabled = false },
     picker = {
-      hidden = true,
-      ignored = true,
       layout = { fullscreen = true },
       sources = {
+        files = { hidden = true },
+        grep = { hidden = true },
         explorer = {
+          hidden = true,
           layout = { fullscreen = false },
           win = {
             list = {

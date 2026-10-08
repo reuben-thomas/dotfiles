@@ -3,9 +3,12 @@ return {
     "rmehri01/onenord.nvim",
     lazy = true,
     opts = {
+      disable = {
+        background = true,
+        float_background = true,
+      },
       custom_highlights = {
         WinSeparator = { fg = "#3879C5" },
-        -- Override default "Visual" (#EAEBED) which is difficult to distinguish from the background.
         light = {
           Visual = { bg = "#C2D5E8" },
           VisualNOS = { bg = "#C2D5E8" },
@@ -26,6 +29,7 @@ return {
         },
         highlights = {
           WinSeparator = { fg = "$blue" },
+          MatchParen = { fg = "$yellow", bg = "$bg3", fmt = "bold" },
         },
       })
     end,

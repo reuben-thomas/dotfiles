@@ -153,43 +153,50 @@ bar:
                     right: /bin/sh -c "python3 /home/reuben/.config/yambar/scripts/brightness.py +",
                   },
               }
-          - string:
-              {
-                text: " [+ /",
-                on-click: /bin/sh -c "python3 /home/reuben/.config/yambar/scripts/brightness.py +",
-                <<: *info,
-              }
-          - string:
-              {
-                text: " -]",
-                on-click: /bin/sh -c "python3 /home/reuben/.config/yambar/scripts/brightness.py -",
-                <<: *info,
-              }
     - mem:
         poll-interval: 15000
         content:
-          - string: { text: "MEM", foreground: *mem_color }
-          - string: { text: " {percent_used}%" }
-          - string: { text: " [{used:mb} MB]", <<: *info }
+          map:
+            conditions:
+              percent_used < 70:
+                - string: { text: "MEM", foreground: *mem_color }
+                - string: { text: " {percent_used}%" }
+                - string: { text: " [{used:mb} MB]", <<: *info }
+              percent_used >= 70:
+                - string: { text: "MEM", <<: *warn }
+                - string: { text: " {percent_used}%" }
+                - string: { text: " [{used:mb} MB]", <<: *info }
+              percent_used >= 90:
+                - string: { text: "MEM", <<: *error }
+                - string: { text: " {percent_used}%" }
+                - string: { text: " [{used:mb} MB]", <<: *info }
     - cpu:
         poll-interval: 15000
         content:
           map:
             conditions:
               id == -1:
-                - string: { text: "CPU", foreground: *cpu_color }
-                - string: { text: " {cpu}%" }
+                map:
+                  conditions:
+                    cpu < 70:
+                      - string: { text: "CPU", foreground: *cpu_color }
+                      - string: { text: " {cpu}%" }
+                    cpu >= 70:
+                      - string: { text: "CPU", <<: *warn }
+                      - string: { text: " {cpu}%" }
+                    cpu >= 90:
+                      - string: { text: "CPU", <<: *error }
+                      - string: { text: " {cpu}%" }
   #
   # CENTER
   #
   #
   center:
     - clock:
-        time-format: "%I:%M %p"
-        date-format: "%^A, %d %^B %Y"
+        time-format: "%I:%M:%S %p %Z"
+        date-format: "%^a %d %^b %Y"
         content:
-          - string:
-              { text: "󰅐   {time}  |  {date}", foreground: *white, margin: 25 }
+          - string: { text: "{date} {time}", foreground: *white, margin: 25 }
   #
   #
   # RIGHT
@@ -360,8 +367,8 @@ bar:
           - string:
               on-click: /bin/sh -c "swaymsg reload"
               font: *icon_font
-              text: "󰜉  "
+              text: "󰜉 "
           - string:
               on-click: /bin/sh -c "/home/$USER/.config/wofi/powermenu/launch.sh"
               font: *icon_font
-              text: " ⏻  "
+              text: " ⏻ "

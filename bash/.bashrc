@@ -114,15 +114,26 @@ if ! shopt -oq posix; then
   fi
 fi
 
-# App Shortcuts
+#
+# apps
+#
 alias code='code --enable-features=UseOzonePlatform,WaylandWindowDecorations,WebRTCPipeWireCapturer --ozone-platform-hint=auto > /dev/null 2>&1'
 alias sync='/home/reuben/.config/scripts/sync.sh'
 alias nusvpn='openconnect-lite --server 8d0c.vpn.sse.cisco.com/NUSStudent'
 alias chrome='google-chrome --password-store=gnome-libsecret'
 alias typetest='tt -showwpm -notheme -blockcursor'
 alias powerstats='flatpak run org.gnome.PowerStats&exit'
+alias obs='cd ~/Documents/Obsidian; nvim .'
 
-# Pure Laziness
+#
+# laziness
+#
+bak() {
+  for f in "$@"; do
+    cp -a -- "$f" "$f.bak.$(date +%Y%m%d-%H%M%S)"
+  done
+}
+alias time-restart='sudo systemctl restart systemd-timesyncd'
 alias commit='git add -A && git commit -m "Updates" && git push'
 alias noise='play -n synth brownnoise'
 alias rec='/home/reuben/.config/scripts/screencast.sh; cd /home/reuben/Videos/Screencasts/'
@@ -133,13 +144,14 @@ alias zoxadd='/home/reuben/.config/scripts/zoxide-add.sh'
 alias r='ranger'
 alias p='wl-paste >'
 alias e='exit'
-alias t='tmux'
+alias t='tmux new-session -A -s "$(golang-petname -separator '_')"'
+alias nf='cd ~/ && nvim "$(fzf)"'
+alias nd='cd ~/ && nvim "$(fzf --walker=dir)"'
+alias fd='cd ~/ && cd "$(fzf --walker=dir)"'
 
-# Obsidian Notes
-alias obs='cd ~/Documents/Obsidian; nvim .'
-alias note='cd ~/Documents/Note; nvim .'
-
-# Dev Shortcuts
+#
+# dev services
+#
 dev-service() {
   local action=$1
   shift
@@ -153,10 +165,11 @@ alias dev-enable='dev-service enable'
 alias dev-disable='dev-service disable'
 alias activate='source ~/.venv/base/bin/activate'
 
-# System Shortcuts
+#
+# system
+#
 alias powerstatus='upower -i /org/freedesktop/UPower/devices/battery_BAT0'
 alias pcipm-enable='echo auto | sudo tee /sys/bus/pci/devices/*/power/control'
-alias lume-all='python3 /home/reuben/.config/scripts/lume.py $1'
 alias lume='ddcutil setvcp 10'
 alias gaps='f() { swaymsg gaps inner all set "$1"; swaymsg gaps inner "$1"; }; f'
 alias boot-windows='sudo grub-reboot 2 && systemctl reboot'
@@ -164,11 +177,18 @@ alias boot-uefi='sudo grub-reboot 3 && systemctl reboot'
 alias autosuspend-off='sudo /home/reuben/.config/scripts/autosuspend-off.sh'
 alias autosuspend-status='cat /sys/module/usbcore/parameters/autosuspend'
 
-# Created by `pipx` on 2023-12-13 10:18:49
+#
+# convenience scripts
+#
+export PATH="$PATH:/home/reuben/.config/scripts"
+
+#
+# languages
+#
+
+# rust
 export PATH="$PATH:/home/reuben/.local/bin"
 . "$HOME/.cargo/env"
-
-export PATH="$PATH:/home/reuben/.config/scripts"
 
 # pyenv
 export PYENV_ROOT="$HOME/.pyenv"
@@ -252,7 +272,7 @@ _confset() {
 }
 
 # perf
-alias allow-perf='sudo sysctl -w kernel.perf_event_paranoid=1'
+alias allow-perf='sudo sysctl -w kernel.perf_event_paranoid=-1'
 
 # talos
 talosconf() { _confset TALOSCONFIG "$HOME/.talos" "$1"; }
@@ -281,7 +301,7 @@ export SDKMAN_DIR="$HOME/.sdkman"
 export PATH=$PATH:/usr/local/go/bin
 export PATH="$PATH:$(go env GOPATH)/bin"
 
-# latex
+# tectonic
 tex-comp() {
   tectonic \
     --keep-logs \
@@ -292,11 +312,22 @@ tex-comp() {
     "$1"
 }
 
+#
+# shell
+#
+
 # starship
 eval "$(starship init bash)"
 
-# ble.sh
-source -- ~/.local/share/blesh/ble.sh
-
 # zoxide
 eval "$(zoxide init bash)"
+
+# fzf
+export FZF_DEFAULT_OPTS_FILE="$HOME/.config/fzf/fzfrc"
+export FZF_CTRL_T_OPTS="
+  --preview 'batcat -n --color=always {}'
+  --bind 'ctrl-/:change-preview-window(down|hidden|)'"
+
+# ble.sh
+source -- ~/.local/share/blesh/ble.sh
+ble-import -d integration/fzf-key-bindings

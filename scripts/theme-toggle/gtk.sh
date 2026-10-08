@@ -1,6 +1,4 @@
 #!/bin/bash
-# Apply the global GTK theme and color-scheme.
-# Usage: global.sh <light|dark>
 
 THEME=$1
 

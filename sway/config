@@ -62,6 +62,8 @@
     # GNUPlot
     for_window [app_id="gnuplot_qt"] floating enable, move position center
 
+    for_window [app_id="it.catboy.ripdrag"] floating enable, move position center
+
     # Spotify
     for_window [title="Spotify MiniPlayer"] floating enable, sticky enable, resize set 325 360
 
@@ -83,7 +85,9 @@
     for_window [title="Zoom Meeting(.*)?"] workspace next_on_output --create, move container to workspace current, floating disable, inhibit_idle open
 
     # Persistent Terminal
-    exec $term --title scratchpadTerm -e yazi
+    exec $term \
+        --title scratchpadTerm \
+        -e bash -ic yazi
     for_window [title="scratchpadTerm"] floating enable, move position center, move scratchpad
 
 ### Styling
@@ -120,7 +124,7 @@
 ### Display Outputs
 #
     # Wallpaper
-    output * bg $HOME/Pictures/Wallpapers/singers.avif fill
+    output * bg $HOME/Pictures/Wallpapers/bergamo_1.JPG fill
     # output * bg "#000000" solid_color
 
     # Wireless Monitor
@@ -152,6 +156,7 @@
     bindswitch lid:on output $builtin-monitor disable;sleep 0.5
     bindswitch lid:off output $builtin-monitor enable;sleep 0.5
     exec_always cat /proc/acpi/button/lid/LID0/state | awk '{print $2}' | grep -q 'closed' && swaymsg output $builtin-monitor disable
+
 
 ### Status Bar:
 #
@@ -202,7 +207,6 @@
     bindcode 173 exec playerctl previous
 
     # Built-in Brightness
-    # exec brightnessctl set 55%
     bindsym XF86MonBrightnessUp exec brightnessctl set +5%
     bindsym XF86MonBrightnessDown exec brightnessctl set 5%-
 
@@ -217,20 +221,16 @@
     # Toggle DND
     bindsym $mod+Alt+n exec /bin/sh -c "$HOME/.config/scripts/dnd-toggle.sh"
 
-
 #
 # Basics:
 #
     # Start a terminal
     bindsym $mod+Return exec $term
-    bindsym $mod+Alt+Return exec $term tmux
-    bindsym $mod+Shift+Return exec $term yazi
+    bindsym $mod+Shift+Return exec $term tmux new-session -A -s "$(golang-petname -separator '_')"
+    bindsym $mod+Alt+Return exec $term yazi
 
     # Kill focused window
     bindsym $mod+Shift+q kill
-
-    # Open Calculator
-    # bindsym $mod+c exec gnome-calculator;
 
     # Open File Manager
     bindsym $mod+y exec nautilus
@@ -247,7 +247,7 @@
 
     # Take a screenshot / screen record
     bindsym $mod+Shift+s exec sh -c "$HOME/.config/scripts/screenshot.sh"
-    bindsym $mod+Shift+w exec sh -c "python3 $HOME/.config/scripts/screenshot.py"
+    bindsym $mod+c exec sh -c "python3 $HOME/.config/scripts/screenshot.py"
     bindsym $mod+Shift+v exec sh -c "$HOME/.config/scripts/screenrecord.sh"
     bindsym $mod+Shift+r exec sh -c "$HOME/.config/scripts/screenrecord.sh --save-gif"
 
@@ -259,9 +259,6 @@
 
     # Launch Power Menu
     bindsym $mod+x exec /bin/sh -c "$HOME/.config/wofi/powermenu/launch.sh"
-
-    # Launch Bluetooth Device menu
-    bindsym $mod+p exec /bin/sh -c "$HOME/.config/wofi/bluetooth//launch.sh"
 
     # Gaps when i feel like it
     bindcode $mod+Shift+35  exec swaymsg gaps inner all minus 10
@@ -403,7 +400,27 @@
     bindsym $mod+semicolon scratchpad show, move position center
 
     # Restore default scratchpad
-    bindsym $mod+Alt+semicolon exec $term --title scratchpadTerm -e yazi
+    bindsym $mod+Alt+semicolon exec $term \
+        --title scratchpadTerm \
+        -e bash -ic yazi
+#
+# Screen mirroring:
+#
+    mode "present" {
+        # start
+        bindsym m mode "default"; exec wl-present mirror
+        # select
+        bindsym o mode "default"; exec wl-present set-output
+        bindsym r mode "default"; exec wl-present set-region
+        bindsym Shift+r mode "default"; exec wl-present unset-region
+        bindsym s mode "default"; exec wl-present set-scaling
+        bindsym f mode "default"; exec wl-present toggle-freeze
+        bindsym c mode "default"; exec wl-present custom
+        # Return to default mode
+        bindsym Return mode "default"
+        bindsym Escape mode "default"
+    }
+    bindsym $mod+p mode "present"
 #
 # Resizing containers:
 #
@@ -413,7 +430,6 @@
     bindsym $mod+Alt+$up resize grow height 5
     bindsym $mod+Alt+$down resize shrink height 5
     bindsym $mod+Alt+$right resize grow width 5
-    # TODO: Implement a better equalize keybind
     bindsym $mod+Alt+u resize set height 50
     bindsym $mod+Alt+i resize set width 50
 
