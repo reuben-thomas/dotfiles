@@ -11,7 +11,6 @@ nnoremap gj j
 nnoremap gk k
 
 " Visual
-colorscheme lunaperche
 syntax on
 set number
 set ruler

@@ -247,7 +247,8 @@
 
     # Take a screenshot / screen record
     bindsym $mod+Shift+s exec sh -c "$HOME/.config/scripts/screenshot.sh"
-    bindsym $mod+c exec sh -c "python3 $HOME/.config/scripts/screenshot.py"
+    # bindsym $mod+c exec sh -c "python3 $HOME/.config/scripts/screenshot.py"
+    bindsym $mod+c exec ~/.local/bin/uv run --script ~/.config/scripts/screenshot.py
     bindsym $mod+Shift+v exec sh -c "$HOME/.config/scripts/screenrecord.sh"
     bindsym $mod+Shift+r exec sh -c "$HOME/.config/scripts/screenrecord.sh --save-gif"
 
