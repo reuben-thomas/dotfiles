@@ -17,6 +17,7 @@ vim.opt.rtp:prepend(lazypath)
 require("lazy").setup({
   spec = {
     { "LazyVim/LazyVim", import = "lazyvim.plugins" },
+    { import = "lazyvim.plugins.extras.ai.copilot" },
     { import = "lazyvim.plugins.extras.lang.clangd" },
     { import = "lazyvim.plugins.extras.lang.cmake" },
     { import = "lazyvim.plugins.extras.lang.git" },
@@ -43,6 +44,7 @@ require("lazy").setup({
     version = false, -- use the latest commit
   },
   install = { colorscheme = { "tokyonight", "habamax" } },
+  ui = { border = "rounded" },
   checker = {
     enabled = true,
     notify = false,

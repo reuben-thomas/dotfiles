@@ -19,12 +19,23 @@ okular = [
 	{ run = 'okular "$@"', orphan = true, for = "unix", desc = "Okular" },
 ]
 #
+# Office
+onlyoffice = [
+	{ run = 'onlyoffice-desktopeditors "$@"', orphan = true, for = "unix", desc = "OnlyOffice" },
+]
+libreoffice = [
+	{ run = 'libreoffice "$@"', orphan = true, for = "unix", desc = "LibreOffice" },
+]
+#
 # Browser
 brave = [
 	{ run = 'brave-browser "$@"', orphan = true, for = "unix", desc = "Brave" },
 ]
 firefox = [
 	{ run = 'firefox "$@"', orphan = true, for = "unix", desc = "Firefox" },
+]
+excalidraw = [
+	{ run = 'brave-browser --profile-directory=Default --app-id=dnfpoenibinnbbckgbhendmlljoobcfg "$(realpath "$1")"', orphan = true, for = "unix", desc = "Excalidraw" },
 ]
 #
 # Media
@@ -38,6 +49,11 @@ kdenlive = [
 	{ run = 'kdenlive "$@"', desc = "Kdenlive", orphan = true, for = "unix" }
 ]
 #
+# File manager
+nautilus = [
+	{ run = 'nautilus "$@"', orphan = true, for = "unix", desc = "Nautilus" },
+]
+#
 # Reveal
 reveal = [
 	{ run = '''exiftool "$1"; echo "Press enter to exit"; read _''', block = true, desc = "Show EXIF", for = "unix" },
@@ -45,6 +61,12 @@ reveal = [
 
 [open]
 rules = [
+  # Excalidraw (before text/json so it wins)
+	{ url = "*.excalidraw", use = [ "excalidraw", "nvim", "code", "reveal" ] },
+
+  # Office (by extension; zip-based formats can be misdetected by mime)
+	{ url = "*.{docx,doc,docm,odt,dotx,xlsx,xls,xlsm,ods,xltx,pptx,ppt,pptm,odp,ppsx,potx}", use = [ "onlyoffice", "libreoffice", "reveal" ] },
+
   # Code
 	{ mime = "text/html",  use = [ "brave", "nvim", "code", "firefox", "reveal" ] },
 	{ mime = "text/*",  use = [ "nvim", "code", "reveal" ] },
@@ -52,10 +74,10 @@ rules = [
 
   # Media
   { mime = "application/pdf", use = [ "zathura", "okular", "brave", "firefox", "reveal" ] },
-	{ mime = "image/*", use = "image_viewer", "reveal" },
+	{ mime = "image/*", use = [ "image_viewer", "reveal" ] },
 	{ mime = "video/*", use = ["video_viewer", "kdenlive", "reveal"] },
 
   # Base
-	{ name = "*/", use = [ "nvim", "code", "reveal" ] },
+	{ url = "*/", use = [ "nvim", "code", "nautilus", "reveal" ] },
 	{ mime = "*", use = [ "nvim", "code", "reveal" ] }
 ]

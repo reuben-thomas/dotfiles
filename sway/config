@@ -1,6 +1,5 @@
 ### Defaults
 #
-    # Home row direction keys, like vim
     set $mod Mod4
     set $left h
     set $down j
@@ -49,12 +48,12 @@
     for_window [title="^.*R Graphics.*$"] title_format ' ' %title
 
     # Transparency
-    set $pip_opacity 1.0
+    set $default_overlay_opacity 0.90
 
     # Firefox Picture-in-Picture
-    for_window [title="Picture-in-picture$"] floating enable, sticky enable, move position cursor, opacity $pip_opacity
+    for_window [title="Picture-in-picture$"] floating enable, sticky enable, move position cursor, opacity $default_overlay_opacity
     # Chrome Picture-in-Picture
-    for_window [title="Picture-in-Picture$"] floating enable, sticky enable, move position cursor, opacity $pip_opacity
+    for_window [title="Picture-in-Picture$"] floating enable, sticky enable, move position cursor, opacity $default_overlay_opacity
 
     # Okular Notes
     for_window [title="New Text Note — Okular"] floating enable, move position cursor
@@ -79,16 +78,24 @@
     # Zathura
     for_window [app_id="zathura"] tabbed enable
 
-    # Zoom Ruins my Life
-    for_window [title="^zoom$"] border none, floating enable, opacity $pip_opacity
-    for_window [title="^(Zoom|About)$"] border pixel, floating enable
-    for_window [title="Zoom Meeting(.*)?"] workspace next_on_output --create, move container to workspace current, floating disable, inhibit_idle open
-
-    # Persistent Terminal
+    # Yazi Scratchpad
     exec $term \
-        --title scratchpadTerm \
+        --app-id scratchpadTerm \
         -e bash -ic yazi
-    for_window [title="scratchpadTerm"] floating enable, move position center, move scratchpad
+    for_window [app_id="scratchpadTerm"] \
+        floating enable, \
+        move position center, \
+        move scratchpad
+
+    # Claude Scratchpad
+    set $claude_ext fmpnliohjhemenmnlpbfagaolkdacoja
+    set $claude_win brave-fmpnliohjhemenmnlpbfagaolkdacoja-Default
+    exec brave-browser --app-id=$claude_ext
+    for_window [app_id="$claude_win"] \
+        floating enable, \
+        opacity $default_overlay_opacity, \
+        move position center, \
+        move scratchpad
 
 ### Styling
 #
@@ -127,34 +134,14 @@
     output * bg $HOME/Pictures/Wallpapers/bergamo_1.JPG fill
     # output * bg "#000000" solid_color
 
-    # Wireless Monitor
-    output HEADLESS-1 {
-      # Portrait Below
-      pos 196,1200
-      mode 1920x1200@60Hz
-    }
-
-    # Workspace to Monitor
-    set $builtin-monitor eDP-1
-    set $primary-monitor DP-9 DP-8 DP-7 DP-6 DP-5 DP-4 DP-3 DP-2 DP-1 DP-0
-    workspace 0 output $builtin-monitor
-    workspace 1 output $primary-monitor $builtin-monitor
-    workspace 2 output $primary-monitor $builtin-monitor
-    workspace 3 output $primary-monitor $builtin-monitor
-    workspace 4 output $primary-monitor $builtin-monitor
-    workspace 5 output $primary-monitor $builtin-monitor
-    workspace 6 output $primary-monitor $builtin-monitor
-    workspace 7 output $primary-monitor $builtin-monitor
-    workspace 8 output $primary-monitor $builtin-monitor
-    workspace 9 output $primary-monitor $builtin-monitor
-    workspace 10 output $primary-monitor $builtin-monitor
-
     # Set display configuration if one exists
     exec_always /bin/sh -c "$HOME/.cargo/bin/sway-displays set"
 
     # Toggle built-in display upon closed/open events
-    bindswitch lid:on output $builtin-monitor disable;sleep 0.5
-    bindswitch lid:off output $builtin-monitor enable;sleep 0.5
+    set $builtin-monitor eDP-1
+    workspace 0 output $builtin-monitor
+    bindswitch lid:on output $builtin-monitor disable
+    bindswitch lid:off output $builtin-monitor enable
     exec_always cat /proc/acpi/button/lid/LID0/state | awk '{print $2}' | grep -q 'closed' && swaymsg output $builtin-monitor disable
 
 
@@ -173,23 +160,21 @@
         middle_emulation enabled
     }
 
-
-    # input "1240:60205:liliums_Lily58_Mouse" {
-    #     scroll_factor 0.05
-    # }
-    #
-
     # Logitech MX Anywhere 2S (Bluetooth)
     input "1133:45082:MX_Anywhere_2S_Mouse" {
         pointer_accel 0.1
+        accel_profile "adaptive"
     }
 
     # Keychron M6 8K (Bluetooth)
     input "13364:53321:Keychron_M6_8K_Mouse" {
-        pointer_accel -0.7
+        accel_profile "adaptive"
     }
-# You can get the names of your inputs by running: swaymsg -t get_inputs
-# Read `man 5 sway-input` for more information about this section.
+
+    # Keychron M6 8K (USB)
+    input "13364:53288:Keychron_Keychron_Ultra-Link_8K" {
+        accel_profile "adaptive"
+    }
 
 ### Key bindings
 #
@@ -242,15 +227,7 @@
     bindsym $mod+Alt+d exec /bin/sh -c "$HOME/.config/wofi/window_switcher/launch.sh"
 
     # Drag windows by holding down $mod and left mouse button.
-    # Resize them with right mouse button + $mod.
     floating_modifier $mod normal
-
-    # Take a screenshot / screen record
-    bindsym $mod+Shift+s exec sh -c "$HOME/.config/scripts/screenshot.sh"
-    # bindsym $mod+c exec sh -c "python3 $HOME/.config/scripts/screenshot.py"
-    bindsym $mod+c exec ~/.local/bin/uv run --script ~/.config/scripts/screenshot.py
-    bindsym $mod+Shift+v exec sh -c "$HOME/.config/scripts/screenrecord.sh"
-    bindsym $mod+Shift+r exec sh -c "$HOME/.config/scripts/screenrecord.sh --save-gif"
 
     # Reload the configuration file
     bindsym $mod+Shift+c reload
@@ -333,16 +310,6 @@
     bindsym $mod+Shift+8 move container to workspace number 8, workspace number 8 
     bindsym $mod+Shift+9 move container to workspace number 9, workspace number 9
     bindsym $mod+Shift+0 move container to workspace number 10, workspace number 10
-    # Rename workspace
-    bindsym $mod+Alt+1 rename workspace to 1
-    bindsym $mod+Alt+2 rename workspace to 2
-    bindsym $mod+Alt+3 rename workspace to 3
-    bindsym $mod+Alt+4 rename workspace to 4
-    bindsym $mod+Alt+5 rename workspace to 5
-    bindsym $mod+Alt+6 rename workspace to 6
-    bindsym $mod+Alt+7 rename workspace to 7
-    bindsym $mod+Alt+8 rename workspace to 8
-    bindsym $mod+Alt+9 rename workspace to 9
     # Move workspace to output
     bindsym $mod+Control+Shift+$right move workspace to output right
     bindsym $mod+Control+Shift+$left move workspace to output left
@@ -377,9 +344,11 @@
 
     # Make the current focus fullscreen
     bindsym $mod+Shift+f fullscreen
-# Toggle the current focus between tiling and floating mode
 
+    # Toggle the current focus between tiling and floating mode
     bindsym $mod+Shift+space floating toggle
+
+    # Picture-in-picture
     bindsym $mod+Alt+p sticky toggle, floating toggle
 
     # Swap focus between the tiling area and the floating area
@@ -393,39 +362,51 @@
 #
 # Scratchpad:
 #
-    # Move the currently focused window to the scratchpad
-    bindsym $mod+Shift+semicolon floating enable, resize set width 900 height 500, move scratchpad
+    # Toggle Claude scratchpad
+    bindsym $mod+Shift+semicolon [app_id="$claude_win"] scratchpad show; \
+        [app_id="scratchpadTerm" workspace=__focused__] move scratchpad
+    bindsym $mod+f [app_id="$claude_win"] scratchpad show, move position center; \
+        [app_id="scratchpadTerm" workspace=__focused__] move scratchpad
 
-    # Show the next scratchpad window or hide the focused scratchpad window.
-    # If there are multiple scratchpad windows, this command cycles through them.
-    bindsym $mod+semicolon scratchpad show, move position center
+    # Toggle Yazi scratchpad
+    bindsym $mod+semicolon [app_id="scratchpadTerm"] scratchpad show, move position center; \
+        [app_id="$claude_win" workspace=__focused__] move scratchpad
 
     # Restore default scratchpad
-    bindsym $mod+Alt+semicolon exec $term \
-        --title scratchpadTerm \
-        -e bash -ic yazi
+    bindsym $mod+Alt+semicolon [app_id="scratchpadTerm"] kill; \
+        [app_id="$claude_win"] kill; \
+        exec $term --app-id scratchpadTerm -e bash -ic yazi; \
+        exec brave-browser --app-id=$claude_ext
 #
-# Screen mirroring:
+# Mirroring
 #
-    mode "present" {
-        # start
-        bindsym m mode "default"; exec wl-present mirror
-        # select
-        bindsym o mode "default"; exec wl-present set-output
-        bindsym r mode "default"; exec wl-present set-region
-        bindsym Shift+r mode "default"; exec wl-present unset-region
-        bindsym s mode "default"; exec wl-present set-scaling
-        bindsym f mode "default"; exec wl-present toggle-freeze
-        bindsym c mode "default"; exec wl-present custom
-        # Return to default mode
-        bindsym Return mode "default"
-        bindsym Escape mode "default"
+    bindsym $mod+p exec /bin/sh -c "$HOME/.config/wofi/wl-mirror/launch.sh"
+#
+# Capture
+#
+    set $capture ~/.config/scripts/capture.sh
+    mode "capture-shot" {
+        bindsym a mode "default"; exec $capture shot all
+        bindsym w mode "default"; exec $capture shot window
+        bindsym o mode "default"; exec $capture shot output
     }
-    bindsym $mod+p mode "present"
+    mode "capture-gif" {
+        bindsym a mode "default"; exec $capture gif all
+        bindsym w mode "default"; exec $capture gif window
+        bindsym o mode "default"; exec $capture gif output
+    }
+    mode "capture-video" {
+        bindsym a mode "default"; exec $capture video all
+        bindsym w mode "default"; exec $capture video window
+        bindsym o mode "default"; exec $capture video output
+    }
+    bindsym $mod+Shift+s exec $capture pick shot
+    bindsym $mod+Shift+r exec $capture pick gif
+    bindsym $mod+Shift+v exec $capture pick video
+    bindsym $mod+c exec ~/.local/bin/uv run --script ~/.config/scripts/screenshot.py
 #
-# Resizing containers:
+# Resizing
 #
-    # Height Presets
     bindsym $mod+Alt+t resize set height 20 ppt
     bindsym $mod+Alt+$left resize shrink width 5
     bindsym $mod+Alt+$up resize grow height 5
@@ -433,26 +414,5 @@
     bindsym $mod+Alt+$right resize grow width 5
     bindsym $mod+Alt+u resize set height 50
     bindsym $mod+Alt+i resize set width 50
-
-    mode "resize" {
-        bindsym $left resize shrink width 10px
-        bindsym $down resize shrink height 10px
-        bindsym $up resize grow height 10px
-        bindsym $right resize grow width 10px
-        bindsym Shift+$left resize shrink width 60px
-        bindsym Shift+$down resize shrink height 60px
-        bindsym Shift+$up resize grow height 60px
-        bindsym SHift+$right resize grow width 60px
-
-        bindsym Left resize shrink width 10px
-        bindsym Down resize grow height 10px
-        bindsym Up resize shrink height 10px
-        bindsym Right resize grow width 10px
-
-        # Return to default mode
-        bindsym Return mode "default"
-        bindsym Escape mode "default"
-    }
-    bindsym $mod+Alt+r mode "resize"
 
 include /etc/sway/config.d/*

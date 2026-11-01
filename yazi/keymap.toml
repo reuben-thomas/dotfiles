@@ -5,9 +5,17 @@ prepend_keymap = [
 	{ on = "V", run = "visual_mode",         desc = "Enter visual mode (selection mode)" },
 	{ on = "v", run = "visual_mode --unset", desc = "Enter visual mode (unset mode)" },
 
-  # Swap zoxide, fzf defaults
+  # fzf
   { on = [ "z" ], run = "plugin zoxide", desc = "Jump to a directory or reveal a file using zoxide" },
-  { on = [ "Z" ], run = "plugin fzf", desc = "Jump to a directory or reveal a file using fzf" },
+  { on = [ "Z" ], run = '''shell --block --
+    d="$(
+      fdfind --type d --hidden --exclude .git |
+        fzf --preview 'ls -Cp --color=always --group-directories-first {}' \
+            --preview-window=down,30%,sharp
+    )" &&
+      ya emit cd "$PWD/$d"
+  ''', desc = "Jump to a directory using fzf" },
+  { on = [ "<A-z>" ], run = "plugin fzf", desc = "Jump to a directory or reveal a file using fzf" },
 
   # Drop to shell
   { on = "!", for = "unix", run = 'shell "$SHELL" --block', desc = "Open $SHELL here" },
@@ -15,6 +23,16 @@ prepend_keymap = [
 
   # Drag and drop files from and to Yazi
   { on = "<C-n>", run = '''shell --
-    /home/reuben/.cargo/bin/ripdrag --resizable --no-click --and-exit --all --target "$@" | while read filepath; do cp -nR "$filepath" .; done
+    "$HOME/.cargo/bin/ripdrag" \
+      --resizable --no-click --and-exit --all --target "$@" |
+    while read filepath; do
+      cp -nR "$filepath" .
+    done
   ''', desc = "Drag and drop selected files" },
-  ]
+
+  # Copy files to clipboard (like Nautilus Ctrl+C) for pasting into other apps
+  { on = [ "c", "y" ], run = '''shell --
+    python3 -c 'import sys, pathlib; print("\r\n".join(pathlib.Path(p).absolute().as_uri() for p in sys.argv[1:]), end="\r\n")' "$@" |
+      wl-copy --type text/uri-list
+  ''', desc = "Copy selected files to clipboard" }
+]

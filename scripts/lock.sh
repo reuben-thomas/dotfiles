@@ -26,4 +26,4 @@ swaylock -c 000000ff \
   --line-clear-color 00000000 \
   --separator-color 00000000
 
-swaymsg reload
+"$HOME"/.config/yambar/scripts/launch-yambar.sh

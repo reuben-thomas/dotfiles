@@ -30,6 +30,8 @@ return {
         highlights = {
           WinSeparator = { fg = "$blue" },
           MatchParen = { fg = "$yellow", bg = "$bg3", fmt = "bold" },
+          NormalFloat = { bg = "none" },
+          FloatBorder = { bg = "none" },
         },
       })
     end,

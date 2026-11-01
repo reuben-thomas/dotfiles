@@ -9,7 +9,6 @@ case $- in
 esac
 
 # don't put duplicate lines or lines starting with space in the history.
-# See bash(1) for more options
 HISTCONTROL=ignoreboth
 
 # append to the history file, don't overwrite it
@@ -23,13 +22,6 @@ HISTFILESIZE=2000
 # update the values of LINES and COLUMNS.
 shopt -s checkwinsize
 
-# If set, the pattern "**" used in a pathname expansion context will
-# match all files and zero or more directories and subdirectories.
-#shopt -s globstar
-
-# make less more friendly for non-text input files, see lesspipe(1)
-#[ -x /usr/bin/lesspipe ] && eval "$(SHELL=/bin/sh lesspipe)"
-
 # set variable identifying the chroot you work in (used in the prompt below)
 if [ -z "${debian_chroot:-}" ] && [ -r /etc/debian_chroot ]; then
   debian_chroot=$(cat /etc/debian_chroot)
@@ -40,14 +32,10 @@ case "$TERM" in
 xterm-color | *-256color) color_prompt=yes ;;
 esac
 
-# foot: apply current theme on startup
-# [ "$TERM" = "foot" ] && "$HOME/.config/foot/set-theme.sh"
-
 # uncomment for a colored prompt, if the terminal has the capability; turned
 # off by default to not distract the user: the focus in a terminal window
 # should be on the output of commands, not on the prompt
 #force_color_prompt=yes
-
 if [ -n "$force_color_prompt" ]; then
   if [ -x /usr/bin/tput ] && tput setaf 1 >&/dev/null; then
     # We have color support; assume it's compliant with Ecma-48
@@ -98,7 +86,6 @@ alias l='ls -CF'
 # You may want to put all your additions into a separate file like
 # ~/.bash_aliases, instead of adding them here directly.
 # See /usr/share/doc/bash-doc/examples in the bash-doc package.
-
 if [ -f ~/.bash_aliases ]; then
   . ~/.bash_aliases
 fi
@@ -144,10 +131,7 @@ alias zoxadd='/home/reuben/.config/scripts/zoxide-add.sh'
 alias r='ranger'
 alias p='wl-paste >'
 alias e='exit'
-alias t='tmux new-session -A -s "$(golang-petname -separator '_')"'
-alias nf='cd ~/ && nvim "$(fzf)"'
-alias nd='cd ~/ && nvim "$(fzf --walker=dir)"'
-alias fd='cd ~/ && cd "$(fzf --walker=dir)"'
+alias t='tmux attach || tmux new-session -A -s "$(golang-petname -separator '_')"'
 
 #
 # dev services
@@ -239,8 +223,24 @@ bind -m vi-command 'Control-l: clear-screen'
 bind -m vi-insert 'Control-l: clear-screen'
 export EDITOR=nvim
 
-# search
-alias s="~/.config/scripts/search.py"
+# claude
+ask() {
+  claude -p \
+    --model claude-haiku-5-5 \
+    --tools "" \
+    --disallowedTools "*" \
+    --strict-mcp-config \
+    --safe-mode \
+    --permission-prompts none \
+    --no-session-persistence \
+    "$*"
+}
+
+claude-desktop-open() {
+  local enc
+  enc=$(python3 -c 'import os,urllib.parse;print(urllib.parse.quote(os.getcwd(),safe=""))')
+  xdg-open "claude://code/new?folder=${enc}"
+}
 
 # yazi
 function y() {
@@ -301,6 +301,12 @@ export SDKMAN_DIR="$HOME/.sdkman"
 export PATH=$PATH:/usr/local/go/bin
 export PATH="$PATH:$(go env GOPATH)/bin"
 
+# ocaml
+eval $(opam env --switch=default)
+
+# nvidia nsight
+export PATH="/usr/local/NVIDIA-Nsight-Compute:$PATH"
+
 # tectonic
 tex-comp() {
   tectonic \
@@ -331,3 +337,4 @@ export FZF_CTRL_T_OPTS="
 # ble.sh
 source -- ~/.local/share/blesh/ble.sh
 ble-import -d integration/fzf-key-bindings
+ble-import -d integration/fzf-completion

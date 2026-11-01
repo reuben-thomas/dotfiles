@@ -1,0 +1,25 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+BROWSER_BIN="${EXCALIDRAW_BROWSER:-brave-browser}"
+PROFILE="${EXCALIDRAW_PROFILE:-Default}"
+APP_ID="${EXCALIDRAW_APP_ID:-dnfpoenibinnbbckgbhendmlljoobcfg}"
+
+if [ $# -ne 1 ] || [ -z "$1" ]; then
+  echo "usage: $(basename "$0") <file>[.excalidraw]" >&2
+  exit 1
+fi
+
+file="$1"
+[[ "$file" == *.excalidraw ]] || file="$file.excalidraw"
+
+# Create empty if none exists
+if [ ! -e "$file" ]; then
+  printf '%s\n' '{"type":"excalidraw","version":2,"source":"local","elements":[],"appState":{"viewBackgroundColor":"#ffffff"},"files":{}}' >"$file"
+  echo "created $file"
+fi
+
+path="$(realpath "$file")"
+
+nohup "$BROWSER_BIN" --profile-directory="$PROFILE" --app-id="$APP_ID" "$path" >/dev/null 2>&1 &
+disown

@@ -15,10 +15,10 @@ bg_color: &bg_color 000000ff
 info_color: &info_color acb4bdff
 white: &white ffffffff
 # Component accents
-dsp_color: &dsp_color ffa95eff
-lum_color: &lum_color dbd76bff
-mem_color: &mem_color a3f095ff
-cpu_color: &cpu_color 63c99aff
+wea_color: &wea_color ff7a7aff
+cpu_color: &cpu_color ffa95eff
+mem_color: &mem_color dbd76bff
+dsp_color: &dsp_color a3f095ff
 spk_color: &spk_color 63c99aff
 mic_color: &mic_color 9ee4ffff
 net_color: &net_color be9cffff
@@ -93,11 +93,7 @@ bar:
               deco: { stack: [*error_deco] }
           - map: &i3_mode
               default:
-                - string:
-                    margin: 5
-                    text: "{mode}"
-                    deco: { background: { color: cc421dff } }
-                - empty: { right-margin: 7 }
+                string: { text: "[{mode}]", left-margin: 7, <<: *info }
               conditions:
                 mode == default: { empty: {} }
         strip-workspace-numbers: false
@@ -109,67 +105,14 @@ bar:
                 state == unfocused: { string: { <<: [*default, *unfocused] } }
                 state == invisible: { string: { <<: *default } }
                 state == urgent: { string: { <<: [*default, *urgent] } }
-    - label:
+          current: { map: { <<: *i3_mode } }
+    - script:
+        path: /home/reuben/.config/yambar/scripts/weather.sh
+        poll-interval: 3600000
         content:
-          - string: { text: "DSP", foreground: *dsp_color }
-          - string:
-              {
-                text: " 󰙟",
-                font: *icon_font,
-                on-click: /bin/sh -c "sway output eDP-1 toggle; /home/$USER/.config/yambar/scripts/launch-yambar.sh &",
-              }
-          - string: { text: " [", <<: *info }
-          - string:
-              {
-                text: "▭  ▯",
-                on-click: /bin/sh -c "sway-displays set",
-                font: *icon_font,
-                <<: *info,
-              }
-          - string: { text: "]", <<: *info }
-    - backlight:
-        name: intel_backlight
-        content:
-          - string:
-              {
-                text: "LUM",
-                foreground: *lum_color,
-                on-click:
-                  {
-                    wheel-down: brightnessctl set 5%- &,
-                    wheel-up: brightnessctl set +5% &,
-                    left: /bin/sh -c "python3 /home/reuben/.config/yambar/scripts/brightness.py -",
-                    right: /bin/sh -c "python3 /home/reuben/.config/yambar/scripts/brightness.py +",
-                  },
-              }
-          - string:
-              {
-                text: " {percent}% ",
-                on-click:
-                  {
-                    wheel-down: brightnessctl set 5%- &,
-                    wheel-up: brightnessctl set +5% &,
-                    left: /bin/sh -c "python3 /home/reuben/.config/yambar/scripts/brightness.py -",
-                    right: /bin/sh -c "python3 /home/reuben/.config/yambar/scripts/brightness.py +",
-                  },
-              }
-    - mem:
-        poll-interval: 15000
-        content:
-          map:
-            conditions:
-              percent_used < 70:
-                - string: { text: "MEM", foreground: *mem_color }
-                - string: { text: " {percent_used}%" }
-                - string: { text: " [{used:mb} MB]", <<: *info }
-              percent_used >= 70:
-                - string: { text: "MEM", <<: *warn }
-                - string: { text: " {percent_used}%" }
-                - string: { text: " [{used:mb} MB]", <<: *info }
-              percent_used >= 90:
-                - string: { text: "MEM", <<: *error }
-                - string: { text: " {percent_used}%" }
-                - string: { text: " [{used:mb} MB]", <<: *info }
+          - string: { text: "WEA", foreground: *wea_color }
+          - string: { text: " {temp}" }
+          - string: { text: " [{desc}]", <<: *info }
     - cpu:
         poll-interval: 15000
         content:
@@ -187,13 +130,56 @@ bar:
                     cpu >= 90:
                       - string: { text: "CPU", <<: *error }
                       - string: { text: " {cpu}%" }
+    - mem:
+        poll-interval: 15000
+        content:
+          map:
+            conditions:
+              percent_used < 70:
+                - string: { text: "MEM", foreground: *mem_color }
+                - string: { text: " {percent_used}%" }
+                - string: { text: " [{used:mb} MB]", <<: *info }
+              percent_used >= 70:
+                - string: { text: "MEM", <<: *warn }
+                - string: { text: " {percent_used}%" }
+                - string: { text: " [{used:mb} MB]", <<: *info }
+              percent_used >= 90:
+                - string: { text: "MEM", <<: *error }
+                - string: { text: " {percent_used}%" }
+                - string: { text: " [{used:mb} MB]", <<: *info }
+    - backlight:
+        name: intel_backlight
+        content:
+          - string:
+              {
+                text: "DSP",
+                foreground: *dsp_color,
+                on-click: /bin/sh -c "/home/$USER/.config/yambar/scripts/sway-displays-set.sh",
+              }
+          - string:
+              {
+                text: " {percent}%",
+                on-click:
+                  {
+                    wheel-down: brightnessctl set 5%- &,
+                    wheel-up: brightnessctl set +5% &,
+                    left: /bin/sh -c "python3 /home/reuben/.config/yambar/scripts/brightness.py -",
+                    right: /bin/sh -c "python3 /home/reuben/.config/yambar/scripts/brightness.py +",
+                  },
+              }
+          - string:
+              {
+                text: " [eDP-1]",
+                on-click: /bin/sh -c "/home/$USER/.config/yambar/scripts/internal-display-toggle.sh",
+                <<: *info,
+              }
   #
   # CENTER
   #
   #
   center:
     - clock:
-        time-format: "%I:%M:%S %p %Z"
+        time-format: "%I:%M %p %Z"
         date-format: "%^a %d %^b %Y"
         content:
           - string: { text: "{date} {time}", foreground: *white, margin: 25 }
@@ -365,9 +351,13 @@ bar:
     - label:
         content:
           - string:
+              on-click: /bin/sh -c "/home/$USER/.config/scripts/toggle-sleep.sh"
+              font: *icon_font
+              text: "   "
+          - string:
               on-click: /bin/sh -c "swaymsg reload"
               font: *icon_font
-              text: "󰜉 "
+              text: " 󰜉 "
           - string:
               on-click: /bin/sh -c "/home/$USER/.config/wofi/powermenu/launch.sh"
               font: *icon_font

@@ -129,6 +129,8 @@
     "editor.formatOnSave": true,
     "[latex]": {
       "editor.defaultFormatter": "James-Yu.latex-workshop"
-    }
+    },
+    "editor.minimap.enabled": false,
+    "extensions.ignoreRecommendations": true
 
 }
