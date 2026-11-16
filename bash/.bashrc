@@ -1,12 +1,15 @@
-# ~/.bashrc: executed by bash(1) for non-login shells.
-# see /usr/share/doc/bash/examples/startup-files (in the package bash-doc)
-# for examples
+# ble.sh
+[[ $- == *i* ]] && source -- ~/.local/share/blesh/ble.sh --noattach
 
-# If not running interactively, don't do anything
+# If not running interactively, no action
 case $- in
 *i*) ;;
 *) return ;;
 esac
+
+#==========================================================
+# history
+#==========================================================
 
 # don't put duplicate lines or lines starting with space in the history.
 HISTCONTROL=ignoreboth
@@ -18,77 +21,17 @@ shopt -s histappend
 HISTSIZE=1000
 HISTFILESIZE=2000
 
+#==========================================================
+# sizing
+#==========================================================
+
 # check the window size after each command and, if necessary,
 # update the values of LINES and COLUMNS.
 shopt -s checkwinsize
 
-# set variable identifying the chroot you work in (used in the prompt below)
-if [ -z "${debian_chroot:-}" ] && [ -r /etc/debian_chroot ]; then
-  debian_chroot=$(cat /etc/debian_chroot)
-fi
-
-# set a fancy prompt (non-color, unless we know we "want" color)
-case "$TERM" in
-xterm-color | *-256color) color_prompt=yes ;;
-esac
-
-# uncomment for a colored prompt, if the terminal has the capability; turned
-# off by default to not distract the user: the focus in a terminal window
-# should be on the output of commands, not on the prompt
-#force_color_prompt=yes
-if [ -n "$force_color_prompt" ]; then
-  if [ -x /usr/bin/tput ] && tput setaf 1 >&/dev/null; then
-    # We have color support; assume it's compliant with Ecma-48
-    # (ISO/IEC-6429). (Lack of such support is extremely rare, and such
-    # a case would tend to support setf rather than setaf.)
-    color_prompt=yes
-  else
-    color_prompt=
-  fi
-fi
-
-if [ "$color_prompt" = yes ]; then
-  PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '
-else
-  PS1='${debian_chroot:+($debian_chroot)}\u@\h:\w\$ '
-fi
-unset color_prompt force_color_prompt
-
-# If this is an xterm set the title to user@host:dir
-case "$TERM" in
-xterm* | rxvt*)
-  PS1="\[\e]0;${debian_chroot:+($debian_chroot)}\u@\h: \w\a\]$PS1"
-  ;;
-*) ;;
-esac
-
-# enable color support of ls and also add handy aliases
-if [ -x /usr/bin/dircolors ]; then
-  test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
-  alias ls='ls --color=auto'
-  alias dir='dir --color=auto'
-  alias vdir='vdir --color=auto'
-
-  alias grep='grep --color=auto'
-  alias fgrep='fgrep --color=auto'
-  alias egrep='egrep --color=auto'
-fi
-
-# colored GCC warnings and errors
-export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01'
-
-# some more ls aliases
-alias ll='ls -l'
-alias la='ls -A'
-alias l='ls -CF'
-
-# Alias definitions.
-# You may want to put all your additions into a separate file like
-# ~/.bash_aliases, instead of adding them here directly.
-# See /usr/share/doc/bash-doc/examples in the bash-doc package.
-if [ -f ~/.bash_aliases ]; then
-  . ~/.bash_aliases
-fi
+#==========================================================
+# completion
+#==========================================================
 
 # enable programmable completion features (you don't need to enable
 # this, if it's already enabled in /etc/bash.bashrc and /etc/profile
@@ -101,41 +44,67 @@ if ! shopt -oq posix; then
   fi
 fi
 
-#
-# apps
-#
-alias code='code --enable-features=UseOzonePlatform,WaylandWindowDecorations,WebRTCPipeWireCapturer --ozone-platform-hint=auto > /dev/null 2>&1'
-alias sync='/home/reuben/.config/scripts/sync.sh'
-alias nusvpn='openconnect-lite --server 8d0c.vpn.sse.cisco.com/NUSStudent'
-alias chrome='google-chrome --password-store=gnome-libsecret'
-alias typetest='tt -showwpm -notheme -blockcursor'
-alias powerstats='flatpak run org.gnome.PowerStats&exit'
-alias obs='cd ~/Documents/Obsidian; nvim .'
+#==========================================================
+# utils
+#==========================================================
 
-#
-# laziness
-#
+# vim mode
+set -o vi
+bind -m vi-command 'Control-l: clear-screen'
+bind -m vi-insert 'Control-l: clear-screen'
+export EDITOR=nvim
+
+# convenience scripts
+export PATH="$PATH:$HOME/.config/scripts"
+
 bak() {
   for f in "$@"; do
     cp -a -- "$f" "$f.bak.$(date +%Y%m%d-%H%M%S)"
   done
 }
-alias time-restart='sudo systemctl restart systemd-timesyncd'
-alias commit='git add -A && git commit -m "Updates" && git push'
-alias noise='play -n synth brownnoise'
-alias rec='/home/reuben/.config/scripts/screencast.sh; cd /home/reuben/Videos/Screencasts/'
-alias work='/home/reuben/.config/scripts/work.sh'
-alias dock='/home/reuben/.config/scripts/dock.sh'
-alias yam='/home/reuben/.config/yambar/scripts/launch-yambar.sh'
-alias zoxadd='/home/reuben/.config/scripts/zoxide-add.sh'
-alias r='ranger'
+
+time-sync() {
+  local tz
+  tz=$(curl -sf --max-time 10 https://ifconfig.co/json | jq -r '.time_zone // empty')
+  if [[ -n $tz ]]; then
+    sudo timedatectl set-timezone "$tz" && echo "Time zone: $tz"
+    sudo systemctl restart systemd-timesyncd
+  else
+    echo "Time zone lookup failed; keeping $(timedatectl show -p Timezone --value)" >&2
+  fi
+}
+
+#==========================================================
+# laziness
+#==========================================================
+
+# colors
+alias diff='diff --color=auto -u'
+alias grep='grep --color=auto'
+alias ls='ls --color=auto'
+alias ll='ls -l'
+alias la='ls -A'
+alias l='ls -CF'
+
+# apps
+alias nusvpn='openconnect-lite --server 8d0c.vpn.sse.cisco.com/NUSStudent'
+alias obs='cd ~/Documents/Obsidian; nvim .'
+
 alias p='wl-paste >'
 alias e='exit'
-alias t='tmux attach || tmux new-session -A -s "$(golang-petname -separator '_')"'
 
-#
+t() {
+  if [ $# -eq 0 ]; then
+    tmux attach || tmux
+  else
+    tmux new-session -s "$1"
+  fi
+}
+
+#==========================================================
 # dev services
-#
+#==========================================================
+
 dev-service() {
   local action=$1
   shift
@@ -143,59 +112,24 @@ dev-service() {
     sudo systemctl "$action" "$service"
   done
 }
+
 alias dev-start='dev-service start'
 alias dev-stop='dev-service stop'
 alias dev-enable='dev-service enable'
 alias dev-disable='dev-service disable'
 alias activate='source ~/.venv/base/bin/activate'
 
-#
+#==========================================================
 # system
-#
+#==========================================================
+
 alias powerstatus='upower -i /org/freedesktop/UPower/devices/battery_BAT0'
 alias pcipm-enable='echo auto | sudo tee /sys/bus/pci/devices/*/power/control'
 alias lume='ddcutil setvcp 10'
-alias gaps='f() { swaymsg gaps inner all set "$1"; swaymsg gaps inner "$1"; }; f'
 alias boot-windows='sudo grub-reboot 2 && systemctl reboot'
 alias boot-uefi='sudo grub-reboot 3 && systemctl reboot'
-alias autosuspend-off='sudo /home/reuben/.config/scripts/autosuspend-off.sh'
+alias autosuspend-off='sudo $HOME/.config/scripts/autosuspend-off.sh'
 alias autosuspend-status='cat /sys/module/usbcore/parameters/autosuspend'
-
-#
-# convenience scripts
-#
-export PATH="$PATH:/home/reuben/.config/scripts"
-
-#
-# languages
-#
-
-# rust
-export PATH="$PATH:/home/reuben/.local/bin"
-. "$HOME/.cargo/env"
-
-# pyenv
-export PYENV_ROOT="$HOME/.pyenv"
-export PATH="$PYENV_ROOT/bin:$PATH"
-
-if command -v pyenv 1>/dev/null 2>&1; then
-  eval "$(pyenv init -)"
-fi
-
-# bun
-export BUN_INSTALL="$HOME/.bun"
-export PATH=$BUN_INSTALL/bin:$PATH
-
-# java
-export PATH_TO_FX="$HOME/.local/share/javafx-sdk-17.0.13/lib"
-export JAVA_HOME="/usr/lib/jvm/java-17-openjdk-amd64"
-
-# esp-idf
-alias idf-activate='. $HOME/utils/esp/esp-idf/export.sh'
-
-# wayvnc
-export PATH="$HOME/utils/vnc/wayvnc/build:$PATH"
-alias ipad-connect='/home/reuben/.config/wayvnc/ipad-launch.sh'
 
 # dell command-configure
 export PATH="/opt/dell/dcc:$PATH"
@@ -207,40 +141,29 @@ alias thermal-performance='sudo env PATH=$PATH cctk --ThermalManagement=UltraPer
 alias thermal-optimized='sudo env PATH=$PATH cctk --ThermalManagement=Optimized'
 alias thermal-cool='sudo env PATH=$PATH cctk --ThermalManagement=Cool'
 
-# nvm
-export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"                   # This loads nvm
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion" # This loads nvm bash_completion
-
-# gradle
-export GRADLE_HOME="$HOME/.gradle/wrapper/dists/gradle-8.12.1-bin/eumc4uhoysa37zql93vfjkxy0/gradle-8.12.1"
-export PATH="$GRADLE_HOME/bin:$PATH"
-alias gradle="$GRADLE_HOME/bin/gradle"
-
-# vim mode
-set -o vi
-bind -m vi-command 'Control-l: clear-screen'
-bind -m vi-insert 'Control-l: clear-screen'
-export EDITOR=nvim
-
-# claude
-ask() {
-  claude -p \
-    --model claude-haiku-5-5 \
-    --tools "" \
-    --disallowedTools "*" \
-    --strict-mcp-config \
-    --safe-mode \
-    --permission-prompts none \
-    --no-session-persistence \
-    "$*"
+gaps() {
+  swaymsg gaps inner all set "$1"
 }
 
-claude-desktop-open() {
-  local enc
-  enc=$(python3 -c 'import os,urllib.parse;print(urllib.parse.quote(os.getcwd(),safe=""))')
-  xdg-open "claude://code/new?folder=${enc}"
-}
+#==========================================================
+# languages and tooling
+#==========================================================
+
+# bin
+export PATH="$PATH:$HOME/.local/bin"
+
+# perf
+alias allow-perf='sudo sysctl -w kernel.perf_event_paranoid=-1'
+
+# gcc
+export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01'
+
+# rust
+. "$HOME/.cargo/env"
+
+# bun
+export BUN_INSTALL="$HOME/.bun"
+export PATH=$BUN_INSTALL/bin:$PATH
 
 # yazi
 function y() {
@@ -251,7 +174,6 @@ function y() {
   rm -f -- "$tmp"
 }
 
-# utility for setting config files
 _confset() {
   local varname="$1" dir="$2" name="$3"
 
@@ -271,9 +193,6 @@ _confset() {
   echo "$varname set to $path"
 }
 
-# perf
-alias allow-perf='sudo sysctl -w kernel.perf_event_paranoid=-1'
-
 # talos
 talosconf() { _confset TALOSCONFIG "$HOME/.talos" "$1"; }
 
@@ -287,7 +206,7 @@ export GEM_HOME="$HOME/gems"
 export PATH="$HOME/gems/bin:$PATH"
 
 # fnm
-FNM_PATH="/home/reuben/.local/share/fnm"
+FNM_PATH="$HOME/.local/share/fnm"
 if [ -d "$FNM_PATH" ]; then
   export PATH="$FNM_PATH:$PATH"
   eval "$(fnm env)"
@@ -302,7 +221,7 @@ export PATH=$PATH:/usr/local/go/bin
 export PATH="$PATH:$(go env GOPATH)/bin"
 
 # ocaml
-eval $(opam env --switch=default)
+eval "$(opam env --switch=default)"
 
 # nvidia nsight
 export PATH="/usr/local/NVIDIA-Nsight-Compute:$PATH"
@@ -318,15 +237,38 @@ tex-comp() {
     "$1"
 }
 
-#
+#==========================================================
+# claude
+#==========================================================
+
+ask() {
+  claude -p \
+    --model claude-haiku-5-5 \
+    --tools "" \
+    --disallowedTools "*" \
+    --strict-mcp-config \
+    --safe-mode \
+    --permission-prompts none \
+    --no-session-persistence \
+    "$*"
+}
+
+claude-desktop-open() {
+  local enc
+  enc=$(python3 -c 'import sys,urllib.parse;print(urllib.parse.quote(sys.argv[1],safe=""))' "$PWD")
+  setsid -f xdg-open "claude://code/new?folder=${enc}" >/dev/null 2>&1
+}
+
+#==========================================================
 # shell
-#
+#==========================================================
 
 # starship
 eval "$(starship init bash)"
 
 # zoxide
 eval "$(zoxide init bash)"
+alias zadd='zoxide-add.sh'
 
 # fzf
 export FZF_DEFAULT_OPTS_FILE="$HOME/.config/fzf/fzfrc"
@@ -335,6 +277,8 @@ export FZF_CTRL_T_OPTS="
   --bind 'ctrl-/:change-preview-window(down|hidden|)'"
 
 # ble.sh
-source -- ~/.local/share/blesh/ble.sh
-ble-import -d integration/fzf-key-bindings
-ble-import -d integration/fzf-completion
+if [[ ${BLE_VERSION-} ]]; then
+  ble-import -d integration/fzf-key-bindings
+  ble-import -d integration/fzf-completion
+  ble-attach
+fi
