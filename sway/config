@@ -79,9 +79,6 @@
     for_window [app_id="zathura"] tabbed enable
 
     # Yazi Scratchpad
-    exec $term \
-        --app-id scratchpadTerm \
-        -e bash -ic yazi
     for_window [app_id="scratchpadTerm"] \
         floating enable, \
         move position center, \
@@ -90,12 +87,15 @@
     # Claude Scratchpad
     set $claude_ext fmpnliohjhemenmnlpbfagaolkdacoja
     set $claude_win brave-fmpnliohjhemenmnlpbfagaolkdacoja-Default
-    exec brave-browser --app-id=$claude_ext
     for_window [app_id="$claude_win"] \
         floating enable, \
         opacity $default_overlay_opacity, \
         move position center, \
         move scratchpad
+
+    # (Re)launch scratchpads on startup and on every config reload
+    set $scratchpad ~/.config/sway/scripts/scratchpad.sh
+    exec_always $scratchpad
 
 ### Styling
 #
@@ -131,7 +131,7 @@
 ### Display Outputs
 #
     # Wallpaper
-    output * bg $HOME/Pictures/Wallpapers/bergamo_1.JPG fill
+    output * bg $HOME/Pictures/Wallpapers/edm_03.jpg fill
     # output * bg "#000000" solid_color
 
     # Set display configuration if one exists
@@ -140,14 +140,14 @@
     # Toggle built-in display upon closed/open events
     set $builtin-monitor eDP-1
     workspace 0 output $builtin-monitor
-    bindswitch lid:on output $builtin-monitor disable
-    bindswitch lid:off output $builtin-monitor enable
+    bindswitch --locked lid:on output $builtin-monitor disable
+    bindswitch --locked lid:off output $builtin-monitor enable
     exec_always cat /proc/acpi/button/lid/LID0/state | awk '{print $2}' | grep -q 'closed' && swaymsg output $builtin-monitor disable
 
 
 ### Status Bar:
 #
-    exec_always /bin/sh -c "$HOME/.config/yambar/scripts/launch-yambar.sh"
+    exec_always /bin/sh -c "$HOME/.config/yambar/scripts/launch.sh"
 
 ### Input configuration
 #
@@ -182,9 +182,9 @@
 #
     # Volume
     exec pactl set-sink-volume @DEFAULT_SINK@ 0 150%
-    bindsym XF86AudioRaiseVolume exec pactl set-sink-mute @DEFAULT_SINK@ 0 && pactl set-sink-volume @DEFAULT_SINK@ +5%
-    bindsym XF86AudioLowerVolume exec pactl set-sink-mute @DEFAULT_SINK@ 0 && pactl set-sink-volume @DEFAULT_SINK@ -5%     
-    bindsym XF86AudioMute exec pactl set-sink-mute @DEFAULT_SINK@ toggle
+    bindsym --locked XF86AudioRaiseVolume exec pactl set-sink-mute @DEFAULT_SINK@ 0 && pactl set-sink-volume @DEFAULT_SINK@ +5%
+    bindsym --locked XF86AudioLowerVolume exec pactl set-sink-mute @DEFAULT_SINK@ 0 && pactl set-sink-volume @DEFAULT_SINK@ -5%     
+    bindsym --locked XF86AudioMute exec pactl set-sink-mute @DEFAULT_SINK@ toggle
 
     # Next and Previous
     bindcode 172 exec playerctl play-pause
@@ -195,9 +195,8 @@
     bindsym XF86MonBrightnessUp exec brightnessctl set +5%
     bindsym XF86MonBrightnessDown exec brightnessctl set 5%-
 
-    # External Display Brightness
-    bindsym $mod+Alt+Down exec ddcutil setvcp 10 - 10 --noverify --async
-    bindsym $mod+Alt+Up exec ddcutil setvcp 10 + 10 --noverify --async
+    # Brightness Controller
+    bindsym $mod+b exec /bin/sh -c "$HOME/.config/wofi/brightness/launch.sh"
 
     # Toggle Theme
     bindsym $mod+n exec /bin/sh -c "$HOME/.config/scripts/theme-toggle.sh dark"
@@ -219,7 +218,6 @@
 
     # Open File Manager
     bindsym $mod+y exec nautilus
-    bindsym $mod+Shift+y exec $term yazi
 
     # Start your launcher
     bindsym $mod+d exec $menu --show=drun -a
@@ -328,11 +326,6 @@
 #
 # Layout stuff:
 #
-    # You can "split" the current object of your focus with
-    # $mod+b or $mod+v, for horizontal and vertical splits
-    # respectively.
-    bindsym $mod+b splith
-    bindsym $mod+v splitv
     bindsym $mod+u splitv
     bindsym $mod+i splith
     bindsym $mod+o split none
@@ -350,6 +343,7 @@
 
     # Picture-in-picture
     bindsym $mod+Alt+p sticky toggle, floating toggle
+    bindsym $mod+Alt+f sticky toggle, floating toggle, resize 100 100
 
     # Swap focus between the tiling area and the floating area
     bindsym $mod+space focus mode_toggle
@@ -363,20 +357,13 @@
 # Scratchpad:
 #
     # Toggle Claude scratchpad
-    bindsym $mod+Shift+semicolon [app_id="$claude_win"] scratchpad show; \
-        [app_id="scratchpadTerm" workspace=__focused__] move scratchpad
-    bindsym $mod+f [app_id="$claude_win"] scratchpad show, move position center; \
-        [app_id="scratchpadTerm" workspace=__focused__] move scratchpad
+    bindsym $mod+f [app_id="$claude_win"] scratchpad show
 
     # Toggle Yazi scratchpad
-    bindsym $mod+semicolon [app_id="scratchpadTerm"] scratchpad show, move position center; \
-        [app_id="$claude_win" workspace=__focused__] move scratchpad
+    bindsym $mod+semicolon [app_id="scratchpadTerm"] scratchpad show
 
-    # Restore default scratchpad
-    bindsym $mod+Alt+semicolon [app_id="scratchpadTerm"] kill; \
-        [app_id="$claude_win"] kill; \
-        exec $term --app-id scratchpadTerm -e bash -ic yazi; \
-        exec brave-browser --app-id=$claude_ext
+    # Restore default scratchpads
+    bindsym $mod+Alt+semicolon exec $scratchpad
 #
 # Mirroring
 #
@@ -387,18 +374,24 @@
     set $capture ~/.config/scripts/capture.sh
     mode "capture-shot" {
         bindsym a mode "default"; exec $capture shot all
-        bindsym w mode "default"; exec $capture shot window
-        bindsym o mode "default"; exec $capture shot output
+        bindsym w mode "default"; exec $capture shot focused_window
+        bindsym o mode "default"; exec $capture shot focused_output
+        bindsym Shift+w mode "default"; exec $capture shot window
+        bindsym Shift+o mode "default"; exec $capture shot output
     }
     mode "capture-gif" {
         bindsym a mode "default"; exec $capture gif all
-        bindsym w mode "default"; exec $capture gif window
-        bindsym o mode "default"; exec $capture gif output
+        bindsym w mode "default"; exec $capture gif focused_window
+        bindsym o mode "default"; exec $capture gif focused_output
+        bindsym Shift+w mode "default"; exec $capture gif window
+        bindsym Shift+o mode "default"; exec $capture gif output
     }
     mode "capture-video" {
         bindsym a mode "default"; exec $capture video all
-        bindsym w mode "default"; exec $capture video window
-        bindsym o mode "default"; exec $capture video output
+        bindsym w mode "default"; exec $capture video focused_window
+        bindsym o mode "default"; exec $capture video focused_output
+        bindsym Shift+w mode "default"; exec $capture video window
+        bindsym Shift+o mode "default"; exec $capture video output
     }
     bindsym $mod+Shift+s exec $capture pick shot
     bindsym $mod+Shift+r exec $capture pick gif
